@@ -1,2 +1,2 @@
 # minux
-minimal Linux distro based on kernel
+Minimal Linux distro based on kernel and Busybox
