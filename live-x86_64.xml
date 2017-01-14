@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build name="minux" type="live" arch="x86_64" version="0.0.2" vendor="minux" author-name="M.J.Ahmadi" author-email="mohammad.j.ahmadi@gmail.com">
+<build name="minux" type="live" arch="x86_64" version="0.0.2" codename="Robin">
 
 	<phase seq="1">
 		<entry name="linux-4.4.6" type="package/src" seq="1" cdto="yes" download="no" extract="yes">

@@ -44,9 +44,12 @@ export PROJECT__TYPE=$(xml_get_val "/build/@type")
 export PROJECT__ARCH=$(xml_get_val "/build/@arch")
 export PROJECT__VERSION=$(xml_get_val "/build/@version")
 export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
-export PROJECT__VENDOR=$(xml_get_val "/build/@vendor")
-export PROJECT__AUTHOR_NAME=$(xml_get_val "/build/@author-name")
-export PROJECT__AUTHOR_EMAIL=$(xml_get_val "/build/@author-email")
+
+export PROJECT__VENDOR="Minux"
+export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
+export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
+export PROJECT__WEBSITE="https://github.com/mjahmadi/minux"
+
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
 
 export PROJECT__CUR=$(pwd)
