@@ -24,7 +24,7 @@ if [[ -z $1 ]]; then
 	echo -e "${RED}ERROR: Build descriptor file missing.${NORMAL}"
 	exit -1
 elif [[ ! -s $1 ]]; then
-	echo -e "${RED}ERROR: Build descriptor file does not exists.${NORMAL}"
+	echo -e "${RED}ERROR: Build descriptor file does not exist or access denied.${NORMAL}"
 	exit -1
 fi
 
@@ -160,6 +160,12 @@ for phase in `seq $phase_begin_from $phase_count`; do
         fi
         
 		if [[ $extract == 'yes' ]]; then
+		
+			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
+				echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
+				exit -1
+			fi
+
 		    des_dir=$(tar -tf $PROJECT__PKG/$filename | head -n 1 | cut -f1)
 			des_dir=$(IFS='/' read -r -a array <<< $des_dir && echo ${array[0]})
 			des_dir=$(read -r -a array <<< $des_dir && echo ${array[0]})
@@ -176,6 +182,12 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		fi
 		
 		if [[ $cdto == 'yes' ]]; then
+		
+			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
+				echo -e "${RED}ERROR: The directory does not exist or access denied.${NORMAL}"
+				exit -1
+			fi
+			
 			cd $PROJECT__BLD/$des_dir
 		fi
         
