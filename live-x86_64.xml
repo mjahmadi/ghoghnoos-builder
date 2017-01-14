@@ -12,7 +12,7 @@
                 <line verbos="yes">make mrproper</line>
                 <line verbos="yes">make defconfig</line>
                 <line>sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"$PROJECT__NAME\"/" .config</line>
-                <line verbos="yes">make bzImage</line>
+                <line verbos="yes">make bzImage $CPUS</line>
                 <line verbos="yes">make headers_install</line>
             </action>
 		</entry>
@@ -28,7 +28,7 @@
                 <line>GLIBC_INSTALLED=$(pwd)/glibc_installed</line>
                 <line>cd ./glibc_objects</line>
                 <line>../configure --prefix= --with-headers=$PROJECT__BLD/linux-4.4.6/usr/include --disable-werror</line>
-                <line verbos="yes">make</line>
+                <line verbos="yes">make $CPUS</line>
                 <line verbos="yes">make install DESTDIR=$GLIBC_INSTALLED</line>
                 
                 <line>mkdir -vp $PROJECT__RFS/lib</line>
@@ -49,11 +49,11 @@
             <action when="after" seq="1">
 				<line verbos="yes">make distclean</line>
 				<line verbos="yes">make defconfig</line>
-				<line verbos="yes">GLIBC_INSTALLED_ESC=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
-				<line verbos="yes">GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED_ESC\" | sed 's/\//\\\//g')</line>
-				<line verbos="yes">sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED_ESC/" .config</line>
-				<line verbos="yes">sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
-				<line verbos="yes">make busybox</line>
+				<line>GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
+				<line>GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED\" | sed 's/\//\\\//g')</line>
+				<line>sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED_ESC/" .config</line>
+				<line>sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
+				<line verbos="yes">make busybox $CPUS</line>
 				<line verbos="yes">make install</line>
 				
 				<line>cp -R _install/* $PROJECT__RFS</line>

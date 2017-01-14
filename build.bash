@@ -37,6 +37,7 @@ function xml_get_val
 }
 
 #export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
+export CPUS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
 
 export PROJECT__NAME=$(xml_get_val "/build/@name")
 export PROJECT__TYPE=$(xml_get_val "/build/@type")
