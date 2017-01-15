@@ -12,7 +12,7 @@
                 <line verbos="yes">make mrproper</line>
                 <line verbos="yes">make defconfig</line>
                 <line>sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"$PROJECT__NAME\"/" .config</line>
-                <line verbos="yes">make bzImage $CPUS</line>
+                <line verbos="yes">make bzImage</line>
                 <line verbos="yes">make headers_install</line>
             </action>
 		</entry>
@@ -28,7 +28,7 @@
                 <line>GLIBC_INSTALLED=$(pwd)/glibc_installed</line>
                 <line>cd ./glibc_objects</line>
                 <line>../configure --prefix= --with-headers=$PROJECT__BLD/linux-4.4.6/usr/include --disable-werror</line>
-                <line verbos="yes">make $CPUS</line>
+                <line verbos="yes">make</line>
                 <line verbos="yes">make install DESTDIR=$GLIBC_INSTALLED</line>
                 
                 <line>mkdir -vp $PROJECT__RFS/lib</line>
@@ -49,11 +49,11 @@
             <action when="after" seq="1">
 				<line verbos="yes">make distclean</line>
 				<line verbos="yes">make defconfig</line>
-				<line>GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
-				<line>GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED\" | sed 's/\//\\\//g')</line>
-				<line>sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED_ESC/" .config</line>
+				<line>#GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
+				<line>#GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED\" | sed 's/\//\\\//g')</line>
+				<line>#sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED_ESC/" .config</line>
 				<line>sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
-				<line verbos="yes">make busybox $CPUS</line>
+				<line verbos="yes">make busybox</line>
 				<line verbos="yes">make install</line>
 				
 				<line>cp -R _install/* $PROJECT__RFS</line>
@@ -131,9 +131,11 @@
 					##########################################################################
 
 					Welcome to $PROJECT__NAME $PROJECT__VERSION ($PROJECT__ARCH)
-
+					
 					Author: $PROJECT__AUTHOR_NAME
-							$PROJECT__AUTHOR_EMAIL
+					        $PROJECT__AUTHOR_EMAIL
+					
+					Homepage: $PROJECT__WEBSITE
 
 					##########################################################################
 					
@@ -160,12 +162,14 @@
 					cat > $PROJECT__RFS/init &lt;&lt;-EOF
 					#!/bin/sh
 					
-					exec /sbin/init
+					#exec /sbin/init
+					exec /testic
 					
 					EOF
                 </line>
                 <line>chmod +x $PROJECT__RFS/init</line>
                 
+                <line>rm -f $PROJECT__RFS/lib64</line>
                 <line>ln -s $PROJECT__RFS/lib $PROJECT__RFS/lib64</line>
             </action>
 		</entry>
@@ -201,7 +205,7 @@
 				</line>
 				<line>cp $PROJECT__BLD/linux-4.4.6/arch/$PROJECT__ARCH/boot/bzImage ./kernel.bz</line>
 				<line>mv $PROJECT__DIR/rootfs.cpio.gz ./rootfs.gz</line>
-				<line>echo 'default kernel.bz  initrd=rootfs.gz' > ./isolinux.cfg</line>
+				<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
 				<line>genisoimage -J -r -o $PROJECT__DIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 				<line>isohybrid $PROJECT__DIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
 				

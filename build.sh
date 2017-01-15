@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+
+#COLORS
 NORMAL="\e[39m"
 WHITE="\e[37m"
 GREEN="\e[32m"
@@ -10,6 +12,7 @@ MAGENTA="\e[35m"
 CYAN="\e[36m"
 RED="\e[31m"
 
+#START EXECUTION TIME IN SEC
 exec__start_time=$(date +%s)
 
 set -e
@@ -36,8 +39,7 @@ function xml_get_val
     echo "$XML_STRING" | xmlstarlet sel -t -v "$1" | xmlstarlet unesc
 }
 
-#export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
-export CPUS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
+export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
 
 export PROJECT__NAME=$(xml_get_val "/build/@name")
 export PROJECT__TYPE=$(xml_get_val "/build/@type")
@@ -104,7 +106,7 @@ fi
 phase_count=$(xml_get_val "count(/build/phase)")
 for phase in `seq $phase_begin_from $phase_count`; do
 
-    echo -e "Phase --> '$phase'"
+    echo -e "\nPhase --> '$phase'"
     
     # BUILD >> PHASE >> ENTRY
     entry_count=$(xml_get_val "count(/build/phase[$phase]/entry)")
@@ -144,28 +146,29 @@ for phase in `seq $phase_begin_from $phase_count`; do
         link=$(xml_get_val "/build/phase[$phase]/entry[$entry]/link")
         filename=$(xml_get_val "/build/phase[$phase]/entry[$entry]/filename")
         directory=$(xml_get_val "/build/phase[$phase]/entry[$entry]/directory")
-	    checksum1=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum [@type='md5']")
+	    checksum1=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum")
         checksum_type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum/@type")
         
         if [[ $download == 'yes' ]]; then
             echo -e "\nDownloading '$filename'"
-            
             wget --continue $link --directory-prefix="$PROJECT__PKG"
-		    checksum2=($(md5sum $PROJECT__PKG/$filename))
-		    
-		    if [[ $checksum1 != $checksum2 ]]; then
-                echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n '$checksum1' != '$checksum2'${NORMAL}"
-                exit -1
-		    fi
         fi
         
+		chk_algo="${checksum_type}sum"
+		checksum2=($($chk_algo $PROJECT__PKG/$filename))
+		
+		if [[ -n $checksum1 && $checksum1 != $checksum2 ]]; then
+			echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n  '$checksum1' != '$checksum2'${NORMAL}"
+			exit -1
+		fi
+		
 		if [[ $extract == 'yes' ]]; then
 		
 			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
 				echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
 				exit -1
 			fi
-
+			
 		    des_dir=$(tar -tf $PROJECT__PKG/$filename | head -n 1 | cut -f1)
 			des_dir=$(IFS='/' read -r -a array <<< $des_dir && echo ${array[0]})
 			des_dir=$(read -r -a array <<< $des_dir && echo ${array[0]})
@@ -222,5 +225,5 @@ for phase in `seq $phase_begin_from $phase_count`; do
 done
 
 exec__elapsed_time=$(echo "$(date +%s) - $exec__start_time" | bc)
-echo -e "${GREEN}\nBuild time: $(($exec__elapsed_time / 60)) minute(s) and $(($exec__elapsed_time % 60)) second(s). ${NORMAL}\n"
+echo -e "${GREEN}\nExecution time:\n   $(($exec__elapsed_time / 60)) minute(s) and $(($exec__elapsed_time % 60)) second(s). ${NORMAL}\n"
 
