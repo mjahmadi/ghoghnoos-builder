@@ -117,6 +117,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE]
         entry_action_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
         for action in `seq 1 $entry_action_count`; do
+        
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE] >> LINE
         	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
         	for line in `seq 1 $entry_action_line_count`; do
@@ -138,15 +139,15 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	done
         done
         
-        # BUILD >> PHASE >> ENTRY [TYPE=PACKAGE/SRC]
-        type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@type")
+        # BUILD >> PHASE >> ENTRY
+        entry_type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@type")
         cdto=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@cdto")
         download=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@download")
         extract=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@extract")
         link=$(xml_get_val "/build/phase[$phase]/entry[$entry]/link")
         filename=$(xml_get_val "/build/phase[$phase]/entry[$entry]/filename")
         directory=$(xml_get_val "/build/phase[$phase]/entry[$entry]/directory")
-	    checksum1=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum")
+	    checksum=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum")
         checksum_type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum/@type")
         
         if [[ $download == 'yes' ]]; then
@@ -154,33 +155,38 @@ for phase in `seq $phase_begin_from $phase_count`; do
             wget --continue $link --directory-prefix="$PROJECT__PKG"
         fi
         
-		chk_algo="${checksum_type}sum"
-		checksum2=($($chk_algo $PROJECT__PKG/$filename))
+		if [[ $entry_type == 'package' ]]; then
 		
-		if [[ -n $checksum1 && $checksum1 != $checksum2 ]]; then
-			echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n  '$checksum1' != '$checksum2'${NORMAL}"
-			exit -1
-		fi
-		
-		if [[ $extract == 'yes' ]]; then
-		
-			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
-				echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
+			chk_algo="${checksum_type}sum"
+			checksum2=($($chk_algo $PROJECT__PKG/$filename))
+			
+			if [[ -n $checksum && $checksum != $checksum2 ]]; then
+				echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n  '$checksum1' != '$checksum2'${NORMAL}"
 				exit -1
 			fi
-			
-		    des_dir=$(tar -tf $PROJECT__PKG/$filename | head -n 1 | cut -f1)
-			des_dir=$(IFS='/' read -r -a array <<< $des_dir && echo ${array[0]})
-			des_dir=$(read -r -a array <<< $des_dir && echo ${array[0]})
-			
-			echo -e "\nExtracting '$filename'"
+
+		    if [[ $entry_type == 'package/src' ]]; then
+				if [[ $extract == 'yes' ]]; then
 		
-			rm -rf $PROJECT__BLD/$des_dir
+					if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
+						echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
+						exit -1
+					fi
+			
+					des_dir=$(tar -tf $PROJECT__PKG/$filename | head -n 1 | cut -f1)
+					des_dir=$(IFS='/' read -r -a array <<< $des_dir && echo ${array[0]})
+					des_dir=$(read -r -a array <<< $des_dir && echo ${array[0]})
+			
+					echo -e "\nExtracting '$filename'"
 		
-			if [[ -n $directory ]]; then
-				tar -xf $PROJECT__PKG/$filename -C $PROJECT__BLD/$des_dir
-			else
-				tar -xf $PROJECT__PKG/$filename -C $PROJECT__BLD
+					rm -rf $PROJECT__BLD/$des_dir
+		
+					if [[ -n $directory ]]; then
+						tar -xf $PROJECT__PKG/$filename -C $PROJECT__BLD/$des_dir
+					else
+						tar -xf $PROJECT__PKG/$filename -C $PROJECT__BLD
+					fi
+				fi
 			fi
 		fi
 		
@@ -202,8 +208,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	for line in `seq 1 $entry_action_line_count`; do
 		        sudo=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@sudo")
 		        verbos=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@verbos")
-		        strap=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@strap")
-		        
+	        	
 		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]")
 		        
 		        if [[ $verbos == 'yes' ]]; then
