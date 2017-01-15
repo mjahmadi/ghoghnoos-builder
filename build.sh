@@ -15,7 +15,7 @@ RED="\e[31m"
 #START EXECUTION TIME IN SEC
 exec__start_time=$(date +%s)
 
-set -e
+#set -e
 set +h
 
 if [[ $(id -u) == 0 ]]; then
@@ -55,10 +55,10 @@ export PROJECT__WEBSITE="https://github.com/mjahmadi/minux"
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
 
 export PROJECT__CUR=$(pwd)
-export PROJECT__DIR="$PROJECT__CUR/$PROJECT__TYPE-$PROJECT__ARCH"
-export PROJECT__PKG="$PROJECT__CUR/packages"
-export PROJECT__BLD="$PROJECT__DIR/build"
-export PROJECT__RFS="$PROJECT__DIR/rootfs"
+export PROJECT__DIR=$PROJECT__CUR/$PROJECT__TYPE-$PROJECT__ARCH
+export PROJECT__PKG=$PROJECT__CUR/packages
+export PROJECT__BLD=$PROJECT__DIR/build
+export PROJECT__RFS=$PROJECT__DIR/rootfs
 
 if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__ARCH || -z $PROJECT__VERSION ]]; then
 	echo -e "${RED}ERROR: Project 'name/type/arch/version' is missing.${NORMAL}"
@@ -155,7 +155,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
             wget --continue $link --directory-prefix="$PROJECT__PKG"
         fi
         
-		if [[ $entry_type == 'package' ]]; then
+		if [[ $entry_type == 'package/src' ]]; then
 		
 			chk_algo="${checksum_type}sum"
 			checksum2=($($chk_algo $PROJECT__PKG/$filename))

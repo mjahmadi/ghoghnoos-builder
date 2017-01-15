@@ -11,7 +11,7 @@
             <action when="after" seq="1">
                 <line verbos="yes">make mrproper</line>
                 <line verbos="yes">make defconfig</line>
-                <line>sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"$PROJECT__NAME\"/" .config</line>
+                <line>#sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"$PROJECT__NAME\"/" .config</line>
                 <line verbos="yes">make bzImage</line>
                 <line verbos="yes">make headers_install</line>
             </action>
@@ -27,7 +27,7 @@
                 <line>mkdir ./glibc_installed</line>
                 <line>GLIBC_INSTALLED=$(pwd)/glibc_installed</line>
                 <line>cd ./glibc_objects</line>
-                <line>../configure --prefix= --with-headers=$PROJECT__BLD/linux-4.4.6/usr/include --disable-werror</line>
+                <line verbos="yes">../configure --prefix= --with-headers=$PROJECT__BLD/linux-4.4.6/usr/include --disable-werror</line>
                 <line verbos="yes">make</line>
                 <line verbos="yes">make install DESTDIR=$GLIBC_INSTALLED</line>
                 
@@ -49,21 +49,21 @@
             <action when="after" seq="1">
 				<line verbos="yes">make distclean</line>
 				<line verbos="yes">make defconfig</line>
-				<line>#GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
+				<line>GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
 				<line>#GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED\" | sed 's/\//\\\//g')</line>
-				<line>#sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED_ESC/" .config</line>
-				<line>sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
+				<line verbos="yes">sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED/" .config</line>
+				<line verbos="yes">sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
 				<line verbos="yes">make busybox</line>
 				<line verbos="yes">make install</line>
 				
-				<line>cp -R _install/* $PROJECT__RFS</line>
+				<line>cp -R _install/ $PROJECT__RFS</line>
 				<line>rm -f $PROJECT__RFS/linuxrc</line>
             </action>
 		</entry>
 	</phase>
 	
 	<phase seq="2">
-	    <entry type="package/src" seq="1" cdto="no" download="no" extract="no">
+	    <entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
             <action when="after" seq="1">
                 <line>echo -e "\n\nCreating root filesystem...\n"</line>
                 
@@ -84,7 +84,7 @@
                 <line>mkdir -v -p $PROJECT__RFS/tmp</line>
                 
                 <line>chmod 1777 $PROJECT__RFS/tmp</line>
-                
+
                 <line>cd $PROJECT__RFS/etc</line>
                 
                 <line>
@@ -104,7 +104,7 @@
 					EOF
                 </line>
                 <line>chmod +x bootscript.sh</line>
-                
+
                 <line>
 					cat > rc.dhcp &lt;&lt;-EOF
 					#!/bin/sh
@@ -118,7 +118,7 @@
 					EOF
                 </line>
                 <line>chmod +x rc.dhcp</line>
-                
+
                 <line>
 					cat > resolv.conf &lt;&lt;-EOF
 					nameserver 8.8.8.8
@@ -128,19 +128,21 @@
                 </line>
                 <line>
 					cat > welcome.txt &lt;&lt;-EOF
-					##########################################################################
-
-					Welcome to $PROJECT__NAME $PROJECT__VERSION ($PROJECT__ARCH)
 					
-					Author: $PROJECT__AUTHOR_NAME
+					##########################################################################
+					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+					
+					Author: 
+					        $PROJECT__AUTHOR_NAME
 					        $PROJECT__AUTHOR_EMAIL
 					
-					Homepage: $PROJECT__WEBSITE
-
+					Website:
+					        $PROJECT__WEBSITE
 					##########################################################################
 					
 					EOF
                 </line>
+                
                 <line>
 					cat > inittab &lt;&lt;-EOF
 					::sysinit:/etc/bootscript.sh
@@ -157,26 +159,26 @@
 					
 					EOF
 				</line>
-                
+				
                 <line>
 					cat > $PROJECT__RFS/init &lt;&lt;-EOF
 					#!/bin/sh
 					
-					#exec /sbin/init
-					exec /testic
+					exec /sbin/init
 					
 					EOF
-                </line>
-                <line>chmod +x $PROJECT__RFS/init</line>
-                
-                <line>rm -f $PROJECT__RFS/lib64</line>
-                <line>ln -s $PROJECT__RFS/lib $PROJECT__RFS/lib64</line>
+				</line>
+				<line>chmod +x $PROJECT__RFS/init</line>
+				
+				<line>cd $PROJECT__RFS</line>
+				<line>rm -f ./lib64</line>
+				<line>ln -s ./lib ./lib64</line>
             </action>
 		</entry>
 	</phase>
 	
 	<phase seq="3">
-	    <entry type="package/src" seq="1" cdto="no" download="no" extract="no">
+	    <entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
             <action when="after" seq="1">
                 <line>echo -e "\n\nPackaging root filesystem...\n"</line>
                 
