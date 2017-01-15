@@ -56,10 +56,39 @@
 				<line verbos="yes">make busybox</line>
 				<line verbos="yes">make install</line>
 				
-				<line>cp -R _install/ $PROJECT__RFS</line>
+				<line>cp -R _install/* $PROJECT__RFS</line>
 				<line>rm -f $PROJECT__RFS/linuxrc</line>
             </action>
 		</entry>
+		
+		<entry name="jdate-0.0.1" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+		    <link>https://github.com/mjahmadi/jdate/archive/jdate-0.0.1.tar.gz</link>
+		    <filename>jdate-0.0.1.tar.gz</filename>
+		    <version>0.0.1</version>
+		    <checksum type="md5">234f52744982ed551ada1bbfa70af0f9</checksum>
+            <action when="after" seq="1">
+	            <line>chmod +x ./build.sh</line>
+				<line>./build.sh</line>
+				<line>cp ./jdate $PROJECT__RFS/usr/bin</line>
+            </action>
+		</entry>
+		
+		<entry name="mc-4.8.18.tar.xz" type="package/src" seq="5" cdto="yes" download="yes" extract="yes" disabled="yes">
+		    <link>http://ftp.midnight-commander.org/mc-4.8.18.tar.xz</link>
+		    <filename>mc-4.8.18.tar.xz</filename>
+		    <version>4.8.18</version>
+		    <checksum type="md5">85ff9279f912c5482fe9f110f8892c96</checksum>
+            <action when="after" seq="1">
+	            <line>
+					./configure                                   \
+						 --prefix=$PROJECT__RFS/usr/local         \
+						 --with-screen=ncurses                    
+	            </line>
+				<line>make</line>
+				<line>make install</line>
+            </action>
+		</entry>
+		
 	</phase>
 	
 	<phase seq="2">
@@ -129,16 +158,16 @@
                 <line>
 					cat > welcome.txt &lt;&lt;-EOF
 					
-					##########################################################################
-					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+					##############################################################
+					 Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
 					
-					Author: 
+					 Author: 
 					        $PROJECT__AUTHOR_NAME
 					        $PROJECT__AUTHOR_EMAIL
 					
-					Website:
+					 Website:
 					        $PROJECT__WEBSITE
-					##########################################################################
+					##############################################################
 					
 					EOF
                 </line>

@@ -2,7 +2,7 @@
 
 
 
-#COLORS
+# COLORS
 NORMAL="\e[39m"
 WHITE="\e[37m"
 GREEN="\e[32m"
@@ -12,10 +12,10 @@ MAGENTA="\e[35m"
 CYAN="\e[36m"
 RED="\e[31m"
 
-#START EXECUTION TIME IN SEC
+# START EXECUTION TIME IN SEC
 exec__start_time=$(date +%s)
 
-#set -e
+set -e
 set +h
 
 if [[ $(id -u) == 0 ]]; then
@@ -34,11 +34,13 @@ fi
 XML_FILE=$1
 XML_STRING=$(cat $XML_FILE)
 
+# FUNCTION TO GET XML DATA
 function xml_get_val
 {
     echo "$XML_STRING" | xmlstarlet sel -t -v "$1" | xmlstarlet unesc
 }
 
+# MAXIMUM CONCURRENT MAKE JOBS
 export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
 
 export PROJECT__NAME=$(xml_get_val "/build/@name")
@@ -114,6 +116,12 @@ for phase in `seq $phase_begin_from $phase_count`; do
     
         echo -e "Entry --> '$entry'\n"
         
+        disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@disabled")
+        if [[ $disabled == 'yes' ]]; then
+        	echo -e "entry is disabled!\n"
+        	break
+        fi
+        
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE]
         entry_action_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
         for action in `seq 1 $entry_action_count`; do
@@ -157,22 +165,22 @@ for phase in `seq $phase_begin_from $phase_count`; do
         
 		if [[ $entry_type == 'package/src' ]]; then
 		
+			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
+				echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
+				exit -1
+			fi
+			
 			chk_algo="${checksum_type}sum"
 			checksum2=($($chk_algo $PROJECT__PKG/$filename))
 			
 			if [[ -n $checksum && $checksum != $checksum2 ]]; then
-				echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n  '$checksum1' != '$checksum2'${NORMAL}"
+				echo -e "${RED}ERROR: Checksum[$checksum_type] validation failed.\n  '$checksum' != '$checksum2'${NORMAL}"
 				exit -1
 			fi
 
 		    if [[ $entry_type == 'package/src' ]]; then
 				if [[ $extract == 'yes' ]]; then
 		
-					if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
-						echo -e "${RED}ERROR: The package file does not exist or access denied.${NORMAL}"
-						exit -1
-					fi
-			
 					des_dir=$(tar -tf $PROJECT__PKG/$filename | head -n 1 | cut -f1)
 					des_dir=$(IFS='/' read -r -a array <<< $des_dir && echo ${array[0]})
 					des_dir=$(read -r -a array <<< $des_dir && echo ${array[0]})
@@ -225,10 +233,12 @@ for phase in `seq $phase_begin_from $phase_count`; do
         
     done
     
+    # RESET ENTRY INDEX FOR EACH PHASE
     entry_begin_from=1
     
 done
 
+# CALCULATE THE EXECUTION TIME
 exec__elapsed_time=$(echo "$(date +%s) - $exec__start_time" | bc)
 echo -e "${GREEN}\nExecution time:\n   $(($exec__elapsed_time / 60)) minute(s) and $(($exec__elapsed_time % 60)) second(s). ${NORMAL}\n"
 
