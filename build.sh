@@ -48,6 +48,7 @@ export PROJECT__TYPE=$(xml_get_val "/build/@type")
 export PROJECT__ARCH=$(xml_get_val "/build/@arch")
 export PROJECT__VERSION=$(xml_get_val "/build/@version")
 export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
+export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__CODENAME
 
 export PROJECT__VENDOR="Minux"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
