@@ -252,7 +252,7 @@
                 <line verbos="yes">make</line>
                 <line verbos="yes">make install</line>
                 
-                <line verbos="yes">ln -s ./libncurses.so $PROJECT__TOL/lib/libncursesw.so</line>
+                <line verbos="yes" disabled="yes">ln -sf ./libncurses.so $PROJECT__TOL/lib/libncursesw.so</line>
             </action>
 		</entry>
 		
