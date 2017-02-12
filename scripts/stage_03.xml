@@ -1002,14 +1002,14 @@
 		<entry name="grub-2.02~beta3" type="package/src" seq="49" cdto="yes" download="no" extract="yes">
 		    <filename>grub-2.02~beta3.tar.xz</filename>
 		    <version>2.02~beta3</version>
-		    <checksum type="md5">df3f5690eaa30fd228537b00cb7b7590</checksum>
+		    <checksum type="md5">ab399fc6f74a97d66ff77f04b743149c</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">
-					./configure
-						--prefix=/usr
-						--sbindir=/sbin
-						--sysconfdir=/etc
-						--disable-efiemu
+					./configure             \
+						--prefix=/usr       \
+						--sbindir=/sbin     \
+						--sysconfdir=/etc   \
+						--disable-efiemu    \
 						--disable-werror
 				</line>
 				<line verbos="yes">make</line>
@@ -1020,7 +1020,7 @@
 		<entry name="less-481" type="package/src" seq="50" cdto="yes" download="no" extract="yes">
 		    <filename>less-481.tar.gz</filename>
 		    <version>481</version>
-		    <checksum type="md5">df3f5690eaa30fd228537b00cb7b7590</checksum>
+		    <checksum type="md5">50ef46065c65257141a7340123527767</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc</line>
 				<line verbos="yes">make</line>
@@ -1031,14 +1031,190 @@
 		<entry name="gzip-1.8" type="package/src" seq="51" cdto="yes" download="no" extract="yes">
 		    <filename>gzip-1.8.tar.xz</filename>
 		    <version>1.8</version>
-		    <checksum type="md5">df3f5690eaa30fd228537b00cb7b7590</checksum>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
 				<line verbos="yes">make</line>
 				<line verbos="yes">make install</line>
 				<line verbos="yes">mv -v /usr/bin/gzip /bin</line>
-				
-				<line>exit -1</line>
+			</action>
+		</entry>
+		
+		<entry name="iproute2-4.7.0" type="package/src" seq="52" cdto="yes" download="no" extract="yes">
+		    <filename>iproute2-4.7.0.tar.xz</filename>
+		    <version>4.7.0</version>
+		    <checksum type="md5">d4b205830cdc2702f8a0cbd6232129cd</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">sed -i /ARPD/d Makefile</line>
+				<line verbos="yes">sed -i 's/arpd.8//' man/man8/Makefile</line>
+				<line verbos="yes">sed -i 's/m_ipt.o//' tc/Makefile</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make DOCDIR=/usr/share/doc/iproute2-4.7.0 install</line>
+			</action>
+		</entry>
+		
+		<entry name="kbd-2.0.3" type="package/src" seq="53" cdto="yes" download="no" extract="yes">
+		    <filename>kbd-2.0.3.tar.xz</filename>
+		    <version>2.0.3</version>
+		    <checksum type="md5">231b46e7142eb41ea3ae06d2ded3c208</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">patch -Np1 -i $PROJECT__PKG/kbd-2.0.3-backspace-1.patch</line>
+				<line verbos="yes">PKG_CONFIG_PATH=/tools/lib/pkgconfig ./configure --prefix=/usr --disable-vlock</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libpipeline-1.4.1" type="package/src" seq="54" cdto="yes" download="no" extract="yes">
+		    <filename>libpipeline-1.4.1.tar.gz</filename>
+		    <version>1.4.1</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
+		<entry name="make-4.2.1" type="package/src" seq="55" cdto="yes" download="no" extract="yes">
+		    <filename>make-4.2.1.tar.bz2</filename>
+		    <version>4.2.1</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
+		<entry name="patch-2.7.5" type="package/src" seq="56" cdto="yes" download="no" extract="yes">
+		    <filename>patch-2.7.5.tar.xz</filename>
+		    <version>2.7.5</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
+		<entry name="dbus-1.10.10" type="package/src" seq="57" cdto="yes" download="no" extract="yes">
+		    <filename>dbus-1.10.10.tar.gz</filename>
+		    <version>1.10.10</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">
+					./configure                                 \
+						--prefix=/usr                           \
+						--sysconfdir=/etc                       \
+						--localstatedir=/var                    \
+						--disable-static                        \
+						--disable-doxygen-docs                  \
+						--disable-xml-docs                      \
+						--docdir=/usr/share/doc/dbus-1.10.10    \
+						--with-console-auth-dir=/run/console
+            	</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">mv -v /usr/lib/libdbus-1.so.* /lib</line>
+				<line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</line>
+				<line verbos="yes">ln -sfv /etc/machine-id /var/lib/dbus</line>
+			</action>
+		</entry>
+		
+		<entry name="util-linux-2.28.1" type="package/src" seq="58" cdto="yes" download="no" extract="yes">
+		    <filename>util-linux-2.28.1.tar.xz</filename>
+		    <version>2.28.1</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">mkdir -pv /var/lib/hwclock</line>
+            	<line verbos="yes">
+					./configure ADJTIME_PATH=/var/lib/hwclock/adjtime   \
+						--docdir=/usr/share/doc/util-linux-2.28.1       \
+						--disable-chfn-chsh                             \
+						--disable-login                                 \
+						--disable-nologin                               \
+						--disable-su                                    \
+						--disable-setpriv                               \
+						--disable-runuser                               \
+						--disable-pylibmount                            \
+						--disable-static                                \
+						--without-python                                \
+						--enable-libmount-force-mountinfo
+            	</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
+		<entry name="man-db-2.7.5" type="package/src" seq="59" cdto="yes" download="no" extract="yes">
+		    <filename>man-db-2.7.5.tar.xz</filename>
+		    <version>2.7.5</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">mkdir -pv /var/lib/hwclock</line>
+            	<line verbos="yes">
+					./configure                                 \
+						--prefix=/usr                           \
+						--docdir=/usr/share/doc/man-db-2.7.5    \
+						--sysconfdir=/etc                       \
+						--disable-setuid                        \
+						--with-browser=/usr/bin/lynx            \
+						--with-vgrind=/usr/bin/vgrind           \
+						--with-grap=/usr/bin/grap
+            	</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">sed -i "s:man root:root root:g" /usr/lib/tmpfiles.d/man-db.conf</line>
+			</action>
+		</entry>
+		
+		<entry name="tar-1.29.tar.xz" type="package/src" seq="60" cdto="yes" download="no" extract="yes">
+		    <filename>tar-1.29.tar.xz</filename>
+		    <version>1.29</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr --bindir=/bin</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">make -C doc install-html docdir=/usr/share/doc/tar-1.29</line>
+			</action>
+		</entry>
+		
+		<entry name="texinfo-6.1" type="package/src" seq="61" cdto="yes" download="no" extract="yes">
+		    <filename>texinfo-6.1.tar.xz</filename>
+		    <version>6.1</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">make TEXMF=/usr/share/texmf install-tex</line>
+			</action>
+		</entry>
+		
+		<entry name="vim-7.4" type="package/src" seq="62" cdto="yes" download="no" extract="yes">
+		    <filename>vim-7.4.tar.bz2</filename>
+		    <version>7.4</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
+            	<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">make TEXMF=/usr/share/texmf install-tex</line>
+			</action>
+		</entry>
+		
+		<entry name="texinfo-6.1" type="package/src" seq="63" cdto="yes" download="no" extract="yes">
+		    <filename>texinfo-6.1</filename>
+		    <version>6.1</version>
+		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make</line>
+				<line verbos="yes">make install</line>
+				<line verbos="yes">make TEXMF=/usr/share/texmf install-tex</line>
 			</action>
 		</entry>
 		
