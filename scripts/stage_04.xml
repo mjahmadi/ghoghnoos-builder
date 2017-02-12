@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+
+<build name="minux" type="live" subject="base" stage="03" constructor="yes" in-chroot="yes" arch="x86_64" version="0.0.2" hostname="$PROJECT_NAME-$PROJECT_ARCH" timezone="Asia/Tehran">
+
+	<phase seq="1">
+	
+	    <entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
+	    	<action when="after" seq="1">
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/systemd/network/10-eth0-static.network &lt;&lt;-EOF
+					[Match]
+					Name=eth0
+					
+					[Network]
+					Address=192.168.0.2/24
+					Gateway=192.168.0.1
+					DNS=192.168.0.1
+					Domains=
+					
+					EOF
+				</line>
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/systemd/network/10-eth0-dhcp.network &lt;&lt;-EOF
+					[Match]
+					Name=eth0
+					
+					[Network]
+					DHCP=ipv4
+					
+					[DHCP]
+					UseDomains=true
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/hostname &lt;&lt;-EOF
+					$PROJECT__HOSTNAME
+
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/hosts &lt;&lt;-EOF
+					127.0.0.1 localhost
+					127.0.0.1 $PROJECT__HOSTNAME
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/udev/rules.d/83-duplicate_devs.rules &lt;&lt;-EOF
+					# Persistent symlinks for webcam and tuner
+					KERNEL=="video*", ATTRS{idProduct}=="1910", ATTRS{idVendor}=="0d81", SYMLINK+="webcam"
+					KERNEL=="video*", ATTRS{device}=="0x036f", ATTRS{vendor}=="0x109e", SYMLINK+="tvtuner"
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/adjtime &lt;&lt;-EOF
+					0.0 0 0.0
+					0
+					LOCAL
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/vconsole.conf &lt;&lt;-EOF
+					KEYMAP=de-latin1
+					FONT=Lat2-Terminus16
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/locale.conf &lt;&lt;-EOF
+					LANG=
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/inputrc &lt;&lt;-EOF
+					# Begin /etc/inputrc
+					set horizontal-scroll-mode Off
+					# Enable 8bit input
+					set meta-flag On
+					set input-meta On
+					# Turns off 8th bit stripping
+					set convert-meta Off
+					# Keep the 8th bit for display
+					set output-meta On
+					# none, visible or audible
+					set bell-style none
+					# All of the following map the escape sequence of the value
+					# contained in the 1st argument to the readline specific functions
+					"\eOd": backward-word
+					"\eOc": forward-word
+					# for linux console
+					"\e[1~": beginning-of-line
+					"\e[4~": end-of-line
+					"\e[5~": beginning-of-history
+					"\e[6~": end-of-history
+					"\e[3~": delete-char
+					"\e[2~": quoted-insert
+					# for xterm
+					"\eOH": beginning-of-line
+					"\eOF": end-of-line
+					# for Konsole
+					"\e[H": beginning-of-line
+					"\e[F": end-of-line
+					# End /etc/inputrc
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/shells &lt;&lt;-EOF
+					# Begin /etc/shells
+					/bin/sh
+					/bin/bash
+					# End /etc/shells
+					
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/bootscript.sh &lt;&lt;-EOF
+					#!/bin/sh
+
+					dmesg -n 1
+					mount -t devtmpfs none /dev
+					mount -t proc none /proc
+					mount -t sysfs none /sys
+
+					for DEVICE in /sys/class/net/* ; do
+						ip link set \${DEVICE##*/} up
+						[ \${DEVICE##*/} != lo ] &amp;&amp; udhcpc -b -i \${DEVICE##*/} -s /etc/rc.dhcp
+					done
+
+					EOF
+				</line>
+				<line>chmod +x $PROJECT__RFS/etc/bootscript.sh</line>
+
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/rc.dhcp &lt;&lt;-EOF
+					#!/bin/sh
+
+					ip addr add \$ip/\$mask dev \$interface
+
+					if [ "\$router" ]; then
+						ip route add default via \$router dev \$interface
+					fi
+
+					EOF
+				</line>
+				<line>chmod +x $PROJECT__RFS/etc/rc.dhcp</line>
+
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/resolv.conf &lt;&lt;-EOF
+					nameserver 8.8.8.8
+					nameserver 8.8.4.4
+
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/welcome.txt &lt;&lt;-EOF
+					##############################################################
+					 Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+
+					 Author: 
+							$PROJECT__AUTHOR_NAME
+							$PROJECT__AUTHOR_EMAIL
+
+					 Website:
+							$PROJECT__WEBSITE
+					##############################################################
+
+					EOF
+				</line>
+
+				<line verbos="yes">
+					cat > $PROJECT__RFS/etc/inittab &lt;&lt;-EOF
+					::sysinit:/etc/bootscript.sh
+					::restart:/sbin/init
+					::ctrlaltdel:/sbin/reboot
+					::once:cat /etc/welcome.txt
+					::respawn:/bin/cttyhack /bin/sh
+					tty2::once:cat /etc/welcome.txt
+					tty2::respawn:/bin/sh
+					tty3::once:cat /etc/welcome.txt
+					tty3::respawn:/bin/sh
+					tty4::once:cat /etc/welcome.txt
+					tty4::respawn:/bin/sh
+
+					EOF
+				</line>
+				
+			</action>
+		</entry>
+		
+	    <entry type="script/bash" seq="2" cdto="no" download="no" extract="no">
+	    	<action when="after" seq="1">
+				<line>rm -f /usr/lib/lib{bfd,opcodes}.a</line>
+				<line>rm -f /usr/lib/libbz2.a</line>
+				<line>rm -f /usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
+				<line>rm -f /usr/lib/libltdl.a</line>
+				<line>rm -f /usr/lib/libfl.a</line>
+				<line>rm -f /usr/lib/libfl_pic.a</line>
+				<line>rm -f /usr/lib/libz.a</line>
+				
+				<line>rm -rf /tmp/*</line>
+		    </action>
+		    
+	    	<action when="after" seq="2">
+		    	<line>umount -v $PROJECT_RFS/dev/pts</line>
+		    	<line>umount -v $PROJECT_RFS/dev</line>
+		    	<line>umount -v $PROJECT_RFS/run</line>
+		    	<line>umount -v $PROJECT_RFS/proc</line>
+		    	<line>umount -v $PROJECT_RFS/sys</line>
+	    	</action>
+		</entry>
+		
+	    <entry type="script/bash" seq="3" cdto="no" download="no" extract="no">
+            <action when="after" seq="3">
+                <line>echo -e "\n\nPackaging root filesystem...\n"</line>
+                
+                <line>rm -f $PROJECT__DIR/rootfs.cpio.gz</line>
+                <line>cd $PROJECT__RFS</line>
+                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__DIR/rootfs.cpio.gz</line>
+            </action>
+            
+            <action when="after" seq="3">
+				<line>echo -e "\n\nMaking bootable iso file...\n"</line>
+				
+				<line>rm -rf $PROJECT__DIR/isoimage</line>
+				<line>mkdir -v $PROJECT__DIR/isoimage</line>
+				<line>cd $PROJECT__DIR/isoimage</line>
+				<line>
+					for i in lib lib64 share end ; do
+						if [ -f /usr/$i/syslinux/isolinux.bin ]; then
+							cp /usr/$i/syslinux/isolinux.bin .
+							if [ -f /usr/$i/syslinux/ldlinux.c32 ]; then
+								cp /usr/$i/syslinux/ldlinux.c32 .
+							fi;
+							break;
+						fi;
+						if [ $i = end ]; then exit 1; fi;
+					done
+				</line>
+				<line>cp $PROJECT__BLD/linux-4.4.6/arch/$PROJECT__ARCH/boot/bzImage ./kernel.bz</line>
+				<line>mv $PROJECT__DIR/rootfs.cpio.gz ./rootfs.gz</line>
+				<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
+				<line>genisoimage -J -r -o $PROJECT__DIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
+				<line>isohybrid $PROJECT__DIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
+				
+				<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__DIR/isoimage/$PROJECT__ISONAME\n"</line>
+            </action>
+       	</entry>
+	</phase>
+	
+</build>
+
