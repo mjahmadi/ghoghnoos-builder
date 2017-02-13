@@ -47,6 +47,7 @@ if [[ -n $envpath ]]; then
 	export PATH=$envpath
 fi
 
+# SET USEFUL GLOBAL VARIABLES
 export PROJECT__NAME=$(xml_get_val "/build/@name")
 export PROJECT__TYPE=$(xml_get_val "/build/@type")
 export PROJECT__ARCH=$(xml_get_val "/build/@arch")
@@ -56,40 +57,26 @@ export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
 export PROJECT__SUBJECT=$(xml_get_val "/build/@subject")
 export PROJECT__TIMEZONE=$(xml_get_val "/build/@timezone")
 export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__CODENAME
-
 export PROJECT__VENDOR="Minux"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
 export PROJECT__WEBSITE="https://github.com/mjahmadi/minux"
-
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
-
-if [[ $(xml_get_val "/build/@constructor") = 'yes' ]]; then
-	export PROJECT__RFS=$(pwd)
-	export PROJECT__BLD=$PROJECT__RFS/build
-	export PROJECT__TOL=$PROJECT__RFS/tools
-	export PROJECT__PKG=$PROJECT__RFS/packages
-else
-	export PROJECT__CUR=$(pwd)
-	export PROJECT__DIR=$PROJECT__CUR/$PROJECT__TYPE-$PROJECT__ARCH
-	export PROJECT__BLD=$PROJECT__DIR/build
-	export PROJECT__RFS=$PROJECT__DIR/rootfs
-	export PROJECT__TOL=$PROJECT__DIR/tools
-	export PROJECT__PKG=$PROJECT__CUR/packages
-fi
-
 export PROJECT__TGT=$(uname -m)-$PROJECT__NAME-linux-gnu
 
+# CHECK IF NECESSARY GLOBAL VARIABLE EXISTS OR NOT
 if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__SUBJECT || -z $PROJECT__ARCH || -z $PROJECT__VERSION ]]; then
 	echo -e "${RED}ERROR: Project 'name/type/subject/arch/version' is missing.${NORMAL}"
 	exit -1
 fi
 
+# CHECK HOST AND BUILD ARCH
 if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $(uname -m) ]]; then
 	echo -e "${RED}ERROR: Unsupported build arch.${NORMAL}"
 	exit -1
 fi
 
+# CHECK IF BUILD NEED'S SUDO
 if [[ $(xml_get_val "/build/@sudo") == 'yes' ]]; then
 	set +e
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
@@ -107,10 +94,7 @@ fi
 
 echo -e "\n\n${BOLD_TXT}About to building '$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__SUBJECT-$PROJECT__ARCH-$PROJECT__VERSION-->[$PROJECT__SUBJECT]'${NORMAL_TXT}\n"
 
-mkdir -pv $PROJECT__PKG
-mkdir -pv $PROJECT__BLD
-mkdir -pv $PROJECT__TOL
-
+# IMPILIMEN BUILD SEGMENTAION
 if [[ -n $2 ]]; then
     phase_begin_from=$2
 else
@@ -127,6 +111,30 @@ if [[ -n $3 ]]; then
     action_begin_from=$4
 else
     action_begin_from=1
+fi
+
+# SET GLOBAL PATH VARIABLES AND CREATE DIRECTORIES
+if [[ $(xml_get_val "/build/@constructor") = 'yes' ]]; then
+	export PROJECT__RFS=$(pwd)
+	export PROJECT__BLD=$PROJECT__RFS/build
+	export PROJECT__TOL=$PROJECT__RFS/tools
+	export PROJECT__PKG=$PROJECT__RFS/packages
+	
+	mkdir -pv $PROJECT__PKG
+	mkdir -pv $PROJECT__BLD
+	mkdir -pv $PROJECT__TOL
+else
+	export PROJECT__CUR=$(pwd)
+	export PROJECT__DIR=$PROJECT__CUR/$PROJECT__TYPE-$PROJECT__ARCH
+	export PROJECT__BLD=$PROJECT__DIR/build
+	export PROJECT__RFS=$PROJECT__DIR/rootfs
+	export PROJECT__TOL=$PROJECT__DIR/tools
+	export PROJECT__PKG=$PROJECT__CUR/packages
+	
+	mkdir -pv $PROJECT__PKG
+	mkdir -pv $PROJECT__BLD
+	mkdir -pv $PROJECT__RFS
+	mkdir -pv $PROJECT__TOL
 fi
 
 # MAXIMUM CONCURRENT MAKE JOBS
