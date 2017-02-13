@@ -22,7 +22,7 @@
 			<link>http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.xz</link>
 			<filename>glibc-2.24.tar.xz</filename>
 			<version>2.24</version>
-			<checksum type="md5">0b1e4a240a01233f310b715a4d92c3be</checksum>
+			<checksum type="md5">97dc5517f92016f3d70d83e3162ad318</checksum>
 			<action when="after" seq="1">
 				<line>mkdir ./glibc_objects</line>
 				<line>mkdir ./glibc_installed</line>
@@ -129,14 +129,14 @@
 				<line>
 					cat > $PROJECT__RFS/etc/welcome.txt &lt;&lt;-EOF
 					##############################################################
-					 Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
 
-					 Author: 
-							$PROJECT__AUTHOR_NAME
-							$PROJECT__AUTHOR_EMAIL
+					Author: 
+					    $PROJECT__AUTHOR_NAME
+					    $PROJECT__AUTHOR_EMAIL
 
-					 Website:
-							$PROJECT__WEBSITE
+					Website:
+					    $PROJECT__WEBSITE
 					##############################################################
 
 					EOF
