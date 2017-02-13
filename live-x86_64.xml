@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build name="minux" type="live" arch="x86_64" version="0.0.2" codename="robin">
+<build name="minux" type="live" arch="x86_64" version="0.0.2" subject="base" codename="robin">
 
 	<phase seq="1">
 	
@@ -18,10 +18,10 @@
 			</action>
 		</entry>
 		
-		<entry name="glibc-2.23" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
-			<link>http://ftp.gnu.org/gnu/glibc/glibc-2.23.tar.bz2</link>
-			<filename>glibc-2.23.tar.bz2</filename>
-			<version>2.23</version>
+		<entry name="glibc-2.24" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.xz</link>
+			<filename>glibc-2.24.tar.xz</filename>
+			<version>2.24</version>
 			<checksum type="md5">0b1e4a240a01233f310b715a4d92c3be</checksum>
 			<action when="after" seq="1">
 				<line>mkdir ./glibc_objects</line>
