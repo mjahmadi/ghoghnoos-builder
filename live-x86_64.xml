@@ -2,9 +2,9 @@
 
 <build name="minux" type="live" arch="x86_64" version="0.0.2" subject="base" codename="robin">
 
-	<phase seq="1">
+	<phase seq="1" comment="Base system">
 	
-		<entry name="linux-4.4.6" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="linux-4.4.6" type="package/src" seq="1" cdto="yes" download="yes" extract="yes">
 			<link>https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.6.tar.xz</link>
 			<filename>linux-4.4.6.tar.xz</filename>
 			<version>4.4.6</version>
@@ -18,7 +18,7 @@
 			</action>
 		</entry>
 		
-		<entry name="glibc-2.24" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+		<entry name="glibc-2.24" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
 			<link>http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.xz</link>
 			<filename>glibc-2.24.tar.xz</filename>
 			<version>2.24</version>
@@ -41,30 +41,69 @@
 				<line>cp $GLIBC_INSTALLED/lib/libnss_dns.so.2 $PROJECT__RFS/lib</line>
 			</action>
 		</entry>
-
-		<entry name="busybox-1.24.2" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
-			<link>http://busybox.net/downloads/busybox-1.24.2.tar.bz2</link>
-			<filename>busybox-1.24.2.tar.bz2</filename>
-			<version>1.24.2</version>
-			<checksum type="md5">2eaae519cac1143bcf583636a745381f</checksum>
+	</phase>
+	
+	
+	<phase seq="2" comment="Desktop">
+		<entry name="xfce-4.12" type="package/src" seq="3" cdto="yes" download="yes" extract="yes">
+			<link>http://mirror.netcologne.de/xfce/xfce/4.12/fat_tarballs/xfce-4.12.tar.bz2</link>
+			<filename>xfce-4.12.tar.bz2</filename>
+			<version>4.12</version>
+			<directory>$PROJECT__BLD/xfce-4.12</directory>
+			<checksum type="md5">d50e006b7260cafd5d4859d2388c11e5</checksum>
 			<action when="after" seq="1">
-				<line verbos="yes">make distclean</line>
-				<line verbos="yes">make defconfig</line>
-				<line>#GLIBC_INSTALLED=$(realpath "$PROJECT__BLD/glibc-2.23/glibc_installed")</line>
-				<line>#GLIBC_INSTALLED_ESC=$(echo \"$GLIBC_INSTALLED\" | sed 's/\//\\\//g')</line>
-				<line verbos="yes">#sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_INSTALLED/" .config</line>
-				<line verbos="yes">sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config</line>
-				<line verbos="yes">make busybox</line>
-				<line verbos="yes">make install</line>
+				<line verbos="yes">tar -xf xfce4-dev-tools-4.12.0.tar.bz2 &amp;&amp; cd ./xfce4-dev-tools-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf libxfce4util-4.12.1.tar.bz2 &amp;&amp; cd ./libxfce4util-4.12.1</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf xfconf-4.12.0.tar.bz2 &amp;&amp; cd ./xfconf-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf libxfce4ui-4.12.0.tar.bz2 &amp;&amp; cd ./libxfce4ui-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf garcon-0.4.0.tar.bz2 &amp;&amp; cd ./garcon-0.4.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf exo-0.10.3.tar.bz2 &amp;&amp; cd ./exo-0.10.3</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf xfce4-panel-4.12.0.tar.bz2 &amp;&amp; cd ./xfce4-panel-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
 				
-				<line>cp -R _install/* $PROJECT__RFS</line>
-				<line>rm -f $PROJECT__RFS/linuxrc</line>
+				<line verbos="yes">tar -xf Thunar-1.6.6.tar.bz2 &amp;&amp; cd ./Thunar-1.6.6</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf xfce4-settings-4.12.0.tar.bz2 &amp;&amp; cd ./xfce4-settings-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+				
+				<line verbos="yes">tar -xf xfce4-session-4.12.0.tar.bz2 &amp;&amp; cd ./xfce4-session-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf xfwm4-4.12.0.tar.bz2 &amp;&amp; cd ./xfwm4-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
+				<line verbos="yes">tar -xf xfdesktop-4.12.0.tar.bz2 &amp;&amp; cd ./xfdesktop-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+				
+				<line verbos="yes">tar -xf xfce4-appfinder-4.12.0.tar.bz2 &amp;&amp; cd ./xfce4-appfinder-4.12.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+				
+				<line verbos="yes">tar -xf gtk-xfce-engine-2.10.0.tar.bz2 &amp;&amp; cd ./gtk-xfce-engine-2.10.0</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+				
+				<line verbos="yes">tar -xf tumbler-0.1.31.tar.bz2 &amp;&amp; cd ./tumbler-0.1.31</line>
+				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --disable-debu &amp;&amp; make &amp;&amp; make install &amp;&amp; cd ../</line>
+
 			</action>
 		</entry>
 
 	</phase>
 	
-	<phase seq="2">
+	
+	<phase seq="3" comment="Root file system">
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="after" seq="1">
 				<line>echo -e "\n\nCreating root filesystem...\n"</line>
@@ -247,7 +286,7 @@
 	</phase>
 	
 	
-	<phase seq="3">
+	<phase seq="4" comment="Packaging">
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="after" seq="1">
 				<line>echo -e "\n\nPackaging root filesystem...\n"</line>
