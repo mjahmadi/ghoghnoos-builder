@@ -552,18 +552,46 @@
 	
 	
 	<phase seq="2">
-		
-		<entry name="libgpg-error-1.24" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
-		    <filename>libgpg-error-1.24.tar.bz2</filename>
-		    <version>1.24</version>
-		    <checksum type="md5">feb42198c0aaf3b28eabe8f41a34b983</checksum>
+		<entry name="nettle-3.2" type="package/src" seq="1" cdto="yes" download="yes" extract="yes">
+			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
+		    <filename>nettle-3.2.tar.gz</filename>
+		    <version>3.2</version>
+		    <checksum type="md5">afb15b4764ebf1b4e6d06c62bd4d29e4</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__TOL &amp;&amp; make</line>
-                <line verbos="yes">make install</line>
+            	<line verbos="yes">./configure --prefix=$PROJECT__TOL/usr --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
-		<entry name="libgcrypt-1.7.3" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+		<entry name="gnutls-3.5.3" type="package/src" seq="1" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
+		    <filename>gnutls-3.5.3.tar.xz</filename>
+		    <version>3.5.3</version>
+		    <checksum type="md5">6c2c7f40ddf52933ee3ca474cb8cb63c</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=$PROJECT__TOL/usr --with-default-trust-store-file=$PROJECT__TOL/etc/ssl/ca-bundle.crt</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                
+                <line verbos="yes">exit -1</line>
+            </action>
+		</entry>
+		
+		<entry name="wget-1.18" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
+			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
+		    <filename>wget-1.18.tar.xz</filename>
+		    <version>1.18</version>
+		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=$PROJECT__TOL/usr --sysconfdir=$PROJECT__TOL/etc</line>
+                <line verbos="yes">make</line>
+                <line verbos="yes">make install</line>
+                
+                <line verbos="yes">exit -1</line>
+            </action>
+		</entry>
+		
+		<entry name="libgcrypt-1.7.3" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.7.3.tar.bz2</link>
 		    <filename>libgcrypt-1.7.3.tar.bz2</filename>
 		    <version>1.7.3</version>
 		    <checksum type="md5">c869e542cc13a1c28d8055487bf7f5c4</checksum>
@@ -573,7 +601,8 @@
             </action>
 		</entry>
 		
-		<entry name="expat-2.2.0" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
+		<entry name="expat-2.2.0" type="package/src" seq="3" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.7.3.tar.bz2</link>
 		    <filename>expat-2.2.0.tar.bz2</filename>
 		    <version>2.2.0</version>
 		    <checksum type="md5">2f47841c829facb346eb6e3fab5212e2</checksum>
@@ -584,7 +613,8 @@
 			</action>
 		</entry>
 		
-		<entry name="zlib-1.2.8" type="package/src" seq="5" cdto="yes" download="no" extract="yes">
+		<entry name="zlib-1.2.8" type="package/src" seq="4" cdto="yes" download="yes" extract="yes">
+			<link>https://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.xz/download</link>
 		    <filename>zlib-1.2.8.tar.xz</filename>
 		    <version>1.2.8</version>
 		    <checksum type="md5">28f1205d8dd2001f26fec1e8c2cebe37</checksum>
@@ -595,7 +625,8 @@
             </action>
 		</entry>
 		
-		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="5" cdto="yes" download="yes" extract="yes">
+			<link>https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</link>
 		    <filename>Python-2.7.12.tar.xz</filename>
 		    <version>2.7.12</version>
 		    <checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
@@ -612,7 +643,8 @@
             </action>
 		</entry>
 		
-		<entry name="libxml2-2.9.4" type="package/src" seq="6" cdto="yes" download="no" extract="yes">
+		<entry name="libxml2-2.9.4" type="package/src" seq="6" cdto="yes" download="yes" extract="yes">
+			<link>http://xmlsoft.org/sources/libxml2-2.9.4.tar.gz</link>
 		    <filename>libxml2-2.9.4.tar.gz</filename>
 		    <version>2.9.4</version>
 		    <checksum type="md5">ae249165c173b1ff386ee8ad676815f5</checksum>
@@ -625,7 +657,8 @@
             </action>
 		</entry>
 		
-		<entry name="libxslt-1.1.29" type="package/src" seq="7" cdto="yes" download="no" extract="yes">
+		<entry name="libxslt-1.1.29" type="package/src" seq="7" cdto="yes" download="yes" extract="yes">
+			<link>http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz</link>
 		    <filename>libxslt-1.1.29.tar.gz</filename>
 		    <version>1.1.29</version>
 		    <checksum type="md5">a129d3c44c022de3b9dcf6d6f288d72e</checksum>
@@ -637,7 +670,8 @@
             </action>
 		</entry>
 		
-		<entry name="xmlstarlet-1.6.1" type="package/src" seq="8" cdto="yes" download="no" extract="yes">
+		<entry name="xmlstarlet-1.6.1" type="package/src" seq="8" cdto="yes" download="yes" extract="yes">
+			<link>https://sourceforge.net/projects/xmlstar/files/xmlstarlet/1.6.1/xmlstarlet-1.6.1.tar.gz/download</link>
 		    <filename>xmlstarlet-1.6.1.tar.gz</filename>
 		    <version>1.6.1</version>
 		    <checksum type="md5">f3c5dfa3b1a2ee06cd57c255cc8b70a0</checksum>
@@ -649,7 +683,8 @@
             </action>
 		</entry>
 		
-		<entry name="bc-1.06.95" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
+		<entry name="bc-1.06.95" type="package/src" seq="9" cdto="yes" download="yes" extract="yes">
+			<link>http://alpha.gnu.org/gnu//bc/bc-1.06.95.tar.bz2</link>
 		    <filename>bc-1.06.95.tar.bz2</filename>
 		    <version>1.06.95</version>
 		    <checksum type="md5">5126a721b73f97d715bb72c13c889035</checksum>
