@@ -57,13 +57,13 @@ export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
 export PROJECT__SUBJECT=$(xml_get_val "/build/@subject")
 export PROJECT__TIMEZONE=$(xml_get_val "/build/@timezone")
 export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__CODENAME
-export PROJECT__TGT=$(uname -m)-$PROJECT__NAME-linux-gnu
+export PROJECT__TGT=$PROJECT__ARCH-$PROJECT__NAME-linux-gnu
 export PROJECT__USER=$(xml_get_val "/build/@user")
 export PROJECT__PASWD=$(xml_get_val "/build/@paswd")
-export PROJECT__VENDOR="Gognos"
+export PROJECT__VENDOR=$(xml_get_val "/build/@vendor")
+export PROJECT__WEBSITE=$(xml_get_val "/build/@website")
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
-export PROJECT__WEBSITE="https://github.com/mjahmadi/gognos"
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
 
 # CHECK IF NECESSARY GLOBAL VARIABLE EXISTS OR NOT
@@ -73,7 +73,7 @@ if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__SUBJECT || -z $PROJ
 fi
 
 # CHECK HOST AND BUILD ARCH
-if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $(uname -m) ]]; then
+if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $PROJECT__HOST_ARCH ]]; then
 	echo -e "${RED}ERROR: Unsupported build arch.${NORMAL}"
 	exit -1
 fi
@@ -145,6 +145,9 @@ if [[ ! -z "/proc/cpuinfo " ]]; then
 fi
 export LC_ALL=POSIX
 
+# GLOBAL VARIABLES
+eval "$(xml_get_val '/build/globals')"
+
 # BUILD >> PHASE
 phase_count=$(xml_get_val "count(/build/phase)")
 for phase in `seq $phase_begin_from $phase_count`; do
@@ -175,34 +178,32 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE]
         entry_action_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
-        for action in `seq 1 $entry_action_count`; do
-		
+        for action in `seq $action_begin_from $entry_action_count`; do
+        
 			action_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/@disabled")
 			if [[ $action_disabled == 'yes' ]]; then
 				echo -e "${BOLD_TXT}\naction '$action' is disabled!\n${NORMAL_TXT}"
 				continue
 			else
-				echo -e "${BOLD_TXT}\nphase --> '$phase'"
-				echo -e "Entry --> '$entry'\n$entry_name[$entry_type]\nAction --> '$action'\n${NORMAL_TXT}"
+				echo -e "${BOLD_TXT}action --> '$action'\n${NORMAL_TXT}"
 				sleep 1
 			fi
-		
-            # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE] >> LINE
+        
+            # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
         	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
-        	for line in `seq $action_begin_from $entry_action_line_count`; do
+        	for line in `seq 1 $entry_action_line_count`; do
         	
-	        	line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
+				line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
-					echo -e "${BOLD_TXT}action '$action' line '$line' is disabled!\n${NORMAL_TXT}"
+					echo -e "${BOLD_TXT}\nline '$line' is disabled!\n${NORMAL_TXT}"
 					continue
 				fi
-				
+			
 		        sudo=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@sudo")
 		        verbos=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@verbos")
-				strap=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@strap")
-				
+	        	
 		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]")
-				
+		        
 		        if [[ $verbos == 'yes' ]]; then
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
@@ -303,7 +304,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 				sleep 1
 			fi
         
-            # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE] >> LINE
+            # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
         	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line)")
         	for line in `seq 1 $entry_action_line_count`; do
         	
