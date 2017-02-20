@@ -57,12 +57,14 @@ export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
 export PROJECT__SUBJECT=$(xml_get_val "/build/@subject")
 export PROJECT__TIMEZONE=$(xml_get_val "/build/@timezone")
 export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__CODENAME
-export PROJECT__VENDOR="Minux"
+export PROJECT__TGT=$(uname -m)-$PROJECT__NAME-linux-gnu
+export PROJECT__USER=$(xml_get_val "/build/@user")
+export PROJECT__PASWD=$(xml_get_val "/build/@paswd")
+export PROJECT__VENDOR="Gognos"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
-export PROJECT__WEBSITE="https://github.com/mjahmadi/minux"
+export PROJECT__WEBSITE="https://github.com/mjahmadi/gognos"
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
-export PROJECT__TGT=$(uname -m)-$PROJECT__NAME-linux-gnu
 
 # CHECK IF NECESSARY GLOBAL VARIABLE EXISTS OR NOT
 if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__SUBJECT || -z $PROJECT__ARCH || -z $PROJECT__VERSION ]]; then
@@ -202,7 +204,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]")
 				
 		        if [[ $verbos == 'yes' ]]; then
-		            echo -e "$command"
+		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
 		        
 				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
@@ -317,7 +319,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]")
 		        
 		        if [[ $verbos == 'yes' ]]; then
-		            echo -e "$command"
+		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
 		        
 				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
