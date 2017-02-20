@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<build name="gognos" type="live" arch="x86_64" version="0.0.2" subject="base" in-chroot="yes" codename="alah">
+
+	<phase seq="4" comment="Packaging">
+		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
+			<action when="after" seq="1">
+				<line>echo -e "\n\nPackaging root filesystem...\n"</line>
+				
+				<line>rm -f $PROJECT__DIR/rootfs.cpio.gz</line>
+				<line>cd $PROJECT__RFS</line>
+				<line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__DIR/rootfs.cpio.gz</line>
+			</action>
+			
+			<action when="after" seq="2">
+				<line>echo -e "\n\nMaking bootable iso file...\n"</line>
+				
+				<line>rm -rf $PROJECT__DIR/isoimage</line>
+				<line>mkdir -v $PROJECT__DIR/isoimage</line>
+				<line>cd $PROJECT__DIR/isoimage</line>
+				<line>
+					for i in lib lib64 share end ; do
+						if [ -f /usr/$i/syslinux/isolinux.bin ]; then
+							cp /usr/$i/syslinux/isolinux.bin .
+								if [ -f /usr/$i/syslinux/ldlinux.c32 ]; then
+									cp /usr/$i/syslinux/ldlinux.c32 .
+								fi;
+							break;
+						fi;
+						if [ $i = end ]; then exit 1; fi;
+					done
+				</line>
+				<line>cp $PROJECT__BLD/linux-4.4.6/arch/$PROJECT__ARCH/boot/bzImage ./kernel.bz</line>
+				<line>mv $PROJECT__DIR/rootfs.cpio.gz ./rootfs.gz</line>
+				<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
+				<line>genisoimage -J -r -o $PROJECT__DIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
+				<line>isohybrid $PROJECT__DIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
+				
+				<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__DIR/isoimage/$PROJECT__ISONAME\n"</line>
+			</action>
+		</entry>
+	</phase>
+	
+</build>
+

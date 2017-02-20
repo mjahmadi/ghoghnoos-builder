@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+
+<build
+	name="gognos"
+	type="live"
+	subject="base"
+	stage="03"
+	username="root"
+	password="123"
+	in-chroot="yes"
+	arch="x86_64"
+	version="0.0.2"
+	hostname="$PROJECT_NAME-$PROJECT_ARCH"
+	timezone="Asia/Tehran">
+
+	<globals>
+		export CPPFLAGS="-I/$PROJECT__RFS/usr/include/"
+		export LDFLAGS="-L/$PROJECT__RFS/usr/lib64/"
+
+		export X11_CFLAGS=$CPPFLAGS
+		export X11_LIBS=$LDFLAGS
+		
+		export FS_CFLAGS=$CPPFLAGS
+		export FS_LIBS=$LDFLAGS
+		
+		export ICE_CFLAGS=$CPPFLAGS
+		export ICE_LIBS=$LDFLAGS
+		
+		export SM_CFLAGS=$CPPFLAGS
+		export SM_LIBS=$LDFLAGS
+		
+		export PKG_CONFIG_PATH="$PROJECT__RFS/usr/lib64/pkgconfig"
+				
+		export XORG_PREFIX="$PROJECT__RFS/usr"
+		export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=$PROJECT__RFS/etc --localstatedir=$PROJECT__RFS/var --disable-static"
+	</globals>
+	
+	<phase seq="1" comment="X Window System Environment">
+		
+		<entry name="xorg-7.7" type="script/bash" seq="1" cdto="no" download="no" extract="no">
+			<action when="before" seq="1">
+				<line>
+					cat > $PROJECT__RFS/etc/profile.d/xorg.sh &lt;&lt;-EOF
+					export XORG_PREFIX="/usr"
+					export XORG_CONFIG="--prefix=\$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+					
+					pathappend \$XORG_PREFIX/bin             PATH
+					pathappend \$XORG_PREFIX/lib/pkgconfig   PKG_CONFIG_PATH
+					pathappend \$XORG_PREFIX/share/pkgconfig PKG_CONFIG_PATH
+
+					pathappend \$XORG_PREFIX/lib             LIBRARY_PATH
+					pathappend \$XORG_PREFIX/include         C_INCLUDE_PATH
+					pathappend \$XORG_PREFIX/include         CPLUS_INCLUDE_PATH
+
+					ACLOCAL='aclocal -I \$XORG_PREFIX/share/aclocal'
+
+					export PATH PKG_CONFIG_PATH ACLOCAL LIBRARY_PATH C_INCLUDE_PATH CPLUS_INCLUDE_PATH
+					
+					EOF
+				</line>
+				<line>chmod 644 $PROJECT__RFS/etc/profile.d/xorg.sh</line>
+				
+				<line>echo "/usr/lib" > $PROJECT__RFS/etc/ld.so.conf</line>
+				<line>ln -sf /usr $PROJECT__RFS/usr/X11R6</line>
+				
+				<line>
+					install -v -m755 -d $XORG_PREFIX &amp;&amp;
+					install -v -m755 -d $XORG_PREFIX/lib &amp;&amp;
+					ln -sf lib $XORG_PREFIX/lib64
+				</line>
+            </action>
+		</entry>
+		
+		<entry name="util-macros-1.19.0" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
+			<link>http://ftp.x.org/pub/individual/util/util-macros-1.19.0.tar.bz2</link>
+			<filename>util-macros-1.19.0.tar.bz2</filename>
+			<version>1.19.0</version>
+			<checksum type="md5">1cf984125e75f8204938d998a8b6c1e1</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make install</line>
+            </action>
+		</entry>
+		
+		<entry name="Xorg Protocol Headers" type="script/bash" seq="3" cdto="yes" download="no" extract="no">
+			<directory>$PROJECT__BLD/xorglibs</directory>
+			<action when="after" seq="1">
+				<line>mkdir -vp $PROJECT__PKG/xproto</line>
+				<line>
+					cat > $PROJECT__PKG/xproto/xproto-7.7.md5 &lt;&lt;-EOF
+					1a05fb01fa1d5198894c931cf925c025  bigreqsproto-1.1.2.tar.bz2
+					98482f65ba1e74a08bf5b056a4031ef0  compositeproto-0.4.2.tar.bz2
+					998e5904764b82642cc63d97b4ba9e95  damageproto-1.2.1.tar.bz2
+					4ee175bbd44d05c34d43bb129be5098a  dmxproto-2.3.1.tar.bz2
+					b2721d5d24c04d9980a0c6540cb5396a  dri2proto-2.8.tar.bz2
+					a3d2cbe60a9ca1bf3aea6c93c817fee3  dri3proto-1.0.tar.bz2
+					e7431ab84d37b2678af71e29355e101d  fixesproto-5.0.tar.bz2
+					36934d00b00555eaacde9f091f392f97  fontsproto-2.1.3.tar.bz2
+					5565f1b0facf4a59c2778229c1f70d10  glproto-1.4.17.tar.bz2
+					b290a463af7def483e6e190de460f31a  inputproto-2.3.2.tar.bz2
+					94afc90c1f7bef4a27fdd59ece39c878  kbproto-1.0.7.tar.bz2
+					2d569c75884455c7148d133d341e8fd6  presentproto-1.0.tar.bz2
+					a46765c8dcacb7114c821baf0df1e797  randrproto-1.5.0.tar.bz2
+					1b4e5dede5ea51906f1530ca1e21d216  recordproto-1.14.2.tar.bz2
+					a914ccc1de66ddeb4b611c6b0686e274  renderproto-0.11.1.tar.bz2
+					cfdb57dae221b71b2703f8e2980eaaf4  resourceproto-1.2.0.tar.bz2
+					edd8a73775e8ece1d69515dd17767bfb  scrnsaverproto-1.2.2.tar.bz2
+					fe86de8ea3eb53b5a8f52956c5cd3174  videoproto-2.3.3.tar.bz2
+					5f4847c78e41b801982c8a5e06365b24  xcmiscproto-1.2.2.tar.bz2
+					70c90f313b4b0851758ef77b95019584  xextproto-7.3.0.tar.bz2
+					120e226ede5a4687b25dd357cc9b8efe  xf86bigfontproto-1.2.0.tar.bz2
+					a036dc2fcbf052ec10621fd48b68dbb1  xf86dgaproto-2.1.tar.bz2
+					1d716d0dac3b664e5ee20c69d34bc10e  xf86driproto-2.1.1.tar.bz2
+					e793ecefeaecfeabd1aed6a01095174e  xf86vidmodeproto-2.3.1.tar.bz2
+					9959fe0bfb22a0e7260433b8d199590a  xineramaproto-1.2.1.tar.bz2
+					eeeae1f47d43a33ef0d5c56727410326  xproto-7.0.29.tar.bz2
+					EOF
+				</line>
+				<line>
+					cd $PROJECT__PKG/xproto &amp;&amp;
+					grep -v '^#' $PROJECT__PKG/xproto/xproto-7.7.md5 | awk '{print $2}' | wget -i- -c -B http://ftp.x.org/pub/individual/proto/ &amp;&amp;
+					md5sum -c $PROJECT__PKG/xproto/xproto-7.7.md5
+				</line>
+				<line>
+					for package in $(grep -v '^#' $PROJECT__PKG/xproto/xproto-7.7.md5 | awk '{print $2}')
+					do
+						packagedir=${package%.tar.bz2}
+						tar -xf $package
+						pushd $packagedir
+						./configure $XORG_CONFIG
+						make install
+						popd
+						rm -rf $packagedir
+					done
+				</line>
+			</action>
+		</entry>
+		
+		<entry name="libXau-1.0.8" type="package/src" seq="4" cdto="yes" download="yes" extract="yes">
+			<link>http://ftp.x.org/pub/individual/lib/libXau-1.0.8.tar.bz2</link>
+			<filename>libXau-1.0.8.tar.bz2</filename>
+			<version>1.0.8</version>
+			<checksum type="md5">685f8abbffa6d145c0f930f00703b21b</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libXdmcp-1.1.2" type="package/src" seq="5" cdto="yes" download="yes" extract="yes">
+			<link>http://ftp.x.org/pub/individual/lib/libXdmcp-1.1.2.tar.bz2</link>
+			<filename>libXdmcp-1.1.2.tar.bz2</filename>
+			<version>1.1.2</version>
+			<checksum type="md5">18aa5c1279b01f9d18e3299969665b2e</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libffi-3.2.1" type="package/src" seq="6" cdto="yes" download="yes" extract="yes">
+			<link>ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz</link>
+			<filename>libffi-3.2.1.tar.gz</filename>
+			<version>3.2.1</version>
+			<checksum type="md5">83b89587607e3eb65c70d361f13bab43</checksum>
+			<action when="after" seq="1">
+				<line>
+					sed -e '/^includesdir/ s/$(libdir).*$/$(includedir)/' \
+						-i include/Makefile.in &amp;&amp;
+
+					sed -e '/^includedir/ s/=.*$/=@includedir@/' \
+						-e 's/^Cflags: -I${includedir}/Cflags:/' \
+						-i libffi.pc.in &amp;&amp;
+
+					./configure --prefix=$PROJECT__RFS/usr --disable-static
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="Python-2.7.12" type="package/src" seq="7" cdto="yes" download="yes" extract="yes">
+			<link>https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</link>
+			<filename>Python-2.7.12.tar.xz</filename>
+			<version>2.7.12</version>
+			<checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
+			<action when="after" seq="1">
+				<line>
+					./configure                       \
+						--prefix=$PROJECT__RFS/usr    \
+						--enable-shared               \
+						--with-system-expat           \
+						--with-system-ffi             \
+						--enable-unicode=ucs4
+				</line>
+				<line>make &amp;&amp; make install</line>
+				<line>chmod -v 755 $PROJECT__RFS/usr/lib/libpython2.7.so.1.0</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-proto-1.12" type="package/src" seq="8" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-proto-1.12.tar.bz2</link>
+			<filename>xcb-proto-1.12.tar.bz2</filename>
+			<version>1.12</version>
+			<checksum type="md5">14e60919f859560f28426a685a555962</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libxcb-1.12" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/libxcb-1.12.tar.bz2</link>
+			<filename>libxcb-1.12.tar.bz2</filename>
+			<version>1.12</version>
+			<checksum type="md5">28e552bd78bc1050b6b26ca1db0e5bb6</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="freetype-2.6.5" type="package/src" seq="10" cdto="yes" download="no" extract="yes">
+			<link>http://downloads.sourceforge.net/freetype/freetype-2.6.5.tar.bz2</link>
+			<filename>freetype-2.6.5.tar.bz2</filename>
+			<version>2.6.5</version>
+			<checksum type="md5">6a386964e18ba28cb93370e57a19031b</checksum>
+			<action when="after" seq="1">
+				<line>
+					sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg &amp;&amp;
+
+					sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING 2)) .*:\1:g" \
+						-i include/freetype/config/ftoption.h  &amp;&amp;
+
+					./configure --prefix=$PROJECT__RFS/usr --disable-static
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="fontconfig-2.12.1" type="package/src" seq="11" cdto="yes" download="yes" extract="yes">
+			<link>http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.bz2</link>
+			<filename>fontconfig-2.12.1.tar.bz2</filename>
+			<version>2.12.1</version>
+			<checksum type="md5">b5af5a423ee3b5cfc34846838963c058</checksum>
+			<action when="after" seq="1">
+				<line>
+					./configure                             \
+						--prefix=$PROJECT__RFS/usr          \
+						--sysconfdir=$PROJECT__RFS/etc      \
+						--localstatedir=$PROJECT__RFS/var   \
+						--disable-docs                      \
+						--docdir=$PROJECT__RFS/usr/share/doc/fontconfig-2.12.1 
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="Xorg Libraries" type="script/bash" seq="12" cdto="yes" download="no" extract="no">
+			<directory>$PROJECT__BLD/xorglibs</directory>
+			<action when="after" seq="1">
+				<line>mkdir -vp $PROJECT__PKG/xlib</line>
+				<line>
+					cat > $PROJECT__PKG/xlib/xlib-7.7.md5 &lt;&lt;-EOF
+					c5ba432dd1514d858053ffe9f4737dd8  xtrans-1.3.5.tar.bz2
+					2e36b73f8a42143142dda8129f02e4e0  libX11-1.6.3.tar.bz2
+					52df7c4c1f0badd9f82ab124fb32eb97  libXext-1.3.3.tar.bz2
+					d79d9fe2aa55eb0f69b1a4351e1368f7  libFS-1.0.7.tar.bz2
+					addfb1e897ca8079531669c7c7711726  libICE-1.0.9.tar.bz2
+					499a7773c65aba513609fe651853c5f3  libSM-1.2.2.tar.bz2
+					7a773b16165e39e938650bcc9027c1d5  libXScrnSaver-1.2.2.tar.bz2
+					8f5b5576fbabba29a05f3ca2226f74d3  libXt-1.1.5.tar.bz2
+					41d92ab627dfa06568076043f3e089e4  libXmu-1.1.2.tar.bz2
+					769ee12a43611cdebd38094eaf83f3f0  libXpm-3.5.11.tar.bz2
+					e5e06eb14a608b58746bdd1c0bd7b8e3  libXaw-1.0.13.tar.bz2
+					544d73df94e638ba7b64147be416e576  libXfixes-5.0.2.tar.bz2
+					f7a218dcbf6f0848599c6c36fc65c51a  libXcomposite-0.4.4.tar.bz2
+					5db92962b124ca3a8147daae4adbd622  libXrender-0.9.9.tar.bz2
+					1e7c17afbbce83e2215917047c57d1b3  libXcursor-1.1.14.tar.bz2
+					0cf292de2a9fa2e9a939aefde68fd34f  libXdamage-1.1.4.tar.bz2
+					0920924c3a9ebc1265517bdd2f9fde50  libfontenc-1.1.3.tar.bz2
+					96f76ba94b4c909230bac1e2dcd551c4  libXfont-1.5.1.tar.bz2
+					331b3a2a3a1a78b5b44cfbd43f86fcfe  libXft-2.3.2.tar.bz2
+					510e555ecfffa8d2298a0f42b725e563  libXi-1.7.6.tar.bz2
+					9336dc46ae3bf5f81c247f7131461efd  libXinerama-1.1.3.tar.bz2
+					309762867e41c6fd813da880d8a1bc93  libXrandr-1.5.0.tar.bz2
+					45ef29206a6b58254c81bea28ec6c95f  libXres-1.0.7.tar.bz2
+					25c6b366ac3dc7a12c5d79816ce96a59  libXtst-1.2.2.tar.bz2
+					e0af49d7d758b990e6fef629722d4aca  libXv-1.0.10.tar.bz2
+					eba6b738ed5fdcd8f4203d7c8a470c79  libXvMC-1.0.9.tar.bz2
+					d7dd9b9df336b7dd4028b6b56542ff2c  libXxf86dga-1.1.4.tar.bz2
+					298b8fff82df17304dfdb5fe4066fe3a  libXxf86vm-1.1.4.tar.bz2
+					ba983eba5a9f05d152a0725b8e863151  libdmx-1.1.3.tar.bz2
+					ace78aec799b1cf6dfaea55d3879ed9f  libpciaccess-0.13.4.tar.bz2
+					4a4cfeaf24dab1b991903455d6d7d404  libxkbfile-1.0.9.tar.bz2
+					66662e76899112c0f99e22f2fc775a7e  libxshmfence-1.2.tar.bz2
+					EOF
+				</line>
+				<line>
+					cd $PROJECT__PKG/xlib &amp;&amp;
+					grep -v '^#' $PROJECT__PKG/xlib/xlib-7.7.md5 | awk '{print $2}' | wget -i- -c -B http://ftp.x.org/pub/individual/lib/ &amp;&amp;
+					md5sum -c $PROJECT__PKG/xlib/xlib-7.7.md5
+				</line>
+				<line>
+					for package in $(grep -v '^#' $PROJECT__PKG/xlib/xlib-7.7.md5 | awk '{print $2}') 
+					do
+						packagedir=${package%.tar.bz2}
+						tar -xf $package
+						pushd $packagedir
+						case $packagedir in
+						libX11-[0-9]* )
+							sed -i "/seems to be moved/s/^/#/" ltmain.sh
+							./configure $XORG_CONFIG
+						;;
+						libXfont-[0-9]* )
+							./configure $XORG_CONFIG --disable-devel-docs
+						;;
+						libXt-[0-9]* )
+							./configure $XORG_CONFIG --with-appdefaultdir=$PROJECT__RFS/etc/X11/app-defaults
+						;;
+						* )
+							./configure $XORG_CONFIG
+						;;
+						esac
+						make
+						make install
+						popd
+						rm -rf $packagedir
+					done
+				</line>
+			</action>
+		</entry>
+		
+	</phase>
+	
+</build>
+
