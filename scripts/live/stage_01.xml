@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build name="gognos" type="live" arch="x86_64" version="0.0.2" subject="base" in-chroot="yes" codename="">
+<build name="ghoghnoos" type="live" arch="x86_64" version="0.0.2" subject="base" in-chroot="yes" codename="">
 
 	<phase seq="2" comment="Root file system">
 	

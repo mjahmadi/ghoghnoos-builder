@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <build
-	name="gognos"
+	name="ghoghnoos"
 	type="live"
 	subject="base"
 	stage="03"
@@ -16,6 +16,8 @@
 	<globals>
 		export CPPFLAGS="-I/$PROJECT__RFS/usr/include/"
 		export LDFLAGS="-L/$PROJECT__RFS/usr/lib64/"
+		
+		export LIBS="-lxcb"
 
 		export X11_CFLAGS=$CPPFLAGS
 		export X11_LIBS=$LDFLAGS
@@ -28,6 +30,12 @@
 		
 		export SM_CFLAGS=$CPPFLAGS
 		export SM_LIBS=$LDFLAGS
+		
+		export XSCRNSAVER_CFLAGS=$CPPFLAGS
+		export XSCRNSAVER_LIBS=$LDFLAGS
+		
+		export XFONT_CFLAGS=$CPPFLAGS
+		export XFONT_LIBS=$LDFLAGS
 		
 		export PKG_CONFIG_PATH="$PROJECT__RFS/usr/lib64/pkgconfig"
 				
@@ -214,7 +222,14 @@
 			<version>1.12</version>
 			<checksum type="md5">28e552bd78bc1050b6b26ca1db0e5bb6</checksum>
 			<action when="after" seq="1">
-				<line>./configure $XORG_CONFIG</line>
+				<line>
+					sed -i "s/pthread-stubs//" configure &amp;&amp;
+					
+					./configure $XORG_CONFIG      \
+						--enable-xinput           \
+						--without-doxygen         \
+						--docdir='${datadir}'/doc/libxcb-1.12
+				</line>
 				<line>make &amp;&amp; make install</line>
             </action>
 		</entry>
@@ -329,6 +344,270 @@
 				</line>
 			</action>
 		</entry>
+		
+		<entry name="xcb-util-0.4.0" type="package/src" seq="13" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-0.4.0.tar.bz2</link>
+			<filename>xcb-util-0.4.0.tar.bz2</filename>
+			<version>0.4.0</version>
+			<checksum type="md5">2e97feed81919465a04ccc71e4073313</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-image-0.4.0" type="package/src" seq="14" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-image-0.4.0.tar.bz2</link>
+			<filename>xcb-util-image-0.4.0.tar.bz2</filename>
+			<version>0.4.0</version>
+			<checksum type="md5">08fe8ffecc8d4e37c0ade7906b3f4c87</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-keysyms-0.4.0" type="package/src" seq="15" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-keysyms-0.4.0.tar.bz2</link>
+			<filename>xcb-util-keysyms-0.4.0.tar.bz2</filename>
+			<version>0.4.0</version>
+			<checksum type="md5">1022293083eec9e62d5659261c29e367</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-renderutil-0.3.9" type="package/src" seq="16" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-renderutil-0.3.9.tar.bz2</link>
+			<filename>xcb-util-renderutil-0.3.9.tar.bz2</filename>
+			<version>0.3.9</version>
+			<checksum type="md5">468b119c94da910e1291f3ffab91019a</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-renderutil-0.3.9" type="package/src" seq="17" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-renderutil-0.3.9.tar.bz2</link>
+			<filename>xcb-util-renderutil-0.3.9.tar.bz2</filename>
+			<version>0.3.9</version>
+			<checksum type="md5">468b119c94da910e1291f3ffab91019a</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-wm-0.4.1" type="package/src" seq="18" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-wm-0.4.1.tar.bz2</link>
+			<filename>xcb-util-wm-0.4.1.tar.bz2</filename>
+			<version>0.4.1</version>
+			<checksum type="md5">87b19a1cd7bfcb65a24e36c300e03129</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xcb-util-cursor-0.1.3" type="package/src" seq="19" cdto="yes" download="yes" extract="yes">
+			<link>http://xcb.freedesktop.org/dist/xcb-util-cursor-0.1.3.tar.bz2</link>
+			<filename>xcb-util-cursor-0.1.3.tar.bz2</filename>
+			<version>0.1.3</version>
+			<checksum type="md5">6ac3b17cba51aaaa36ba035a53527214</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libdrm-2.4.70" type="package/src" seq="20" cdto="yes" download="yes" extract="yes">
+			<link>http://dri.freedesktop.org/libdrm/libdrm-2.4.70.tar.bz2</link>
+			<filename>libdrm-2.4.70.tar.bz2</filename>
+			<version>2.4.70</version>
+			<checksum type="md5">920957cfe25a80efb02be9bd90bf3c1e</checksum>
+			<action when="after" seq="1">
+				<line>
+					#sed -i "/pthread-stubs/d" configure.ac &amp;&amp;
+					#autoreconf -fiv &amp;&amp;
+					
+					./configure --prefix=$PROJECT__RFS/usr --enable-udev
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="elfutils-0.167" type="package/src" seq="21" cdto="yes" download="yes" extract="yes">
+			<link>https://fedorahosted.org/releases/e/l/elfutils/0.167/elfutils-0.167.tar.bz2</link>
+			<filename>elfutils-0.167.tar.bz2</filename>
+			<version>0.167</version>
+			<checksum type="md5">efc6c2067dfad5646777e93e85222e8f</checksum>
+			<action when="after" seq="1">
+				<line>./configure --prefix=$PROJECT__RFS/usr --program-prefix="eu-"</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="llvm-3.8.1" type="package/src" seq="22" cdto="yes" download="yes" extract="yes">
+			<link>http://llvm.org/releases/3.8.1/llvm-3.8.1.src.tar.xz</link>
+			<filename>llvm-3.8.1.src.tar.xz</filename>
+			<version>3.8.1</version>
+			<checksum type="md5">538467e6028bbc9259b1e6e015d25845</checksum>
+			<action when="after" seq="1">
+				<line>
+					mkdir -v build &amp;&amp;
+					cd       build &amp;&amp;
+
+					CC=gcc CXX=g++                                    \
+					cmake -DCMAKE_INSTALL_PREFIX=$PROJECT__RFS/usr    \
+						  -DLLVM_ENABLE_FFI=ON                        \
+						  -DCMAKE_BUILD_TYPE=Release                  \
+						  -DBUILD_SHARED_LIBS=ON                      \
+						  -DLLVM_TARGETS_TO_BUILD="host;AMDGPU"       \
+						  -Wno-dev ..
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="mesa-12.0.1" type="package/src" seq="23" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.freedesktop.org/pub/mesa/12.0.1/mesa-12.0.1.tar.xz</link>
+			<filename>mesa-12.0.1.tar.xz</filename>
+			<version>12.0.1</version>
+			<checksum type="md5">972fd5ad5a63aeabf173fb9adefc6522</checksum>
+			<action when="after" seq="1">
+				<line>
+					GLL_DRV="nouveau,r300,r600,radeonsi,svga,swrast,swr" &amp;&amp;
+
+					sed -i "/pthread-stubs/d" configure.ac &amp;&amp;
+					sed -i "/seems to be moved/s/^/: #/" bin/ltmain.sh &amp;&amp;
+					./autogen.sh CFLAGS='-O2' CXXFLAGS='-O2'    \
+								--prefix=$XORG_PREFIX           \
+								--sysconfdir=$PROJECT__RFS/etc  \
+								--enable-texture-float          \
+								--enable-gles1                  \
+								--enable-gles2                  \
+								--enable-osmesa                 \
+								--enable-xa                     \
+								--enable-gbm                    \
+								--enable-glx-tls                \
+								--with-egl-platforms="drm,x11"  \
+								--enable-sysfs                  \
+								--with-llvm-prefix=$PROJECT__RFS/usr    \
+								--with-gallium-drivers=$GLL_DRV &amp;&amp; unset GLL_DRV
+				</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xbitmaps-1.1.1" type="package/src" seq="24" cdto="yes" download="yes" extract="yes">
+			<link>http://ftp.x.org/pub/individual/data/xbitmaps-1.1.1.tar.bz2</link>
+			<filename>xbitmaps-1.1.1.tar.bz2</filename>
+			<version>1.1.1</version>
+			<checksum type="md5">7444bbbd999b53bec6a60608a5301f4c</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libpng-1.6.24" type="package/src" seq="25" cdto="yes" download="yes" extract="yes">
+			<link>http://downloads.sourceforge.net/libpng/libpng-1.6.24.tar.xz</link>
+			<filename>libpng-1.6.24.tar.xz</filename>
+			<version>1.6.24</version>
+			<checksum type="md5">ffcdbd549814787fa8010c372e35ff25</checksum>
+			<action when="after" seq="1">
+				<line>./configure $XORG_CONFIG</line>
+				<line>make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="Xorg Applications" type="script/bash" seq="26">
+			<action when="after" seq="1">
+				<line>mkdir -vp $PROJECT__PKG/xapp</line>
+				<line>
+					cat > $PROJECT__PKG/xapp/xapp-7.7.md5 &lt;&lt;-EOF
+					53a48e1fdfec29ab2e89f86d4b7ca902  bdftopcf-1.0.5.tar.bz2
+					25dab02f8e40d5b71ce29a07dc901b8c  iceauth-1.0.7.tar.bz2
+					c4a3664e08e5a47c120ff9263ee2f20c  luit-1.1.1.tar.bz2
+					18c429148c96c2079edda922a2b67632  mkfontdir-1.0.7.tar.bz2
+					9bdd6ebfa62b1bbd474906ac86a40fd8  mkfontscale-1.1.2.tar.bz2
+					e238c89dabc566e1835e1ecb61b605b9  sessreg-1.1.0.tar.bz2
+					2c47a1b8e268df73963c4eb2316b1a89  setxkbmap-1.3.1.tar.bz2
+					3a93d9f0859de5d8b65a68a125d48f6a  smproxy-1.0.6.tar.bz2
+					f0b24e4d8beb622a419e8431e1c03cd7  x11perf-1.6.0.tar.bz2
+					7d6003f32838d5b688e2c8a131083271  xauth-1.0.9.tar.bz2
+					0066f23f69ca3ef62dcaeb74a87fdc48  xbacklight-1.2.1.tar.bz2
+					9956d751ea3ae4538c3ebd07f70736a0  xcmsdb-1.0.5.tar.bz2
+					b58a87e6cd7145c70346adad551dba48  xcursorgen-1.0.6.tar.bz2
+					8809037bd48599af55dad81c508b6b39  xdpyinfo-1.3.2.tar.bz2
+					fceddaeb08e32e027d12a71490665866  xdriinfo-1.0.5.tar.bz2
+					249bdde90f01c0d861af52dc8fec379e  xev-1.2.2.tar.bz2
+					90b4305157c2b966d5180e2ee61262be  xgamma-1.0.6.tar.bz2
+					f5d490738b148cb7f2fe760f40f92516  xhost-1.0.7.tar.bz2
+					6a889412eff2e3c1c6bb19146f6fe84c  xinput-1.6.2.tar.bz2
+					a4d8353daf6cb0a9c47379b7413c42c6  xkbcomp-1.3.1.tar.bz2
+					c747faf1f78f5a5962419f8bdd066501  xkbevd-1.1.4.tar.bz2
+					502b14843f610af977dffc6cbf2102d5  xkbutils-1.0.4.tar.bz2
+					0ae6bc2a8d3af68e9c76b1a6ca5f7a78  xkill-1.0.4.tar.bz2
+					5dcb6e6c4b28c8d7aeb45257f5a72a7d  xlsatoms-1.1.2.tar.bz2
+					9fbf6b174a5138a61738a42e707ad8f5  xlsclients-1.1.3.tar.bz2
+					2dd5ae46fa18abc9331bc26250a25005  xmessage-1.0.4.tar.bz2
+					723f02d3a5f98450554556205f0a9497  xmodmap-1.0.9.tar.bz2
+					6101f04731ffd40803df80eca274ec4b  xpr-1.0.4.tar.bz2
+					fae3d2fda07684027a643ca783d595cc  xprop-1.2.2.tar.bz2
+					ebffac98021b8f1dc71da0c1918e9b57  xrandr-1.5.0.tar.bz2
+					b54c7e3e53b4f332d41ed435433fbda0  xrdb-1.1.0.tar.bz2
+					a896382bc53ef3e149eaf9b13bc81d42  xrefresh-1.0.5.tar.bz2
+					dcd227388b57487d543cab2fd7a602d7  xset-1.2.3.tar.bz2
+					7211b31ec70631829ebae9460999aa0b  xsetroot-1.1.1.tar.bz2
+					558360176b718dee3c39bc0648c0d10c  xvinfo-1.1.3.tar.bz2
+					6b5d48464c5f366e91efd08b62b12d94  xwd-1.0.6.tar.bz2
+					b777bafb674555e48fd8437618270931  xwininfo-1.1.3.tar.bz2
+					3025b152b4f13fdffd0c46d0be587be6  xwud-1.0.4.tar.bz2
+					EOF
+				</line>
+				<line>
+					cd $PROJECT__PKG/xapp &amp;&amp;
+					grep -v '^#' $PROJECT__PKG/xapp/xapp-7.7.md5 | awk '{print $2}' | wget -i- -c -B http://ftp.x.org/pub/individual/app/ &amp;&amp;
+					md5sum -c $PROJECT__PKG/xapp/xapp-7.7.md5
+				</line>
+				<line>
+					for package in $(grep -v '^#' $PROJECT__PKG/xapp/xapp-7.7.md5 | awk '{print $2}')
+					do
+						packagedir=${package%.tar.bz2}
+						tar -xf $package
+						pushd $packagedir
+						case $packagedir in
+						luit-[0-9]* )
+							line1="#ifdef _XOPEN_SOURCE"
+							line2="#  undef _XOPEN_SOURCE"
+							line3="#  define _XOPEN_SOURCE 600"
+							line4="#endif"
+
+							sed -i -e "s@#ifdef HAVE_CONFIG_H@$line1\n$line2\n$line3\n$line4\n\n&amp;@" sys.c
+							unset line1 line2 line3 line4
+						;;
+						sessreg-* )
+							sed -e 's/\$(CPP) \$(DEFS)/$(CPP) -P $(DEFS)/' -i man/Makefile.in
+						;;
+						esac
+						
+						export CPPFLAGS="-I/$PROJECT__RFS/usr/include/"
+						export LDFLAGS="-L/$PROJECT__RFS/usr/lib64/"
+						export PKG_CONFIG_PATH="$PROJECT__RFS/usr/lib64/pkgconfig"
+						
+						./configure $XORG_CONFIG
+						make
+						make install
+						popd
+						rm -rf $packagedir
+					done
+				</line>
+            </action>
+		</entry>
+		
 		
 	</phase>
 	
