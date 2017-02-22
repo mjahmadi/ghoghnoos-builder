@@ -27,11 +27,11 @@
 				<line>mkdir -v -p $PROJECT__RFS/tmp</line>
 				
 				<line>
-					if [[ $(uname -m) = "x86_64" ]]; then
-						mkdir -v -p $PROJECT__RFS/lib64
-					else
+					#if [[ "$(uname -m)" == "x86_64" ]]; then
+					#	mkdir -v -p $PROJECT__RFS/lib64
+					#else
 					    ln -s ./lib $PROJECT__RFS/lib64
-					fi
+					#fi
 				</line>
 				
 				<line>chmod 1777 $PROJECT__RFS/tmp</line>
