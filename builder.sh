@@ -40,13 +40,6 @@ if [[ $in_chroot != "yes" && $(id -u) == 0 ]]; then
 	exit -1
 fi
 
-export OLD_PATH=$PATH
-
-envpath=$(xml_get_val "/build/@envpath")
-if [[ -n $envpath ]]; then
-	export PATH=$envpath
-fi
-
 # SET USEFUL GLOBAL VARIABLES
 export PROJECT__NAME=$(xml_get_val "/build/@name")
 export PROJECT__TYPE=$(xml_get_val "/build/@type")
@@ -109,7 +102,7 @@ else
     entry_begin_from=1
 fi
 
-if [[ -n $3 ]]; then
+if [[ -n $4 ]]; then
     action_begin_from=$4
 else
     action_begin_from=1
@@ -145,6 +138,13 @@ if [[ ! -z "/proc/cpuinfo " ]]; then
 fi
 export LC_ALL=POSIX
 
+# SET PROJECT ALTERNATIVE PATH
+envpath=$(xml_get_val "/build/@envpath")
+if [[ -n $envpath ]]; then
+	export OLD_PATH=$PATH
+	export PATH=$(eval "echo -e "$envpath"")
+fi
+
 # GLOBAL VARIABLES
 eval "$(xml_get_val '/build/globals')"
 
@@ -172,7 +172,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	continue
         else
 			echo -e "${BOLD_TXT}\nphase --> '$phase'"
-		    echo -e "Entry --> '$entry'\n$entry_name[$entry_type]\n${NORMAL_TXT}"
+		    echo -e "entry --> '$entry'\n$entry_name[$entry_type]\n${NORMAL_TXT}"
 			sleep 1
         fi
 		
