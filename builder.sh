@@ -108,6 +108,12 @@ else
     action_begin_from=1
 fi
 
+if [[ -n $5 ]]; then
+    line_begin_from=$5
+else
+    line_begin_from=1
+fi
+
 # SET GLOBAL PATH VARIABLES AND CREATE DIRECTORIES
 if [[ $(xml_get_val "/build/@constructor") = 'yes' ]]; then
 	export PROJECT__RFS=$(pwd)
@@ -191,7 +197,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
         
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
         	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
-        	for line in `seq 1 $entry_action_line_count`; do
+        	for line in `seq $line_begin_from $entry_action_line_count`; do
         	
 				line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
@@ -215,6 +221,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 				fi
         	done
         done
+        line_begin_from=1
         
 		# BUILD >> PHASE >> ENTRY
 		cdto=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@cdto")
@@ -306,7 +313,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
         
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
         	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line)")
-        	for line in `seq 1 $entry_action_line_count`; do
+        	for line in `seq $line_begin_from $entry_action_line_count`; do
         	
 				line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
@@ -330,6 +337,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 				fi
         	done
         done
+        line_begin_from=1
         
     done
     
