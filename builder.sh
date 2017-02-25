@@ -220,8 +220,8 @@ for phase in `seq $phase_begin_from $phase_count`; do
 					eval "$command"
 				fi
         	done
+        	line_begin_from=1
         done
-        line_begin_from=1
         
 		# BUILD >> PHASE >> ENTRY
 		cdto=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@cdto")
@@ -336,9 +336,8 @@ for phase in `seq $phase_begin_from $phase_count`; do
 					eval "$command"
 				fi
         	done
+        	line_begin_from=1
         done
-        line_begin_from=1
-        
     done
     
     # RESET ENTRY INDEX FOR EACH PHASE
