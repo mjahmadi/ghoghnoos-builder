@@ -1,7 +1,17 @@
 <?xml version="1.0"?>
 
-<build name="ghoghnoos" type="live" arch="x86_64" version="0.0.2" subject="base" in-chroot="yes" codename="alah">
+<build
+	name="ghoghnoos"
+	type="live"
+	arch="x86_64"
+	version="0.0.2"
+	subject="base">
 
+	<globals>
+		export LD_LIBRARY_PATH="$PROJECT__RFS/usr/lib64/"
+		export PKG_CONFIG_PATH="$PROJECT__RFS/usr/lib64/pkgconfig"
+	</globals>
+	
 	<phase seq="1" comment="Base system">
 	
 		<entry name="linux-4.4.6" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
@@ -59,7 +69,8 @@
 		</entry>
 	</phase>
 	
-	<phase seq="2" comment="XML library and tools">
+	
+	<phase seq="2" comment="XML library and tools" disabled="yes">
 		<entry name="nettle-3.2" type="package/src" seq="1" cdto="yes" download="yes" extract="yes">
 			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
 		    <filename>nettle-3.2.tar.gz</filename>
@@ -77,22 +88,8 @@
 		    <version>3.5.3</version>
 		    <checksum type="md5">6c2c7f40ddf52933ee3ca474cb8cb63c</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --with-default-trust-store-file=$PROJECT__RFS/etc/ssl/ca-bundle.crt</line>
+            	<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --with-included-libtasn1 --with-default-trust-store-file=$PROJECT__RFS/etc/ssl/ca-bundle.crt</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">exit -1</line>
-            </action>
-		</entry>
-		
-		<entry name="wget-1.18" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
-			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
-		    <filename>wget-1.18.tar.xz</filename>
-		    <version>1.18</version>
-		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
-            <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__RFS/usr --sysconfdir=$PROJECT__RFS/etc</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
                 
                 <line verbos="yes">exit -1</line>
             </action>
