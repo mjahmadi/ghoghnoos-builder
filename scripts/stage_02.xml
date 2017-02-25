@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 
-<build name="minux" type="live" subject="rootfs" constructor="yes" stage="02" in-chroot="yes" arch="x86_64" version="0.0.2">
+<build
+	name="ghoghnoos"
+	type="live"
+	subject="tools"
+	constructor="yes"
+	stage="02"
+	arch="x86_64"
+	version="0.0.2"
+	sudo="yes">
 
 	<phase seq="1">
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
