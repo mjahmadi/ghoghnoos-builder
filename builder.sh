@@ -34,8 +34,8 @@ function xml_get_val
     echo "$XML_STRING" | xmlstarlet sel -t -v "$1" | xmlstarlet unesc
 }
 
-in_chroot=$(xml_get_val "/build/@in-chroot")
-if [[ $in_chroot != "yes" && $(id -u) == 0 ]]; then
+chroot=$(xml_get_val "/build/@chroot")
+if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
 	echo -e "${RED}ERROR: Sorry, user root is not allowed to execute '$0'.${NORMAL}"
 	exit -1
 fi
