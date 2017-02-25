@@ -1,7 +1,18 @@
 <?xml version="1.0"?>
 
-<build name="ghoghnoos" type="live" arch="x86_64" version="0.0.2" subject="base" in-chroot="yes" codename="">
-
+<build
+	name="ghoghnoos"
+	type="live"
+	subject="base"
+	stage="01"
+	username="root"
+	password="123"
+	in-chroot="yes"
+	arch="x86_64"
+	version="0.0.2"
+	codename="robin"
+	timezone="Asia/Tehran">
+	
 	<phase seq="2" comment="Root file system">
 	
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">

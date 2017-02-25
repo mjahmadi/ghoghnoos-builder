@@ -5,13 +5,10 @@
 	type="live"
 	subject="base"
 	stage="03"
-	username="root"
-	password="123"
 	in-chroot="yes"
 	arch="x86_64"
 	version="0.0.2"
-	envpath="$PATH:$PROJECT__RFS/bin:$PROJECT__RFS/usr/bin"
-	timezone="Asia/Tehran">
+	envpath="$PATH:$PROJECT__RFS/bin:$PROJECT__RFS/usr/bin">
 	
 	<globals>
 		export CPPFLAGS="-I/$PROJECT__RFS/usr/include/"
