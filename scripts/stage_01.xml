@@ -16,7 +16,7 @@
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="before" seq="1">
 				<line sudo="yes">rm -f /tools</line>
-				<line sudo="yes">ln -sv $PROJECT__TOL /</line>
+				<line sudo="yes">ln -fsv $PROJECT__TOL /</line>
 			</action>
 		</entry>
 		
@@ -39,7 +39,7 @@
                 <line verbos="yes">make</line>
                 <line verbos="yes">
                     case $(uname -m) in
-                        x86_64) mkdir -v /tools/lib &amp;&amp; ln -sv lib /tools/lib64 ;;
+                        x86_64) mkdir -vp /tools/lib &amp;&amp; ln -fsv lib /tools/lib64 ;;
                     esac
                 </line>
                 <line verbos="yes">make install</line>
