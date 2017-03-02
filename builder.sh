@@ -34,6 +34,19 @@ function xml_get_val
     echo "$XML_STRING" | xmlstarlet sel -t -v "$1" | xmlstarlet unesc
 }
 
+# FUNCTION TO EXEC COMMAND AS ROOT
+function do_as_root
+{
+	if [[ $EUID = 0 ]]; then
+		$*
+	elif [[ -x /usr/bin/sudo ]]; then
+		sudo $*
+	else
+		su -c \\"$*\\"
+	fi
+}
+
+# CHECK IF RUNING IN CHROOT MODE AS ROOT
 chroot=$(xml_get_val "/build/@chroot")
 if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
 	echo -e "${RED}ERROR: Sorry, user root is not allowed to execute '$0'.${NORMAL}"
