@@ -12,10 +12,10 @@
 	sudo="yes">
 	
 	<globals>
-		export CPPFLAGS="-I/$PROJECT__RFS/usr/include/:$PROJECT__RFS/usr/include/"
-		export LDFLAGS="-L/$PROJECT__RFS/usr/lib64/:/$PROJECT__RFS/lib64/"
+		export CPPFLAGS="-I/tools/include"
+		export LDFLAGS="-L/tools/lib64"
 		
-		export PKG_CONFIG_PATH="$PROJECT__RFS/usr/lib64/pkgconfig:$PROJECT__RFS/usr/share/pkgconfig"
+		export PKG_CONFIG_PATH="/tools/lib64/pkgconfig"
 	</globals>
 	
 	<phase seq="1">
@@ -89,7 +89,7 @@
 						--with-sysroot=/                                  \
 						--with-newlib                                     \
 						--without-headers                                 \
-						--with-local-prefix=$PROJECT__TOL                 \
+						--with-local-prefix=/tools                        \
 						--with-native-system-header-dir=/tools/include    \
 						--disable-nls                                     \
 						--disable-shared                                  \
@@ -117,7 +117,7 @@
             <action when="after" seq="1">
                 <line verbos="yes">make mrproper</line>
                 <line verbos="yes">make INSTALL_HDR_PATH=dest headers_install</line>
-                <line verbos="yes">cp -rv dest/include/* $PROJECT__TOL/include</line>
+                <line verbos="yes">cp -rv dest/include/* /tools/include</line>
             </action>
 		</entry>
 		
@@ -138,8 +138,7 @@
 						libc_cv_forced_unwind=yes           \
 						libc_cv_c_cleanup=yes
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -161,8 +160,7 @@
 						--disable-libstdcxx-pch                                       \
 						--with-gxx-include-dir=/tools/$PROJECT__TGT/include/c++/6.2.0
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -184,8 +182,7 @@
 						--with-lib-path=/tools/lib     \
 						--with-sysroot
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
                 
                 <line verbos="yes">make -C ld clean</line>
                 <line verbos="yes">make -C ld LIB_PATH=/usr/lib:/lib</line>
@@ -243,8 +240,7 @@
 						--disable-bootstrap                               \
 						--disable-libgomp
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">ln -sv gcc /tools/bin/cc</line>
 			</action>
@@ -258,8 +254,7 @@
                 <line>cd unix</line>
                 
                 <line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
                 
                 <line verbos="yes">chmod -v u+w /tools/lib/libtcl8.6.so</line>
                 <line verbos="yes">make install-private-headers</line>
@@ -301,8 +296,7 @@
 		    <checksum type="md5">53c5e5c77d090e103a17f3ed7fd7d8b8</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">PKG_CONFIG= ./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -321,8 +315,7 @@
 						--enable-widec      \
 						--enable-overwrite
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
                 
                 <line verbos="yes" disabled="yes">ln -s ./libncurses.so $PROJECT__TOL/lib/libncursesw.so</line>
             </action>
@@ -343,8 +336,8 @@
 						--enable-widec       \
 						--enable-overwrite
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                
                 <line verbos="yes">ln -sv bash /tools/bin/sh</line>
             </action>
 		</entry>
@@ -365,8 +358,7 @@
 		    <checksum type="md5">070e43ba7f618d747414ef56ab248a48</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/tools --enable-install-program=hostname</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -376,8 +368,7 @@
 		    <checksum type="md5">569354697ff1cfc9a9de3781361015fa</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -387,8 +378,7 @@
 		    <checksum type="md5">3f7771424aa855f32094b49571e19b33</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -398,8 +388,7 @@
 		    <checksum type="md5">9936aa8009438ce185bea2694a997fc1</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -409,8 +398,7 @@
 		    <checksum type="md5">97f8f44149ea9b9e94be97f68988be87</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -437,8 +425,7 @@
 		    <checksum type="md5">04e96b0e6f0fe6a180ae62c88fcd0af6</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -448,8 +435,7 @@
 		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -459,8 +445,7 @@
 		    <checksum type="md5">12a3c829301a4fd6586a57d3fcf196dc</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -470,8 +455,7 @@
 		    <checksum type="md5">15b012617e7c44c0ed482721629577ac</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/tools --without-guile</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -481,8 +465,7 @@
 		    <checksum type="md5">e3da7940431633fb65a01b91d3b7a27a</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/tools</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -493,11 +476,11 @@
             <action when="after" seq="1">
                 <line verbos="yes">sh Configure -des -Dprefix=/tools -Dlibs=-lm</line>
                 <line verbos="yes">make</line>
-                <line verbos="yes">cp -v perl cpan/podlators/scripts/pod2man $PROJECT__TOL/bin</line>
-                <line verbos="yes">mkdir -pv $PROJECT__TOL/lib/perl5/5.24.0</line>
-                <line verbos="yes">cp -Rv lib/* $PROJECT__TOL/lib/perl5/5.24.0</line>
+                <line verbos="yes">cp -v perl cpan/podlators/scripts/pod2man /tools/bin</line>
+                <line verbos="yes">mkdir -pv /tools/lib/perl5/5.24.0</line>
+                <line verbos="yes">cp -Rv lib/* /tools/lib/perl5/5.24.0</line>
                 
-                <line verbos="yes">ln -sf ./ $PROJECT__TOL/lib/perl5/site_perl</line>
+                <line verbos="yes">ln -sf ./ /tools/lib/perl5/site_perl</line>
             </action>
 		</entry>
 		
@@ -506,9 +489,8 @@
 		    <version>4.2.2</version>
 		    <checksum type="md5">7ffe1c7cdc3233e1e0c4b502df253974</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -517,9 +499,8 @@
 		    <version>1.29</version>
 		    <checksum type="md5">a1802fec550baaeecff6c381629653ef</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -528,9 +509,8 @@
 		    <version>6.1</version>
 		    <checksum type="md5">1d7ec1888fae00730693597852b00cde</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -548,8 +528,7 @@
 						--enable-libmount-force-mountinfo   \
 						PKG_CONFIG=""
                 </line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -558,9 +537,8 @@
 		    <version>5.2.2</version>
 		    <checksum type="md5">e26772b69940085c0632589ab1d52e64</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 	</phase>
@@ -574,17 +552,18 @@
 		    <version>1.26</version>
 		    <checksum type="md5">97456709dbbcbb69354317ffe3e347cd</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
+            	<line verbos="yes">./configure --prefix=/tools</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
+		
 		<entry name="libgcrypt-1.7.3" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
 			<link>ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.7.3.tar.bz2</link>
 		    <filename>libgcrypt-1.7.3.tar.bz2</filename>
 		    <version>1.7.3</version>
 		    <checksum type="md5">c869e542cc13a1c28d8055487bf7f5c4</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
+            	<line verbos="yes">./configure --prefix=/tools</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
@@ -595,7 +574,7 @@
 		    <version>2.2.0</version>
 		    <checksum type="md5">2f47841c829facb346eb6e3fab5212e2</checksum>
             <action when="after" seq="1">
-				<line verbos="yes">./configure --prefix=$PROJECT__TOL --disable-static</line>
+				<line verbos="yes">./configure --prefix=/tools --disable-static</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
@@ -606,7 +585,7 @@
 		    <version>1.2.8</version>
 		    <checksum type="md5">28f1205d8dd2001f26fec1e8c2cebe37</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
@@ -618,13 +597,13 @@
 		    <checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">
-					./configure --prefix=$PROJECT__TOL   \
+					./configure --prefix=/toolsn         \
 								--enable-shared          \
 								--with-system-expat      \
 								--enable-unicode=ucs4
             	</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">chmod -v 755 $PROJECT__TOL/lib/libpython2.7.so.1.0</line>
+                <line verbos="yes">chmod -v 755 /tools/lib/libpython2.7.so.1.0</line>
             </action>
 		</entry>
 		
@@ -635,9 +614,9 @@
 		    <checksum type="md5">ae249165c173b1ff386ee8ad676815f5</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
-				<line verbos="yes">./configure --prefix=$PROJECT__TOL --disable-static --with-history</line>
+				<line verbos="yes">./configure --prefix=/tools --disable-static --with-history</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">cp -R $PROJECT__TOL/include/libxml2/libxml $PROJECT__TOL/include/</line>
+                <line verbos="yes">cp -R /tools/include/libxml2/libxml /tools/include/</line>
             </action>
 		</entry>
 		
@@ -648,7 +627,7 @@
 		    <checksum type="md5">a129d3c44c022de3b9dcf6d6f288d72e</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
-				<line verbos="yes">./configure --prefix=$PROJECT__TOL --disable-static</line>
+				<line verbos="yes">./configure --prefix=/tools --disable-static</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
@@ -659,9 +638,9 @@
 		    <version>1.6.1</version>
 		    <checksum type="md5">f3c5dfa3b1a2ee06cd57c255cc8b70a0</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL --enable-ipv6=no</line>
+                <line verbos="yes">./configure --prefix=/tools --enable-ipv6=no</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">ln -sf ./xml $PROJECT__TOL/bin/xmlstarlet</line>
+                <line verbos="yes">ln -sf ./xml /tools/bin/xmlstarlet</line>
             </action>
 		</entry>
 		
@@ -671,20 +650,20 @@
 		    <version>1.06.95</version>
 		    <checksum type="md5">5126a721b73f97d715bb72c13c889035</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL</line>
+                <line verbos="yes">./configure --prefix=/tools</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
-		<entry name="nettle-3.2" type="package/src" seq="11" cdto="yes" download="yes" extract="yes">
+		<entry name="nettle-3.2" type="package/src" seq="10" cdto="yes" download="yes" extract="yes">
 			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
 		    <filename>nettle-3.2.tar.gz</filename>
 		    <version>3.2</version>
-		    <checksum type="md5">afb15b4764ebf1b4e6d06c62bd4d29e4</checksum>
+		    <checksum type="md5">075a3699cbab48ffa2ea6f9aad91e123</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__TOL --disable-static</line>
+            	<line verbos="yes">./configure --prefix=/tools --disable-static</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">chmod -v 755 $PROJECT__TOL/usr/lib64/libnettle.so</line>
+                <line verbos="yes">chmod -v 755 /tools/lib64/libnettle.so</line>
             </action>
 		</entry>
 		
@@ -694,10 +673,8 @@
 		    <version>3.5.3</version>
 		    <checksum type="md5">6c2c7f40ddf52933ee3ca474cb8cb63c</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=$PROJECT__TOL/usr --with-default-trust-store-file=$PROJECT__TOL/etc/ssl/ca-bundle.crt</line>
+            	<line verbos="yes">./configure --prefix=/tools/usr --with-default-trust-store-file=/tools/etc/ssl/ca-bundle.crt</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">exit -1</line>
             </action>
 		</entry>
 		
@@ -707,11 +684,9 @@
 		    <version>1.18</version>
 		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=$PROJECT__TOL/usr --sysconfdir=$PROJECT__TOL/etc</line>
+                <line verbos="yes">./configure --prefix=/tools/usr --sysconfdir=/tools/etc</line>
                 <line verbos="yes">make</line>
                 <line verbos="yes">make install</line>
-                
-                <line verbos="yes">exit -1</line>
             </action>
 		</entry>
 	</phase>
@@ -732,7 +707,7 @@
 			</action>
 			
 			<action when="before" seq="2">
-				<line sudo="yes">chown -R root:root $PROJECT__RFS/tools</line>
+				<line sudo="yes">#chown -R root:root /tools</line>
 				
 				<line>mkdir -pv $PROJECT__RFS/{dev,proc,sys,run}</line>
 				
