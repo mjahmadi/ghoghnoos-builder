@@ -215,11 +215,13 @@
 		    </action>
 		    
 	    	<action when="after" seq="2">
-		    	<line>umount -v $PROJECT_RFS/dev/pts</line>
-		    	<line>umount -v $PROJECT_RFS/dev</line>
-		    	<line>umount -v $PROJECT_RFS/run</line>
-		    	<line>umount -v $PROJECT_RFS/proc</line>
-		    	<line>umount -v $PROJECT_RFS/sys</line>
+		    	<line sudo="yes">umount -v $PROJECT__RFS/dev/pts</line>
+		    	<line sudo="yes">umount -v $PROJECT__RFS/dev</line>
+		    	<line sudo="yes">umount -v $PROJECT__RFS/run</line>
+		    	<line sudo="yes">umount -v $PROJECT__RFS/proc</line>
+		    	<line sudo="yes">umount -v $PROJECT__RFS/sys</line>
+		    	
+		    	<line>exit -q</line>
 	    	</action>
 		</entry>
 		
