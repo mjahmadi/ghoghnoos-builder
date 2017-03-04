@@ -1,0 +1,17 @@
+<config id="01">
+	<name>ghoghnoos</name>
+	<version>0.0.2</version>
+	<codename>robin</codename>
+	<type>live</type>
+	<subject>base</subject>
+	<arch>x86_64</arch>
+	<license>GPL</license>
+	<timezone>Asia/Tehran</timezone>
+	<users>
+		<user>
+			<username>root</username>
+			<password>123</password>
+		</user>
+	</users>
+</config>
+
