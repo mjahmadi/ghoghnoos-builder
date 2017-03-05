@@ -16,9 +16,6 @@
 	</users>
 	
 	<globals>
-		export CPPFLAGS="-I/tools/include"
-		export LDFLAGS="-L/tools/lib64"
-		
-		export PKG_CONFIG_PATH="/tools/lib64/pkgconfig"
+		export LC_ALL=POSIX
 	</globals>
 </config>
