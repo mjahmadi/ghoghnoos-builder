@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
 
 <build
-	name="ghoghnoos"
-	type="live"
-	subject="tools"
-	constructor="yes"
+	subject="base"
 	stage="02"
-	arch="x86_64"
-	version="0.0.2"
-	sudo="yes">
-
+	envpath="/tools/bin:/bin:/usr/bin"
+	chroot="yes">
+	
 	<phase seq="1">
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="before" seq="1">
@@ -19,31 +15,30 @@
 				<line verbos="yes">install -dv -m 1777 /tmp /var/tmp</line>
 				<line verbos="yes">mkdir -pv /usr/{,local/}{bin,include,lib,sbin,src}</line>
 				<line verbos="yes">mkdir -pv /usr/{,local/}share/{color,dict,doc,info,locale,man}</line>
-				<line verbos="yes">mkdir -v /usr/{,local/}share/{misc,terminfo,zoneinfo}</line>
-				<line verbos="yes">mkdir -v /usr/libexec</line>
+				<line verbos="yes">mkdir -pv /usr/{,local/}share/{misc,terminfo,zoneinfo}</line>
+				<line verbos="yes">mkdir -pv /usr/libexec</line>
 				<line verbos="yes">mkdir -pv /usr/{,local/}share/man/man{1..8}</line>
 				
 				<line verbos="yes">
 					case $(uname -m) in
-					x86_64) ln -sv lib /lib64
-							ln -sv lib /usr/lib64
-							ln -sv lib /usr/local/lib64 ;;
+						x86_64) ln -fsv lib /lib64
+								ln -fsv lib /usr/lib64
+								ln -fsv lib /usr/local/lib64 ;;
 					esac
 				</line>
 				
-				<line verbos="yes">mkdir -v /var/{log,mail,spool}</line>
-				<line verbos="yes">ln -sv /run /var/run</line>
-				<line verbos="yes">ln -sv /run/lock /var/lock</line>
+				<line verbos="yes">mkdir -pv /var/{log,mail,spool}</line>
+				<line verbos="yes">ln -fsv /run /var/run</line>
+				<line verbos="yes">ln -fsv /run/lock /var/lock</line>
 				<line verbos="yes">mkdir -pv /var/{opt,cache,lib/{color,misc,locate},local}</line>
 				
-				<line verbos="yes">ln -sv /tools/bin/{bash,cat,echo,pwd,stty} /bin</line>
-				<line verbos="yes">ln -sv /tools/bin/perl /usr/bin</line>
-				<line verbos="yes">ln -sv /tools/lib/libgcc_s.so{,.1} /usr/lib</line>
-				<line verbos="yes">ln -sv /tools/lib/libstdc++.so{,.6} /usr/lib</line>
+				<line verbos="yes">ln -fsv /tools/bin/{bash,cat,echo,pwd,stty} /bin</line>
+				<line verbos="yes">ln -fsv /tools/bin/perl /usr/bin</line>
+				<line verbos="yes">ln -fsv /tools/lib/libgcc_s.so{,.1} /usr/lib</line>
+				<line verbos="yes">ln -fsv /tools/lib/libstdc++.so{,.6} /usr/lib</line>
 				<line verbos="yes">sed 's/tools/usr/' /tools/lib/libstdc++.la > /usr/lib/libstdc++.la</line>
-				<line verbos="yes">ln -sv bash /bin/sh</line>
-				
-				<line verbos="yes">ln -sv /proc/self/mounts /etc/mtab</line>
+				<line verbos="yes">ln -fsv bash /bin/sh</line>
+				<line verbos="yes">ln -fsv /proc/self/mounts /etc/mtab</line>
 				<line verbos="yes">
 					cat > /etc/passwd &lt;&lt;-EOF
 					root:x:0:0:root:/root:/bin/bash
@@ -154,8 +149,7 @@
 
 				<line>
 					cat > /etc/welcome.txt &lt;&lt;-EOF
-					
-					##############################################################
+					#########################################################################
 					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
 					
 					Author: 
@@ -164,7 +158,7 @@
 					
 					Website:
 					    $PROJECT__WEBSITE
-					##############################################################
+					#########################################################################
 					
 					EOF
                 </line>

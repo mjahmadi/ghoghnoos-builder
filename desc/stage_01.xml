@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 
-<build subject="tools" stage="01" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
+<build
+	subject="tools"
+	stage="01"
+	envpath="/tools/bin:/bin:/usr/bin"
+	sudo="yes">
 	
 	<globals>
 		export CPPFLAGS="-I/tools/include"

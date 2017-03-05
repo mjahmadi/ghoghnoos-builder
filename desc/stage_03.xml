@@ -1,17 +1,10 @@
 <?xml version="1.0"?>
 
 <build 
-	name="ghoghnoos"
-	type="live"
 	subject="tools"
-	constructor="yes"
 	stage="01"
 	envpath="/tools/bin:/bin:/usr/bin"
-	arch="x86_64"
-	version="0.0.2"
-	sudo="yes"
-	chroot="yes"
-	timezone="Asia/Tehran">
+	chroot="yes">
 
 	<phase seq="1">
 	
