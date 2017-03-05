@@ -17,6 +17,7 @@ NORMAL_TXT=$(tput sgr0)
 # START EXECUTION TIME IN SEC
 exec__start_time=$(date +%s)
 
+# CHECK IF XML DESC FILE IS PASSED
 if [[ -z $1 ]]; then
 	echo -e "${RED}ERROR: Build descriptor file missing.${NORMAL}"
 	exit -1
@@ -25,16 +26,20 @@ elif [[ ! -s $1 ]]; then
 	exit -1
 fi
 
-XML_FILE=$1
-XML_STRING=$(cat $XML_FILE)
+
+# GET CONFIG XML STRING INTO A VAR
+XML_CONF_STRING=$(cat $(dirname $1)/config.xml)
+
+# GET DESC XML STRING INTO A VAR
+XML_DESC_STRING=$(cat $1)
 
 # FUNCTION TO GET XML DATA
 function xml_get_val
 {
-    echo "$XML_STRING" | xmlstarlet sel -t -v "$1" | xmlstarlet unesc
+	echo "$1" | xmlstarlet sel -t -v "$2" | xmlstarlet unesc
 }
 
-# FUNCTION TO EXEC COMMAND AS ROOT
+# FUNCTION TO EXEC COMMANDS AS ROOT
 function do_as_root
 {
 	if [[ $EUID = 0 ]]; then
@@ -47,34 +52,35 @@ function do_as_root
 }
 
 # CHECK IF RUNING IN CHROOT MODE AS ROOT
-chroot=$(xml_get_val "/build/@chroot")
+chroot=$(xml_get_val "$XML_DESC_STRING" "/build/@chroot")
 if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
 	echo -e "${RED}ERROR: Sorry, user root is not allowed to execute '$0'.${NORMAL}"
 	exit -1
 fi
 
 # SET USEFUL GLOBAL VARIABLES
-export PROJECT__NAME=$(xml_get_val "/build/@name")
-export PROJECT__TYPE=$(xml_get_val "/build/@type")
-export PROJECT__ARCH=$(xml_get_val "/build/@arch")
+export PROJECT__NAME=$(xml_get_val "$XML_CONF_STRING" "/config/name")
+export PROJECT__TYPE=$(xml_get_val "$XML_CONF_STRING" "/config/type")
+export PROJECT__ARCH=$(xml_get_val "$XML_CONF_STRING" "/config/arch")
 export PROJECT__HOST_ARCH=$(uname -m)
-export PROJECT__VERSION=$(xml_get_val "/build/@version")
-export PROJECT__CODENAME=$(xml_get_val "/build/@codename")
-export PROJECT__SUBJECT=$(xml_get_val "/build/@subject")
-export PROJECT__TIMEZONE=$(xml_get_val "/build/@timezone")
+export PROJECT__VERSION=$(xml_get_val "$XML_CONF_STRING" "/config/version")
+export PROJECT__CODENAME=$(xml_get_val "$XML_CONF_STRING" "/config/codename")
+export PROJECT__SUBJECT=$(xml_get_val "$XML_DESC_STRING" "/build/@subject")
+export PROJECT__TIMEZONE=$(xml_get_val "$XML_CONF_STRING" "/config/timezone")
 export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__ARCH-$PROJECT__CODENAME
 export PROJECT__TGT=$PROJECT__ARCH-$PROJECT__NAME-linux-gnu
-export PROJECT__USER=$(xml_get_val "/build/@user")
-export PROJECT__PASWD=$(xml_get_val "/build/@paswd")
-export PROJECT__VENDOR=$(xml_get_val "/build/@vendor")
+export PROJECT__USER=$(xml_get_val "$XML_CONF_STRING" "/config/user")
+export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/paswd")
+export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/vendor")
+export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
+
 export PROJECT__WEBSITE="https://github.com/mjahmadi/ghoghnoos-builder"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
-export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
 
 # CHECK IF NECESSARY GLOBAL VARIABLE EXISTS OR NOT
-if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__SUBJECT || -z $PROJECT__ARCH || -z $PROJECT__VERSION ]]; then
-	echo -e "${RED}ERROR: Project 'name/type/subject/arch/version' is missing.${NORMAL}"
+if [[ -z $PROJECT__NAME || -z $PROJECT__TYPE || -z $PROJECT__SUBJECT || -z $PROJECT__TGT || -z $PROJECT__ARCH || -z $PROJECT__VERSION ]]; then
+	echo -e "${RED}ERROR: Project 'name/type/subject/target/arch/version' is missing.${NORMAL}"
 	exit -1
 fi
 
@@ -85,7 +91,7 @@ if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $PROJECT__HOST_ARCH ]]; then
 fi
 
 # CHECK IF BUILD NEED'S SUDO
-if [[ $(xml_get_val "/build/@sudo") == 'yes' ]]; then
+if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
 	set +e
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
 	read -rs HOST_ROOT_PASS
@@ -128,7 +134,7 @@ else
 fi
 
 # SET GLOBAL PATH VARIABLES AND CREATE DIRECTORIES
-if [[ $(xml_get_val "/build/@constructor") = 'yes' ]]; then
+if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@constructor") = 'yes' ]]; then
 	export PROJECT__RFS=$(pwd)
 	export PROJECT__BLD=$PROJECT__RFS/build
 	export PROJECT__TOL=$PROJECT__RFS/tools
@@ -158,20 +164,23 @@ fi
 export LC_ALL=POSIX
 
 # SET PROJECT ALTERNATIVE PATH
-envpath=$(xml_get_val "/build/@envpath")
+envpath=$(xml_get_val "$XML_DESC_STRING" "/build/@envpath")
 if [[ -n $envpath ]]; then
 	export OLD_PATH=$PATH
 	export PATH=$(eval "echo -e "$envpath"")
 fi
 
-# GLOBAL VARIABLES
-eval "$(xml_get_val '/build/globals')"
+# SET/DEFINE GLOBAL VARIABLES IN CONFIG
+eval $(xml_get_val "$XML_CONFIG_STRING" '/config/globals')
+
+# SET/DEFINE GLOBAL VARIABLES IN DESC
+eval $(xml_get_val "$XML_DESC_STRING" '/build/globals')
 
 # BUILD >> PHASE
-phase_count=$(xml_get_val "count(/build/phase)")
+phase_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase)")
 for phase in `seq $phase_begin_from $phase_count`; do
     
-    phase_disabled=$(xml_get_val "/build/phase[$phase]/@disabled")
+    phase_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/@disabled")
     if [[ $phase_disabled == 'yes' ]]; then
         echo -e "${BOLD_TXT}\nphase --> '$phase'"
     	echo -e "phase is disabled!\n${NORMAL_TXT}"
@@ -179,13 +188,13 @@ for phase in `seq $phase_begin_from $phase_count`; do
     fi
     
     # BUILD >> PHASE >> ENTRY
-    entry_count=$(xml_get_val "count(/build/phase[$phase]/entry)")
+    entry_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry)")
     for entry in `seq $entry_begin_from $entry_count`; do
     
-    	entry_name=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@name")
-        entry_type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@type")
+    	entry_name=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@name")
+        entry_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@type")
         
-        entry_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@disabled")
+        entry_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@disabled")
         if [[ $entry_disabled == 'yes' ]]; then
         	echo -e "${BOLD_TXT}\nentry '$entry' is disabled!\n${NORMAL_TXT}"
         	continue
@@ -196,10 +205,10 @@ for phase in `seq $phase_begin_from $phase_count`; do
         fi
 		
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE]
-        entry_action_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
+        entry_action_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
         for action in `seq $action_begin_from $entry_action_count`; do
         
-			action_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/@disabled")
+			action_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/@disabled")
 			if [[ $action_disabled == 'yes' ]]; then
 				echo -e "${BOLD_TXT}\naction '$action' is disabled!\n${NORMAL_TXT}"
 				continue
@@ -209,19 +218,19 @@ for phase in `seq $phase_begin_from $phase_count`; do
 			fi
         
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
-        	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
+        	entry_action_line_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
         	for line in `seq $line_begin_from $entry_action_line_count`; do
         	
-				line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
+				line_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
 					echo -e "${BOLD_TXT}\nline '$line' is disabled!\n${NORMAL_TXT}"
 					continue
 				fi
 			
-		        sudo=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@sudo")
-		        verbos=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@verbos")
+		        sudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@sudo")
+		        verbos=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@verbos")
 	        	
-		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]")
+		        command=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]")
 		        
 		        if [[ $verbos == 'yes' ]]; then
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
@@ -237,15 +246,15 @@ for phase in `seq $phase_begin_from $phase_count`; do
         done
         
 		# BUILD >> PHASE >> ENTRY
-		cdto=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@cdto")
-		download=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@download")
-		extract=$(xml_get_val "/build/phase[$phase]/entry[$entry]/@extract")
-		link=$(xml_get_val "/build/phase[$phase]/entry[$entry]/link")
-		filename=$(xml_get_val "/build/phase[$phase]/entry[$entry]/filename")
-		directory=$(xml_get_val "/build/phase[$phase]/entry[$entry]/directory")
-		directory_base=$(xml_get_val "/build/phase[$phase]/entry[$entry]/directory/@base")
-		checksum=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum")
-		checksum_type=$(xml_get_val "/build/phase[$phase]/entry[$entry]/checksum/@type")
+		cdto=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@cdto")
+		download=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@download")
+		extract=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@extract")
+		link=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/link")
+		filename=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
+		directory=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory")
+		directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
+		checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
+		checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
         
         if [[ $download == 'yes' ]]; then
             echo -e "\nDownloading '$filename'"
@@ -312,10 +321,10 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		fi
         
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER]
-        entry_action_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='after'])")
+        entry_action_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='after'])")
         for action in `seq $action_begin_from $entry_action_count`; do
         
-			action_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/@disabled")
+			action_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/@disabled")
 			if [[ $action_disabled == 'yes' ]]; then
 				echo -e "${BOLD_TXT}\naction '$action' is disabled!\n${NORMAL_TXT}"
 				continue
@@ -325,19 +334,19 @@ for phase in `seq $phase_begin_from $phase_count`; do
 			fi
         
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
-        	entry_action_line_count=$(xml_get_val "count(/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line)")
+        	entry_action_line_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line)")
         	for line in `seq $line_begin_from $entry_action_line_count`; do
         	
-				line_disabled=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@disabled")
+				line_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
 					echo -e "${BOLD_TXT}\nline '$line' is disabled!\n${NORMAL_TXT}"
 					continue
 				fi
 			
-		        sudo=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@sudo")
-		        verbos=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@verbos")
+		        sudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@sudo")
+		        verbos=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@verbos")
 	        	
-		        command=$(xml_get_val "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]")
+		        command=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]")
 		        
 		        if [[ $verbos == 'yes' ]]; then
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
