@@ -597,7 +597,7 @@
 		    <checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">
-					./configure --prefix=/toolsn         \
+					./configure --prefix=/tools          \
 								--enable-shared          \
 								--with-system-expat      \
 								--enable-unicode=ucs4
@@ -654,46 +654,13 @@
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
-		
-		<entry name="nettle-3.2" type="package/src" seq="10" cdto="yes" download="yes" extract="yes">
-			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
-		    <filename>nettle-3.2.tar.gz</filename>
-		    <version>3.2</version>
-		    <checksum type="md5">075a3699cbab48ffa2ea6f9aad91e123</checksum>
-            <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=/tools --disable-static</line>
-                <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">chmod -v 755 /tools/lib64/libnettle.so</line>
-            </action>
-		</entry>
-		
-		<entry name="gnutls-3.5.3" type="package/src" seq="1" cdto="yes" download="yes" extract="yes">
-			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
-		    <filename>gnutls-3.5.3.tar.xz</filename>
-		    <version>3.5.3</version>
-		    <checksum type="md5">6c2c7f40ddf52933ee3ca474cb8cb63c</checksum>
-            <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=/tools/usr --with-default-trust-store-file=/tools/etc/ssl/ca-bundle.crt</line>
-                <line verbos="yes">make &amp;&amp; make install</line>
-            </action>
-		</entry>
-		
-		<entry name="wget-1.18" type="package/src" seq="2" cdto="yes" download="yes" extract="yes">
-			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
-		    <filename>wget-1.18.tar.xz</filename>
-		    <version>1.18</version>
-		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
-            <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=/tools/usr --sysconfdir=/tools/etc</line>
-                <line verbos="yes">make</line>
-                <line verbos="yes">make install</line>
-            </action>
-		</entry>
+
 	</phase>
 	
 	
 	
 	<phase seq="3">
+	
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="before" seq="1">
 				<line sudo="yes">rm -rf $PROJECT__BLD/*</line>
@@ -707,7 +674,7 @@
 			</action>
 			
 			<action when="before" seq="2">
-				<line sudo="yes">#chown -R root:root /tools</line>
+				<line sudo="yes">chown -R root:root /tools</line>
 				
 				<line>mkdir -pv $PROJECT__RFS/{dev,proc,sys,run}</line>
 				
@@ -726,6 +693,7 @@
 					fi
 				</line>
 			</action>
+			
 		</entry>
 		
 	</phase>
