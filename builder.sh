@@ -93,6 +93,7 @@ fi
 # CHECK IF BUILD NEED'S SUDO
 if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
 	set +e
+	
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
 	read -rs HOST_ROOT_PASS
 	sudo -k
@@ -136,7 +137,7 @@ else
 fi
 
 # SET GLOBAL PATH VARIABLES AND CREATE DIRECTORIES
-if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@constructor") = 'yes' ]]; then
+if [[ $(xml_get_val "$XML_CONF_STRING" "/config/constructor") = 'yes' ]]; then
 	export PROJECT__RFS=$(pwd)
 	export PROJECT__BLD=$PROJECT__RFS/build
 	export PROJECT__TOL=$PROJECT__RFS/tools
@@ -163,7 +164,6 @@ fi
 if [[ ! -z "/proc/cpuinfo " ]]; then
 	export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
 fi
-export LC_ALL=POSIX
 
 # SET PROJECT ALTERNATIVE PATH
 envpath=$(xml_get_val "$XML_DESC_STRING" "/build/@envpath")
@@ -173,7 +173,7 @@ if [[ -n $envpath ]]; then
 fi
 
 # SET/DEFINE GLOBAL VARIABLES IN CONFIG
-eval $(xml_get_val "$XML_CONFIG_STRING" '/config/globals')
+eval $(xml_get_val "$XML_CONF_STRING" '/config/globals')
 
 # SET/DEFINE GLOBAL VARIABLES IN DESC
 eval $(xml_get_val "$XML_DESC_STRING" '/build/globals')
