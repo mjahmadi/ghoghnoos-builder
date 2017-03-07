@@ -1,17 +1,23 @@
 <config id="01">
 	<name>ghoghnoos</name>
 	<version>0.0.2</version>
-	<codename>robin</codename>
+	<codename>bahar</codename>
+	<family>GNU/LINUX</family>
 	<type>live</type>
-	<subject>base</subject>
 	<arch>x86_64</arch>
-	<license>GPL</license>
+	<license>GPL-3.0</license>
 	<timezone>Asia/Tehran</timezone>
+	<constructor>yes</constructor>
+	
 	<users>
 		<user>
 			<username>root</username>
-			<password>123</password>
+			<password checksum="md5">root</password>
 		</user>
 	</users>
+	
+	<globals>
+		export LC_ALL=POSIX
+	</globals>
 </config>
 
