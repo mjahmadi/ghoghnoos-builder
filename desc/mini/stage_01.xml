@@ -1,21 +1,17 @@
 <?xml version="1.0"?>
 
-<build
-	name="ghoghnoos"
-	type="live"
-	subject="base"
-	stage="01"
-	username="root"
-	password="123"
-	in-chroot="yes"
-	arch="x86_64"
-	version="0.0.2"
-	codename="robin"
-	timezone="Asia/Tehran">
+<build subject="filesystem" stage="01" sudo="yes">
 	
-	<phase seq="2" comment="Root file system">
-	
-		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
+	<phase seq="2">
+		
+		<entry type="script/bash" seq="1">
+			<action when="before" seq="1">
+				<line sudo="yes">rm -f /tools</line>
+				<line sudo="yes">ln -fsv $PROJECT__TOL /</line>
+			</action>
+		</entry>
+		
+		<entry type="script/bash" seq="2">
 			<action when="after" seq="1">
 				<line>mkdir -v -p $PROJECT__RFS/bin</line>
 				<line>mkdir -v -p $PROJECT__RFS/sbin</line>
@@ -25,6 +21,7 @@
 				<line>mkdir -v -p $PROJECT__RFS/dev</line>
 				<line>mkdir -v -p $PROJECT__RFS/etc/profile.d</line>
 				<line>mkdir -v -p $PROJECT__RFS/lib</line>
+				<line>ln -fvs ./lib $PROJECT__RFS/lib64</line>
 				<line>mkdir -v -p $PROJECT__RFS/srv</line>
 				<line>mkdir -v -p $PROJECT__RFS/var</line>
 				<line>mkdir -v -p $PROJECT__RFS/proc</line>
@@ -41,7 +38,7 @@
 					#if [[ "$(uname -m)" == "x86_64" ]]; then
 					#	mkdir -v -p $PROJECT__RFS/lib64
 					#else
-					    ln -s ./lib $PROJECT__RFS/lib64
+					#    ln -s ./lib $PROJECT__RFS/lib64
 					#fi
 				</line>
 				
