@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config id="01">
+
+	<name>Ghoghnoos</name>
+	<version></version>
+	<codename></codename>
+	<family>GNU/LINUX</family>
+	<type>live</type>
+	<arch>x86_64</arch>
+	<hostname>Ghoghnoos-x86_64</hostname>
+	<timezone>Asia/Tehran</timezone>
+	<constructor>yes</constructor>
+	
+	<license>GPL-3.0</license>
+	
+	<users>
+		<user>
+			<username>root</username>
+			<password hash="md5">root</password>
+		</user>
+	</users>
+	
+	<globals>
+		export LC_ALL=POSIX
+	</globals>
+	
+</config>
+
