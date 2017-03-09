@@ -7,10 +7,11 @@
 	<family>GNU/LINUX</family>
 	<type>live</type>
 	<arch>x86_64</arch>
-	<license>GPL-3.0</license>
 	<hostname>$PROJECT__NAME-$PROJECT__ARCH</hostname>
 	<timezone>Asia/Tehran</timezone>
 	<constructor>yes</constructor>
+	
+	<license>GPL-3.0</license>
 	
 	<users>
 		<user>
