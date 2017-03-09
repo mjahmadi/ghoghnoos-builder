@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config id="01">
 
-	<name>Ghoghnoos</name>
-	<version></version>
-	<codename></codename>
+	<name>ghoghnoos</name>
+	<version>0.0.2</version>
+	<codename>bahar</codename>
 	<family>GNU/LINUX</family>
 	<type>live</type>
 	<arch>x86_64</arch>
-	<hostname>Ghoghnoos-x86_64</hostname>
+	<hostname>$PROJECT__NAME-$PROJECT__ARCH</hostname>
 	<timezone>Asia/Tehran</timezone>
 	<constructor>yes</constructor>
 	
