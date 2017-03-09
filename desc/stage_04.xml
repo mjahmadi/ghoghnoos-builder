@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<build name="minux" type="live" subject="base" stage="03" constructor="yes" in-chroot="yes" arch="x86_64" version="0.0.2" hostname="$PROJECT_NAME-$PROJECT_ARCH" timezone="Asia/Tehran">
+<build subject="config" stage="04" chroot="yes">
 
 	<phase seq="1">
 	
-	    <entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
+	    <entry type="script/bash" seq="1">
 	    	<action when="after" seq="1">
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/systemd/network/10-eth0-static.network &lt;&lt;-EOF
