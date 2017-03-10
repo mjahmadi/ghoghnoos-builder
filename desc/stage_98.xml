@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<build subject="removing" stage="98">
+
+	<phase seq="1">
+	
+		<entry type="script/bash" seq="2">
+			<action when="after" seq="1">
+				<line>echo -e "\n\nRemoving unnecessary files...\n"</line>
+				
+				<line>rm -f $PROJECT__RFS/usr/lib/lib{bfd,opcodes}.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/libbz2.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/libltdl.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/libfl.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/libfl_pic.a</line>
+				<line>rm -f $PROJECT__RFS/usr/lib/libz.a</line>
+				
+				<line>rm -rf $PROJECT__RFS/tmp/*</line>
+				
+				<line>rm -rf $PROJECT__BLD</line>
+				<line>rm -rf $PROJECT__TOL</line>
+			</action>
+		    
+			<action when="after" seq="2">
+				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
+				
+				<line sudo="yes">umount -v $PROJECT__RFS/dev/pts</line>
+				<line sudo="yes">umount -v $PROJECT__RFS/dev</line>
+				<line sudo="yes">umount -v $PROJECT__RFS/run</line>
+				<line sudo="yes">umount -v $PROJECT__RFS/proc</line>
+				<line sudo="yes">umount -v $PROJECT__RFS/sys</line>
+			</action>
+		</entry>
+				
+	</phase>
+	
+</build>
+

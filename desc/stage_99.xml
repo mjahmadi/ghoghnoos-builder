@@ -1,78 +1,49 @@
 <?xml version="1.0"?>
 
-<build subject="packing" stage="99" chroot="yes">
+<build subject="packing" stage="99">
 
 	<phase seq="1">
 	
-		<entry type="script/bash" seq="2">
-			<action when="after" seq="1">
-				<line>echo -e "\n\nRemoving unnecessary files...\n"</line>
-				
-				<line>rm -f $PROJECT__RFS/usr/lib/lib{bfd,opcodes}.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/libbz2.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/libltdl.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/libfl.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/libfl_pic.a</line>
-				<line>rm -f $PROJECT__RFS/usr/lib/libz.a</line>
-				
-				<line>rm -rf $PROJECT__RFS/tmp/*</line>
-				
-				<line>rm -rf $PROJECT__BLD</line>
-				<line>rm -rf $PROJECT__TOL</line>
-			</action>
-		    
-			<action when="after" seq="2">
-				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
-				
-				<line sudo="yes">umount -v $PROJECT__RFS/dev/pts</line>
-				<line sudo="yes">umount -v $PROJECT__RFS/dev</line>
-				<line sudo="yes">umount -v $PROJECT__RFS/run</line>
-				<line sudo="yes">umount -v $PROJECT__RFS/proc</line>
-				<line sudo="yes">umount -v $PROJECT__RFS/sys</line>
-				
-				<line>exit -q</line>
-			</action>
-		</entry>
-		
-	    <entry type="script/bash" seq="3">
-            <action when="after" seq="3">
-                <line>echo -e "\n\nPackaging root filesystem...\n"</line>
-                
-                <line>rm -f $PROJECT__ISODIR/rootfs.cpio.gz</line>
-                <line>cd $PROJECT__RFS</line>
-                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
-            </action>
-            
-            <action when="after" seq="3">
-				<line>echo -e "\n\nMaking bootable iso file...\n"</line>
-				
-				<line>rm -rf $PROJECT__ISODIR/isoimage</line>
-				<line>mkdir -v $PROJECT__ISODIR/isoimage</line>
-				<line>cd $PROJECT__ISODIR/isoimage</line>
-				
-				<line>
-					for i in lib lib64 share end ; do
-						if [ -f /usr/$i/syslinux/isolinux.bin ]; then
-							cp /usr/$i/syslinux/isolinux.bin .
-							if [ -f /usr/$i/syslinux/ldlinux.c32 ]; then
-								cp /usr/$i/syslinux/ldlinux.c32 .
+		<entry type="script/bash" seq="3">
+	            <action when="after" seq="3">
+	                <line>echo -e "\n\nPackaging root filesystem...\n"</line>
+	                
+	                <line>rm -rf $PROJECT__ISODIR</line>
+	                <line>mkdir -vp $PROJECT__ISODIR</line>
+	                
+	                <line>cd $PROJECT__RFS</line>
+	                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
+	            </action>
+	            
+	            <action when="after" seq="3">
+					<line>echo -e "\n\nMaking bootable iso file...\n"</line>
+					
+					<line>rm -rf $PROJECT__ISODIR/isoimage</line>
+					<line>mkdir -v $PROJECT__ISODIR/isoimage</line>
+					<line>cd $PROJECT__ISODIR/isoimage</line>
+					
+					<line>
+						for i in lib lib64 share end ; do
+							if [ -f /usr/$i/syslinux/isolinux.bin ]; then
+								cp /usr/$i/syslinux/isolinux.bin .
+								if [ -f /usr/$i/syslinux/ldlinux.c32 ]; then
+									cp /usr/$i/syslinux/ldlinux.c32 .
+								fi;
+								break;
 							fi;
-							break;
-						fi;
-						if [ $i = end ]; then exit 1; fi;
-					done
-				</line>
+							if [ $i = end ]; then exit 1; fi;
+						done
+					</line>
+					
+					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
+					<line>echo 'default vmlinuz-4.4.6-ghoghnoos-0.0.1-systemd initrd=rootfs.gz' > ./isolinux.cfg</line>
+					<line>genisoimage -J -r -o $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
+					<line>isohybrid $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
+					
+					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
+	            </action>
+       		</entry>
 				
-				<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
-				<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
-				<line>genisoimage -J -r -o $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
-				<line>isohybrid $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
-				
-				<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
-            </action>
-       	</entry>
-		
 	</phase>
 	
 </build>

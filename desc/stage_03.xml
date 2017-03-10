@@ -258,8 +258,7 @@
 						--disable-bootstrap               \
 						--with-system-zlib
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 
 				<line verbos="yes">ln -sv ../usr/bin/cpp /lib</line>
 				<line verbos="yes">ln -sv gcc /usr/bin/cc</line>
@@ -306,8 +305,7 @@
 						--disable-host-tool                        \
 						--docdir=/usr/share/doc/pkg-config-0.29.1
             	</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
@@ -327,8 +325,7 @@
 						--enable-pc-files         \
 						--enable-widec
             	</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/lib64/libncursesw.so.6* /lib64</line>
 				<line verbos="yes">ln -sfv ../../lib64/$(readlink /usr/lib64/libncursesw.so) /usr/lib64/libncursesw.so</line>
 				<line verbos="yes">
@@ -432,8 +429,7 @@
 				<line verbos="yes">sed -i -e 's@#ENCRYPT_METHOD DES@ENCRYPT_METHOD SHA512@' -e 's@/var/spool/mail@/var/mail@' etc/login.defs</line>
 				<line verbos="yes">sed -i 's/1000/999/' etc/useradd</line>
 				<line verbos="yes">./configure --sysconfdir=/etc --with-group-name-max-length=32</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/bin/passwd /bin</line>
 				
 				
@@ -449,8 +445,7 @@
 		    <checksum type="md5">935c0fd6eb208288262b385fa656f1bf</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/bin/fuser /bin</line>
 				<line verbos="yes">mv -v /usr/bin/killall /bin</line>
 			</action>
@@ -461,8 +456,7 @@
 		    <version>2.30</version>
 		    <checksum type="md5">3ba3afb1d1b261383d247f46cb135ee8</checksum>
             <action when="after" seq="1">
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -472,8 +466,7 @@
 		    <checksum type="md5">12a3c829301a4fd6586a57d3fcf196dc</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -487,8 +480,7 @@
 						--prefix=/usr                           \
 						--docdir=/usr/share/doc/bison-3.0.4
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -502,8 +494,7 @@
 						--prefix=/usr                        \
 						--docdir=/usr/share/doc/flex-2.6.1
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line>ln -sv flex /usr/bin/lex</line>
 			</action>
 		</entry>
@@ -514,8 +505,7 @@
 		    <checksum type="md5">04e96b0e6f0fe6a180ae62c88fcd0af6</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --bindir=/bin</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line></line>
 			</action>
 		</entry>
@@ -558,8 +548,7 @@
 						--without-bash-malloc                \
 						--with-installed-readline
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -vf /usr/bin/bash /bin</line>
 				<line verbos="yes">ln -sf ./bash /bin/sh</line>
 			</action>
@@ -578,8 +567,7 @@
 						--mandir=/usr/share/man    \
 						--infodir=/usr/share/info
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -589,8 +577,7 @@
 		    <checksum type="md5">1bfb9b923f2c1339b4d2ce1807064aa5</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -605,8 +592,7 @@
 						--disable-static         \
 						--enable-libgdbm-compat
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -616,8 +602,7 @@
 		    <checksum type="md5">c1f1db32fb6598d6a93e6e88796a8632</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.0.4</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -627,8 +612,7 @@
 		    <checksum type="md5">2f47841c829facb346eb6e3fab5212e2</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">install -v -dm755 /usr/share/doc/expat-2.2.0</line>
 				<line verbos="yes">install -v -m644 doc/*.{html,png,css} /usr/share/doc/expat-2.2.0</line>
@@ -652,8 +636,7 @@
 						--disable-rsh           \
 						--disable-servers
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">mv -v /usr/bin/{hostname,ping,ping6,traceroute} /bin</line>
 				<line verbos="yes">mv -v /usr/bin/ifconfig /sbin</line>
@@ -678,8 +661,7 @@
 						-Dpager="/usr/bin/less -isR"    \
 						-Duseshrplib
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">unset BUILD_ZLIB BUILD_BZIP2</line>
 			</action>
 		</entry>
@@ -690,8 +672,7 @@
 		    <checksum type="md5">af4813fe3952362451201ced6fbce379</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">perl Makefile.PL</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -702,8 +683,7 @@
             <action when="after" seq="1">
             	<line verbos="yes">sed -i 's:\\\${:\\\$\\{:' intltool-update.in</line>
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">install -v -Dm644 doc/I18N-HOWTO /usr/share/doc/intltool-0.51.0/I18N-HOWTO</line>
 			</action>
 		</entry>
@@ -714,8 +694,7 @@
 		    <checksum type="md5">50f97f4159805e374639a73e2636f22e</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=$PROJECT__RFS/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -730,8 +709,7 @@
 						--prefix=/usr                           \
 						--docdir=/usr/share/doc/automake-1.15
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -747,8 +725,7 @@
 						--disable-static                   \
 						--docdir=/usr/share/doc/xz-5.2.2
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">mv -v /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin</line>
 				<line verbos="yes">mv -v /usr/lib/liblzma.so.* /lib</line>
@@ -770,8 +747,7 @@
 						--with-xz                \
 						--with-zlib
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">
 					for target in depmod insmod lsmod modinfo modprobe rmmod; do
@@ -793,8 +769,7 @@
 						--disable-static                           \
 						--docdir=/usr/share/doc/gettext-0.19.8.1
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">chmod -v 0755 /usr/lib/preloadable_libintl.so</line>
 			</action>
@@ -875,8 +850,7 @@
 						--disable-kill                              \
 						--with-systemd
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">mv -v /usr/lib/libprocps.so.* /lib</line>
 				<line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libprocps.so) /usr/lib/libprocps.so</line>
@@ -904,8 +878,7 @@
 						--disable-uuidd                     \
 						--disable-fsck
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line verbos="yes">make install-libs</line>
 				<line verbos="yes">chmod -v u+w /usr/lib/{libcom_err,libe2p,libext2fs,libss}.a</line>
@@ -940,8 +913,7 @@
             <action when="after" seq="1">
             	<line verbos="yes">sed -i 's:= @mkdir_p@:= /bin/mkdir -p:' po/Makefile.in.in</line>
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				
 				<line>set +e</line>
 				
@@ -963,8 +935,7 @@
 		    <checksum type="md5">97f8f44149ea9b9e94be97f68988be87</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -974,8 +945,7 @@
 		    <checksum type="md5">9936aa8009438ce185bea2694a997fc1</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/bin/find /bin</line>
 				<line verbos="yes">sed -i 's|find:=${BINDIR}|find:=/bin|' /usr/bin/updatedb</line>
 			</action>
@@ -987,8 +957,7 @@
 		    <checksum type="md5">cc825fa64bc7306a885f2fb2268d3ec5</checksum>
             <action when="after" seq="1">
 				<line verbos="yes">PAGE='A4' ./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1005,8 +974,7 @@
 						--disable-efiemu    \
 						--disable-werror
 				</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1016,8 +984,7 @@
 		    <checksum type="md5">50ef46065c65257141a7340123527767</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1027,8 +994,7 @@
 		    <checksum type="md5">f7caabb65cddc1a4165b398009bd05b9</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/bin/gzip /bin</line>
 			</action>
 		</entry>
@@ -1053,8 +1019,7 @@
             <action when="after" seq="1">
             	<line verbos="yes">patch -Np1 -i $PROJECT__PKG/kbd-2.0.3-backspace-1.patch</line>
 				<line verbos="yes">PKG_CONFIG_PATH=/tools/lib/pkgconfig ./configure --prefix=/usr --disable-vlock</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1064,8 +1029,7 @@
 		    <checksum type="md5">e54590ec68d6c1239f67b5b44e92022c</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1075,8 +1039,7 @@
 		    <checksum type="md5">15b012617e7c44c0ed482721629577ac</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1086,8 +1049,7 @@
 		    <checksum type="md5">e3da7940431633fb65a01b91d3b7a27a</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1107,8 +1069,7 @@
 						--docdir=/usr/share/doc/dbus-1.10.10    \
 						--with-console-auth-dir=/run/console
             	</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/lib/libdbus-1.so.* /lib</line>
 				<line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</line>
 				<line verbos="yes">ln -sfv /etc/machine-id /var/lib/dbus</line>
@@ -1135,8 +1096,7 @@
 						--without-python                                \
 						--enable-libmount-force-mountinfo
             	</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
@@ -1156,8 +1116,7 @@
 						--with-vgrind=/usr/bin/vgrind           \
 						--with-grap=/usr/bin/grap
             	</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">sed -i "s:man root:root root:g" /usr/lib/tmpfiles.d/man-db.conf</line>
 			</action>
 		</entry>
@@ -1168,8 +1127,7 @@
 		    <checksum type="md5">a1802fec550baaeecff6c381629653ef</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr --bindir=/bin</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">make -C doc install-html docdir=/usr/share/doc/tar-1.29</line>
 			</action>
 		</entry>
@@ -1180,72 +1138,71 @@
 		    <checksum type="md5">1d7ec1888fae00730693597852b00cde</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">./configure --prefix=/usr --disable-static</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">make TEXMF=/usr/share/texmf install-tex</line>
 			</action>
 		</entry>
 		
-		<entry name="libgpg-error-1.26" type="package/src" seq="62" cdto="yes" download="yes" extract="yes">
+		<entry name="libgpg-error-1.26" type="package/src" seq="62" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-1.26.tar.bz2</link>
 		    <filename>libgpg-error-1.26.tar.bz2</filename>
 		    <version>1.26</version>
 		    <checksum type="md5">97456709dbbcbb69354317ffe3e347cd</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=/tools</line>
+            	<line verbos="yes">./configure --prefix=/usr</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
-		<entry name="libgcrypt-1.7.3" type="package/src" seq="63" cdto="yes" download="yes" extract="yes">
+		<entry name="libgcrypt-1.7.3" type="package/src" seq="63" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.7.3.tar.bz2</link>
 		    <filename>libgcrypt-1.7.3.tar.bz2</filename>
 		    <version>1.7.3</version>
 		    <checksum type="md5">c869e542cc13a1c28d8055487bf7f5c4</checksum>
             <action when="after" seq="1">
-            	<line verbos="yes">./configure --prefix=/tools</line>
+            	<line verbos="yes">./configure --prefix=/usr</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
 		
-		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="64" cdto="yes" download="yes" extract="yes">
+		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="64" cdto="yes" download="no" extract="yes">
 			<link>https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</link>
 		    <filename>Python-2.7.12.tar.xz</filename>
 		    <version>2.7.12</version>
 		    <checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">
-					./configure --prefix=/tools          \
+					./configure  --prefix=/usr           \
 								--enable-shared          \
 								--with-system-expat      \
 								--enable-unicode=ucs4
             	</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">chmod -v 755 /tools/lib/libpython2.7.so.1.0</line>
+                <line verbos="yes">chmod -v 755 /usr/lib/libpython2.7.so.1.0</line>
             </action>
 		</entry>
 		
-		<entry name="libxml2-2.9.4" type="package/src" seq="65" cdto="yes" download="yes" extract="yes">
+		<entry name="libxml2-2.9.4" type="package/src" seq="65" cdto="yes" download="no" extract="yes">
 			<link>http://xmlsoft.org/sources/libxml2-2.9.4.tar.gz</link>
 		    <filename>libxml2-2.9.4.tar.gz</filename>
 		    <version>2.9.4</version>
 		    <checksum type="md5">ae249165c173b1ff386ee8ad676815f5</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
-				<line verbos="yes">./configure --prefix=/tools --disable-static --with-history</line>
+				<line verbos="yes">./configure --prefix=/usr --disable-static --with-history</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">cp -R /tools/include/libxml2/libxml /tools/include/</line>
+                <line verbos="yes">cp -R /usr/include/libxml2/libxml /usr/include/</line>
             </action>
 		</entry>
 		
-		<entry name="libxslt-1.1.29" type="package/src" seq="66" cdto="yes" download="yes" extract="yes">
+		<entry name="libxslt-1.1.29" type="package/src" seq="66" cdto="yes" download="no" extract="yes">
 			<link>http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz</link>
 		    <filename>libxslt-1.1.29.tar.gz</filename>
 		    <version>1.1.29</version>
 		    <checksum type="md5">a129d3c44c022de3b9dcf6d6f288d72e</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
-				<line verbos="yes">./configure --prefix=/tools --disable-static</line>
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>
@@ -1256,9 +1213,9 @@
 		    <version>1.6.1</version>
 		    <checksum type="md5">f3c5dfa3b1a2ee06cd57c255cc8b70a0</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=/tools --enable-ipv6=no</line>
+                <line verbos="yes">./configure --prefix=/usr --enable-ipv6=no</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                <line verbos="yes">ln -sf ./xml /tools/bin/xmlstarlet</line>
+                <line verbos="yes">ln -sf ./xml /usr/bin/xmlstarlet</line>
             </action>
 		</entry>
 
@@ -1269,8 +1226,7 @@
             <action when="after" seq="1">
             	<line verbos="yes">echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h</line>
             	<line verbos="yes">./configure --prefix=/usr --disable-static</line>
-				<line verbos="yes">make</line>
-				<line verbos="yes">make install</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">ln -sv vim /usr/bin/vi</line>
 				<line verbos="yes">
 					for L in /usr/share/man/{,*/}man1/vim.1; do
@@ -1300,7 +1256,7 @@
 		    <checksum type="md5">efc822dad2149e40cc908718a4fea1d3</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">make mrproper</line>
-				<line verbos="yes">make menuconfig</line>
+				<line verbos="yes">make defconfig</line>
 				<line verbos="yes">make</line>
 				<line verbos="yes">make modules_install</line>
 				
