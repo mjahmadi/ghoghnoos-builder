@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="base" stage="03" envpath="/bin:/usr/bin:/tools/bin" chroot="yes">
+<build subject="base" stage="03" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" chroot="yes">
 
 	<phase seq="1">
 	
@@ -98,8 +98,7 @@
                 <line>ZONEINFO=/usr/share/zoneinfo</line>
                 <line>mkdir -pv $ZONEINFO/{posix,right}</line>
                 <line>
-					for tz in etcetera southamerica northamerica europe africa antarctica \
-						asia australasia backward pacificnew systemv; do
+					for tz in etcetera southamerica northamerica europe africa antarctica asia australasia backward pacificnew systemv; do
 						zic -L /dev/null -d $ZONEINFO -y "sh yearistype.sh" ${tz}
 						zic -L /dev/null -d $ZONEINFO/posix -y "sh yearistype.sh" ${tz}
 						zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${tz}
@@ -111,27 +110,21 @@
             </action>
             
             <action when="after" seq="5" comment="Selecting timezone">
-                <line verbos="yes">ln -sfv /usr/share/zoneinfo/$PROJECT__TMZ /etc/localtime</line>
+                <line verbos="yes">ln -sfv /usr/share/zoneinfo/$PROJECT__TIMEZONE /etc/localtime</line>
             </action>
             
-            <action when="after" seq="6" comment="Configuring the Dynamic Loader">
-            	<line verbos="yes">
+			<action when="after" seq="6" comment="Configuring the Dynamic Loader">
+				<line verbos="yes">
 					cat > /etc/ld.so.conf &lt;&lt;-EOF
 					# Begin /etc/ld.so.conf
 					/usr/local/lib
 					/opt/lib
-				
-					EOF
-				</line>
-				<line verbos="yes">
-					cat >> /etc/ld.so.conf &lt;&lt;-EOF
 					# Add an include directory
 					include /etc/ld.so.conf.d/*.conf
-				
 					EOF
 				</line>
 				<line>mkdir -pv /etc/ld.so.conf.d</line>
-            </action>
+			</action>
             
             <action when="after" seq="7" comment="Adjusting the Toolchain">
                 <line>mv -v /tools/bin/{ld,ld-old}</line>
