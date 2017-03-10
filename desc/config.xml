@@ -10,6 +10,7 @@
 	<hostname>$PROJECT__NAME-$PROJECT__ARCH</hostname>
 	<timezone>Asia/Tehran</timezone>
 	<constructor>yes</constructor>
+	<isodir>$HOME/$PROJECT__NAME-$PROJECT__ARCH/isodir</isodir>
 	
 	<license>GPL-3.0</license>
 	

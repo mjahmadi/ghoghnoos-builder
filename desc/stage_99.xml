@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<build name="minux" type="live" subject="base" stage="03" constructor="yes" in-chroot="yes" arch="x86_64" version="0.0.2" hostname="$PROJECT_NAME-$PROJECT_ARCH" timezone="Asia/Tehran">
+<build subject="packing" stage="99" chroot="yes">
 
 	<phase seq="1">
 	
-		<entry type="script/bash" seq="2" cdto="no" download="no" extract="no">
+		<entry type="script/bash" seq="2">
 			<action when="after" seq="1">
 				<line>echo -e "\n\nRemoving unnecessary files...\n"</line>
 				
@@ -17,6 +17,9 @@
 				<line>rm -f $PROJECT__RFS/usr/lib/libz.a</line>
 				
 				<line>rm -rf $PROJECT__RFS/tmp/*</line>
+				
+				<line>rm -rf $PROJECT__BLD</line>
+				<line>rm -rf $PROJECT__TOL</line>
 			</action>
 		    
 			<action when="after" seq="2">
@@ -32,21 +35,21 @@
 			</action>
 		</entry>
 		
-	    <entry type="script/bash" seq="3" cdto="no" download="no" extract="no">
+	    <entry type="script/bash" seq="3">
             <action when="after" seq="3">
                 <line>echo -e "\n\nPackaging root filesystem...\n"</line>
                 
-                <line>rm -f $PROJECT__DIR/rootfs.cpio.gz</line>
+                <line>rm -f $PROJECT__ISODIR/rootfs.cpio.gz</line>
                 <line>cd $PROJECT__RFS</line>
-                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__DIR/rootfs.cpio.gz</line>
+                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
             </action>
             
             <action when="after" seq="3">
 				<line>echo -e "\n\nMaking bootable iso file...\n"</line>
 				
-				<line>rm -rf $PROJECT__DIR/isoimage</line>
-				<line>mkdir -v $PROJECT__DIR/isoimage</line>
-				<line>cd $PROJECT__DIR/isoimage</line>
+				<line>rm -rf $PROJECT__ISODIR/isoimage</line>
+				<line>mkdir -v $PROJECT__ISODIR/isoimage</line>
+				<line>cd $PROJECT__ISODIR/isoimage</line>
 				
 				<line>
 					for i in lib lib64 share end ; do
@@ -61,13 +64,12 @@
 					done
 				</line>
 				
-				<line>cp $PROJECT__BLD/linux-4.4.6/arch/$PROJECT__ARCH/boot/bzImage ./kernel.bz</line>
-				<line>mv $PROJECT__DIR/rootfs.cpio.gz ./rootfs.gz</line>
+				<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
 				<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
-				<line>genisoimage -J -r -o $PROJECT__DIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
-				<line>isohybrid $PROJECT__DIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
+				<line>genisoimage -J -r -o $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
+				<line>isohybrid $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
 				
-				<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__DIR/isoimage/$PROJECT__ISONAME\n"</line>
+				<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
             </action>
        	</entry>
 		

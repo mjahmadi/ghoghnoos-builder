@@ -1186,7 +1186,83 @@
 			</action>
 		</entry>
 		
-		<entry name="vim-7.4" type="package/src" seq="62" cdto="yes" download="no" extract="yes">
+		<entry name="libgpg-error-1.26" type="package/src" seq="62" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-1.26.tar.bz2</link>
+		    <filename>libgpg-error-1.26.tar.bz2</filename>
+		    <version>1.26</version>
+		    <checksum type="md5">97456709dbbcbb69354317ffe3e347cd</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libgcrypt-1.7.3" type="package/src" seq="63" cdto="yes" download="yes" extract="yes">
+			<link>ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.7.3.tar.bz2</link>
+		    <filename>libgcrypt-1.7.3.tar.bz2</filename>
+		    <version>1.7.3</version>
+		    <checksum type="md5">c869e542cc13a1c28d8055487bf7f5c4</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">./configure --prefix=/tools</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="64" cdto="yes" download="yes" extract="yes">
+			<link>https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</link>
+		    <filename>Python-2.7.12.tar.xz</filename>
+		    <version>2.7.12</version>
+		    <checksum type="md5">57dffcee9cee8bb2ab5f82af1d8e9a69</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">
+					./configure --prefix=/tools          \
+								--enable-shared          \
+								--with-system-expat      \
+								--enable-unicode=ucs4
+            	</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">chmod -v 755 /tools/lib/libpython2.7.so.1.0</line>
+            </action>
+		</entry>
+		
+		<entry name="libxml2-2.9.4" type="package/src" seq="65" cdto="yes" download="yes" extract="yes">
+			<link>http://xmlsoft.org/sources/libxml2-2.9.4.tar.gz</link>
+		    <filename>libxml2-2.9.4.tar.gz</filename>
+		    <version>2.9.4</version>
+		    <checksum type="md5">ae249165c173b1ff386ee8ad676815f5</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
+				<line verbos="yes">./configure --prefix=/tools --disable-static --with-history</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">cp -R /tools/include/libxml2/libxml /tools/include/</line>
+            </action>
+		</entry>
+		
+		<entry name="libxslt-1.1.29" type="package/src" seq="66" cdto="yes" download="yes" extract="yes">
+			<link>http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz</link>
+		    <filename>libxslt-1.1.29.tar.gz</filename>
+		    <version>1.1.29</version>
+		    <checksum type="md5">a129d3c44c022de3b9dcf6d6f288d72e</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">sed -i "/seems to be moved/s/^/#/" ltmain.sh</line>
+				<line verbos="yes">./configure --prefix=/tools --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xmlstarlet-1.6.1" type="package/src" seq="67" cdto="yes" download="no" extract="yes">
+			<link>https://sourceforge.net/projects/xmlstar/files/xmlstarlet/1.6.1/xmlstarlet-1.6.1.tar.gz/download</link>
+		    <filename>xmlstarlet-1.6.1.tar.gz</filename>
+		    <version>1.6.1</version>
+		    <checksum type="md5">f3c5dfa3b1a2ee06cd57c255cc8b70a0</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/tools --enable-ipv6=no</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">ln -sf ./xml /tools/bin/xmlstarlet</line>
+            </action>
+		</entry>
+
+		<entry name="vim-7.4" type="package/src" seq="68" cdto="yes" download="no" extract="yes">
 		    <filename>vim-7.4.tar.bz2</filename>
 		    <version>7.4</version>
 		    <checksum type="md5">607e135c559be642f210094ad023dc65</checksum>
@@ -1218,7 +1294,7 @@
 			</action>
 		</entry>
 		
-		<entry name="linux-4.4.6" type="package/src" seq="62" cdto="yes" download="no" extract="yes">
+		<entry name="linux-4.4.6" type="package/src" seq="69" cdto="yes" download="no" extract="yes">
 		    <filename>linux-4.4.6.tar.xz</filename>
 		    <version>4.4.6</version>
 		    <checksum type="md5">efc822dad2149e40cc908718a4fea1d3</checksum>
