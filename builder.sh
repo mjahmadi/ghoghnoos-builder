@@ -73,7 +73,7 @@ export PROJECT__USER=$(xml_get_val "$XML_CONF_STRING" "/config/user")
 export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/paswd")
 export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/vendor")
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
-
+export PROJECT__ISODIR=$(xml_get_val "$XML_CONF_STRING" "/config/isodir")
 export PROJECT__WEBSITE="https://github.com/mjahmadi/ghoghnoos-builder"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
