@@ -59,21 +59,22 @@ if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
 fi
 
 # SET USEFUL GLOBAL VARIABLES
-export PROJECT__NAME=$(xml_get_val "$XML_CONF_STRING" "/config/name")
-export PROJECT__TYPE=$(xml_get_val "$XML_CONF_STRING" "/config/type")
-export PROJECT__ARCH=$(xml_get_val "$XML_CONF_STRING" "/config/arch")
 export PROJECT__HOST_ARCH=$(uname -m)
-export PROJECT__VERSION=$(xml_get_val "$XML_CONF_STRING" "/config/version")
-export PROJECT__CODENAME=$(xml_get_val "$XML_CONF_STRING" "/config/codename")
+export PROJECT__NAME=$(xml_get_val "$XML_CONF_STRING" "/config/project/name")
+export PROJECT__TYPE=$(xml_get_val "$XML_CONF_STRING" "/config/project/type")
+export PROJECT__ARCH=$(xml_get_val "$XML_CONF_STRING" "/config/project/arch")
+export PROJECT__VERSION=$(xml_get_val "$XML_CONF_STRING" "/config/project/version")
+export PROJECT__CODENAME=$(xml_get_val "$XML_CONF_STRING" "/config/project/codename")
 export PROJECT__SUBJECT=$(xml_get_val "$XML_DESC_STRING" "/build/@subject")
-export PROJECT__TIMEZONE=$(xml_get_val "$XML_CONF_STRING" "/config/timezone")
-export PROJECT__HOSTNAME=$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__ARCH-$PROJECT__CODENAME
+export PROJECT__TIMEZONE=$(xml_get_val "$XML_CONF_STRING" "/config/system/timezone")
+export PROJECT__HOSTNAME=$(xml_get_val "$XML_CONF_STRING" "/config/system/hostname")
 export PROJECT__TGT=$PROJECT__ARCH-$PROJECT__NAME-linux-gnu
-export PROJECT__USER=$(xml_get_val "$XML_CONF_STRING" "/config/user")
-export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/paswd")
-export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/vendor")
+export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/system/password")
+export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/project/vendor")
 export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
 export PROJECT__ISODIR=$(xml_get_val "$XML_CONF_STRING" "/config/isodir")
+export PROJECT__LICENSE=$(xml_get_val "$XML_CONF_STRING" "/config/license")
+
 export PROJECT__WEBSITE="https://github.com/mjahmadi/ghoghnoos-builder"
 export PROJECT__AUTHOR_NAME="M.J.Ahmadi"
 export PROJECT__AUTHOR_EMAIL="mohammad.j.ahmadi@gmail.com"
