@@ -655,13 +655,6 @@
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
 			<action when="before" seq="1">
 				<line sudo="yes">rm -rf $PROJECT__BLD/*</line>
-				
-				<line>set +e</line>
-				<line>strip --strip-debug /tools/lib/*</line>
-				<line>/usr/bin/strip --strip-unneeded /tools/{,s}bin/*</line>
-				<line>set -e</line>
-				
-				<line>rm -rf /tools/{,share}/{info,man,doc}</line>
 			</action>
 			
 			<action when="before" seq="2">

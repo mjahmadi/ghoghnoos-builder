@@ -166,22 +166,6 @@
 				</line>
 				
 				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/welcome.txt &lt;&lt;-EOF
-					##############################################################
-					 Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
-
-					 Author: 
-							$PROJECT__AUTHOR_NAME
-							$PROJECT__AUTHOR_EMAIL
-
-					 Website:
-							$PROJECT__WEBSITE
-					##############################################################
-
-					EOF
-				</line>
-
-				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/inittab &lt;&lt;-EOF
 					::sysinit:/etc/bootscript.sh
 					::restart:/sbin/init

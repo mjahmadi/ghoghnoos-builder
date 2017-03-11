@@ -3,7 +3,7 @@
 <build subject="filesystem" stage="02" envpath="/tools/bin:/bin:/usr/bin" chroot="yes">
 	
 	<phase seq="1">
-		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
+		<entry type="script/bash" seq="1">
 			<action when="before" seq="1">
 				<line verbos="yes">mkdir -pv /{bin,boot,etc/{opt,sysconfig},home,lib/firmware,mnt,opt}</line>
 				<line verbos="yes">mkdir -pv /{media/{floppy,cdrom},sbin,srv,var}</line>
@@ -145,7 +145,7 @@
 
 				<line>
 					cat > /etc/welcome.txt &lt;&lt;-EOF
-					#########################################################################
+					#####################################################################
 					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
 					
 					Author: 
@@ -154,7 +154,7 @@
 					
 					Website:
 					    $PROJECT__WEBSITE
-					#########################################################################
+					#####################################################################
 					
 					EOF
                 </line>
