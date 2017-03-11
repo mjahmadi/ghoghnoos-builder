@@ -138,7 +138,7 @@ else
 fi
 
 # SET GLOBAL PATH VARIABLES AND CREATE DIRECTORIES
-if [[ $(xml_get_val "$XML_CONF_STRING" "/config/constructor") = 'yes' ]]; then
+if [[ $(xml_get_val "$XML_CONF_STRING" "/config/system/constructor") = 'yes' ]]; then
 	export PROJECT__RFS=$(pwd)
 	export PROJECT__BLD=$PROJECT__RFS/build
 	export PROJECT__TOL=$PROJECT__RFS/tools
