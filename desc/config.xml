@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
-<config id="01">
-
-	<name>ghoghnoos</name>
-	<version>0.0.1</version>
-	<codename>bahar</codename>
-	<family>GNU/LINUX</family>
-	<type>live</type>
-	<arch>x86_64</arch>
-	<hostname>$PROJECT__NAME-$PROJECT__ARCH</hostname>
-	<timezone>Asia/Tehran</timezone>
-	<constructor>yes</constructor>
-	<isodir>/home/mohammad/isodir</isodir>
+<config id="01" comment="">
 	
+	<project>
+		<name>Ghoghnoos</name>
+		<version>0.0.1</version>
+		<codename>Bahar</codename>
+		<family>GNU/LINUX</family>
+		<type>live</type>
+		<arch>x86_64</arch>
+	</project>
+	
+	<system>
+		<password hash="md5">root</password>
+		<hostname>Ghoghnoos-x86_64</hostname>
+		<timezone>Asia/Tehran</timezone>
+		<constructor>yes</constructor>
+	</system>
+	
+	<isodir>/home/mohammad/Ghoghnoos-x86_64--isodir</isodir>
 	<license>GPL-3.0</license>
 	
-	<users>
-		<user>
-			<username>root</username>
-			<password hash="md5">root</password>
-		</user>
-	</users>
-	
 	<globals>
+		<!-- Add global variables/functions/call here! -->
 		export LC_ALL=POSIX
 	</globals>
 	
