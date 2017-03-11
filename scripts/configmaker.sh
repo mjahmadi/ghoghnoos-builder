@@ -29,6 +29,7 @@ read -p "Project Name [Ghoghnoos]: " PROJECT__NAME
 PROJECT__NAME=${PROJECT__NAME:-Ghoghnoos}
 
 read -p "Project Version [X.Y.Z]: " PROJECT__VERSION
+PROJECT__VERSION=${PROJECT__VERSION:-0.0.1}
 
 read -p "Project Codename: " PROJECT__CODENAME
 
@@ -59,11 +60,22 @@ PROJECT__ISODIR=${PROJECT__ISODIR:-${HOME/PROJECT__HOSTNAME/isodir}}
 read -p "Project License [GPL-3.0]: " PROJECT__LICENSE
 PROJECT__LICENSE=${PROJECT__LICENSE:-GPL-3.0}
 
+echo 
 read -p "Where to save the config file [$(pwd)]: " PROJECT__PATH
 PROJECT__PATH=${PROJECT__PATH:-$(pwd)}
 
-echo -e "<?xml version=\"1.0\"?>
+filename="config"
+ext="xml"
+if [[ -e "$PROJECT__PATH/$filename.$ext" ]] ; then
+    i=0
+    while [[ -e $filename-$i.$ext ]] ; do
+        let i++
+    done
+    filename=$filename-$i
+fi
+filepath=$PROJECT__PATH/$filename.$ext
 
+echo -e "<?xml version=\"1.0\"?>
 <config id=\"01\" comment=\"\">
 	
 	<project>
@@ -86,12 +98,12 @@ echo -e "<?xml version=\"1.0\"?>
 	<license>$PROJECT__LICENSE</license>
 	
 	<globals>
-		<!-- Add global variables here! -->
+		<!-- Add global variables/functions/call here! -->
 		export LC_ALL=POSIX
 	</globals>
 	
 </config>
-" >> $PROJECT__PATH/config.xml
+" > $filepath
 
-echo -e "\n${GREEN}$PROJECT__PATH/config.xml${NORMAL}\n\n"
+echo -e "\nNew config file created in\n  ${GREEN}$filepath${NORMAL}\n"
 
