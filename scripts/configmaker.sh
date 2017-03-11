@@ -98,7 +98,7 @@ echo -e "<?xml version=\"1.0\"?>
 	<license>$PROJECT__LICENSE</license>
 	
 	<globals>
-		<!-- Add global variables/functions/call here! -->
+		<!-- Add global variables/functions/calls here! -->
 		export LC_ALL=POSIX
 	</globals>
 	
