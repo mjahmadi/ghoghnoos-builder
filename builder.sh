@@ -99,7 +99,7 @@ if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
 	
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
 	read -rs HOST_ROOT_PASS
-	sudo -k
+	
 	echo "$HOST_ROOT_PASS" | sudo -S echo "hello" &> /dev/null
 	
 	if ! [[ "$(sudo -n echo hello 2>&1)" == "hello" ]]; then
