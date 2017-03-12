@@ -195,7 +195,17 @@ for phase in `seq $phase_begin_from $phase_count`; do
     # BUILD >> PHASE >> ENTRY
     entry_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry)")
     for entry in `seq $entry_begin_from $entry_count`; do
-    
+
+		export ENTRY__ID=$entry
+    	export ENTRY__NAME=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@name")
+    	export ENTRY__TYPE=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@type")
+    	export ENTRY__VERSION=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/version")
+    	export ENTRY__LINK=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/like")
+    	export ENTRY__FILENAME=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
+    	export ENTRY__CHECKSUM=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
+    	export ENTRY__CHECKSUM_METHOD=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
+    	export ENTRY__SEQ=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@seq")
+    	
     	entry_name=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@name")
         entry_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@type")
         
@@ -204,14 +214,14 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	echo -e "${BOLD_TXT}\nentry '$entry' is disabled!\n${NORMAL_TXT}"
         	continue
         else
-		echo -e "${BOLD_TXT}\nphase --> '$phase'"
-		echo -e "entry --> '$entry'\n$entry_name[$entry_type]\n${NORMAL_TXT}"
-		sleep 1
+			echo -e "${BOLD_TXT}\nphase --> '$phase'"
+			echo -e "entry --> '$entry'\n$entry_name[$entry_type]\n${NORMAL_TXT}"
+			sleep 2
         fi
 		
         # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=BEFORE]
         entry_action_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='before'])")
-	for action in `seq $action_begin_from $entry_action_count`; do
+		for action in `seq $action_begin_from $entry_action_count`; do
 
 		action_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/@disabled")
 		if [[ $action_disabled == 'yes' ]]; then
@@ -224,7 +234,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 
 		# BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
 		entry_action_line_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
-        	for line in `seq $line_begin_from $entry_action_line_count`; do
+        for line in `seq $line_begin_from $entry_action_line_count`; do
         	
 			line_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
 			if [[ $line_disabled == 'yes' ]]; then
@@ -260,7 +270,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 	directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
 	checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
 	checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
-        
+    
 	if [[ $download == 'yes' ]]; then
 		echo -e "\nDownloading '$filename'"
 		wget --continue $link --directory-prefix="$PROJECT__PKG"
