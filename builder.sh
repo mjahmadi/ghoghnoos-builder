@@ -1,6 +1,8 @@
 set -e
 set +h
 
+umask 022
+
 # COLORS
 NORMAL="\e[39m"
 WHITE="\e[37m"
