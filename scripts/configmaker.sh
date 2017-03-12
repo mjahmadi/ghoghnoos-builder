@@ -42,6 +42,9 @@ PROJECT__TYPE=${PROJECT__TYPE:-live}
 read -p "Project architecture [$(uname -m)]: " PROJECT__ARCH
 PROJECT__ARCH=${PROJECT__ARCH:-$(uname -m)}
 
+read -p "Project vendor [Ghoghnoos Development Team]: " PROJECT__VENDOR
+PROJECT__VENDOR=${PROJECT__VENDOR:-"Ghoghnoos Development Team"}
+
 read -p "System hostname [$PROJECT__NAME-$PROJECT__ARCH]: " PROJECT__HOSTNAME
 PROJECT__HOSTNAME=${PROJECT__HOSTNAME:-$PROJECT__NAME-$PROJECT__ARCH}
 
@@ -58,7 +61,7 @@ read -p "Is system self constructor [Yes/no]: " PROJECT__CONSTRUCTOR
 PROJECT__CONSTRUCTOR=${PROJECT__CONSTRUCTOR:-yes}
 
 read -p "ISO directory [$HOME/$PROJECT__HOSTNAME-iso]: " PROJECT__ISODIR
-PROJECT__ISODIR=${PROJECT__ISODIR:-$HOME/$PROJECT__HOSTNAME--isodir}
+PROJECT__ISODIR=${PROJECT__ISODIR:-$HOME/$PROJECT__HOSTNAME-iso}
 
 read -p "Project license [GPL-3.0]: " PROJECT__LICENSE
 PROJECT__LICENSE=${PROJECT__LICENSE:-GPL-3.0}
@@ -89,6 +92,7 @@ echo -e "<?xml version=\"1.0\"?>
 		<family>$PROJECT__FAMILY</family>
 		<type>$PROJECT__TYPE</type>
 		<arch>$PROJECT__ARCH</arch>
+		<vendor>$PROJECT__VENDOR</vendor>
 	</project>
 	
 	<system>
