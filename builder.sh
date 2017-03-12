@@ -70,6 +70,7 @@ export PROJECT__CODENAME=$(xml_get_val "$XML_CONF_STRING" "/config/project/coden
 export PROJECT__SUBJECT=$(xml_get_val "$XML_DESC_STRING" "/build/@subject")
 export PROJECT__TIMEZONE=$(xml_get_val "$XML_CONF_STRING" "/config/system/timezone")
 export PROJECT__HOSTNAME=$(xml_get_val "$XML_CONF_STRING" "/config/system/hostname")
+export PROJECT__CONTROLLER=$(xml_get_val "$XML_CONF_STRING" "/config/system/controller")
 export PROJECT__TGT=$PROJECT__ARCH-$PROJECT__NAME-linux-gnu
 export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/system/password")
 export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/project/vendor")
