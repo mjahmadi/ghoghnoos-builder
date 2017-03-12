@@ -12,7 +12,7 @@
 	                <line>mkdir -vp $PROJECT__ISODIR</line>
 	                
 	                <line>cd $PROJECT__RFS</line>
-	                <line>find . -not -path "$(pwd)/builder.sh" -not -path "$(pwd)/build*" -not -path "$(pwd)/tools*"  -not -path "$(pwd)/packages*" -not -path "$(pwd)/desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
+	                <line>find . -not -path "./builder.sh" -not -path "./build*" -not -path "./tools*" -not -path "./packages*" -not -path "./desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
 	            </action>
 	            
 	            <action when="after" seq="3">
