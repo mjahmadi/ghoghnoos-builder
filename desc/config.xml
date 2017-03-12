@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<config id="01" comment="">
+
+<config id="01" timezone="Asia/Tehran" date="Sun Mar 12 14:53:08 IRST 2017" comment="">
 	
 	<project>
 		<name>Ghoghnoos</name>
@@ -8,6 +9,7 @@
 		<family>GNU/LINUX</family>
 		<type>live</type>
 		<arch>x86_64</arch>
+		<vendor>Ghoghnoos Development Team</vendor>
 	</project>
 	
 	<system>
@@ -18,7 +20,7 @@
 		<constructor>yes</constructor>
 	</system>
 	
-	<isodir>/home/mohammad/ghoghnoos-x86_64</isodir>
+	<isodir>/home/mohammad/Ghoghnoos-x86_64-iso</isodir>
 	<license>GPL-3.0</license>
 	
 	<globals>
