@@ -11,17 +11,18 @@
 	</project>
 	
 	<system>
+		<controller>systemd</controller>
 		<password hash="md5">root</password>
 		<hostname>Ghoghnoos-x86_64</hostname>
 		<timezone>Asia/Tehran</timezone>
 		<constructor>yes</constructor>
 	</system>
 	
-	<isodir>/home/mohammad/Ghoghnoos-x86_64--isodir</isodir>
+	<isodir>/home/mohammad/ghoghnoos-x86_64</isodir>
 	<license>GPL-3.0</license>
 	
 	<globals>
-		<!-- Add global variables/functions/calls here! -->
+		<!-- All your global variables/functions/calls goes here -->
 		export LC_ALL=POSIX
 	</globals>
 	
