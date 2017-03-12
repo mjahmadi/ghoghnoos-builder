@@ -12,7 +12,7 @@
 	                <line>mkdir -vp $PROJECT__ISODIR</line>
 	                
 	                <line>cd $PROJECT__RFS</line>
-	                <line>find . | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
+	                <line>find . -not -path "$(pwd)/builder.sh" -not -path "$(pwd)/build*" -not -path "$(pwd)/tools*"  -not -path "$(pwd)/packages*" -not -path "$(pwd)/desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
 	            </action>
 	            
 	            <action when="after" seq="3">
@@ -36,11 +36,11 @@
 					</line>
 					
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
-					<line>echo 'default vmlinuz-4.4.6-ghoghnoos-0.0.1-systemd initrd=rootfs.gz' > ./isolinux.cfg</line>
+					<line>echo 'default vmlinuz-4.4.6-$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__CONTROLLER initrd=rootfs.gz' > ./isolinux.cfg</line>
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
 					
-					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
+					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created in\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
 	            </action>
        		</entry>
 				
