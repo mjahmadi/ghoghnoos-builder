@@ -27,7 +27,7 @@ chroot "$(pwd)"                                         \
 $env_tmp -i                                             \
 HOME=/root                                              \
 TERM="$TERM"                                            \
-PS1="$BOLD_TXT$RED\u@chroot:\w\$ $NORMAL$NORMAL_TXT"    \
+PS1="$BOLD_TXT$BLUE\u@chroot:\w\$ $NORMAL$NORMAL_TXT"    \
 PATH=$path_tmp                                          \
 $bash_tmp --login +h
 
