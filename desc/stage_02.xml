@@ -119,45 +119,6 @@
 					# End /etc/nsswitch.conf
 					EOF
 				</line>
-				
-            	<line>
-					cat > /etc/os-release &lt;&lt;-EOF
-					NAME="$PROJECT__NAME"
-					VERSION="$PROJECT__VERSION"
-					ID=$PROJECT__NAME
-					PRETTY_NAME="$PROJECT__NAME $PROJECT__VERSION-systemd"
-					VERSION_CODENAME="$PROJECT__CODENAME"
-					
-					EOF
-            	</line>
-            	
-            	<line>echo $PROJECT__VERSION-systemd > /etc/$PROJECT__NAME-release</line>
-            	
-            	<line>
-		        	cat > /etc/lsb-release &lt;&lt;-EOF
-					DISTRIB_ID="$PROJECT__NAME"
-					DISTRIB_RELEASE="$PROJECT__VERSION-systemd"
-					DISTRIB_CODENAME="$PROJECT__CODENAME"
-					DISTRIB_DESCRIPTION="$PROJECT__NAME"
-					
-					EOF
-				</line>
-
-				<line>
-					cat > /etc/welcome.txt &lt;&lt;-EOF
-					#####################################################################
-					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
-					
-					Author: 
-					    $PROJECT__AUTHOR_NAME
-					    $PROJECT__AUTHOR_EMAIL
-					
-					Website:
-					    $PROJECT__WEBSITE
-					#####################################################################
-					
-					EOF
-                </line>
                 
 				<line verbos="yes">touch /var/log/{btmp,lastlog,faillog,wtmp}</line>
 				<line verbos="yes">chgrp -v utmp /var/log/lastlog</line>
