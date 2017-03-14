@@ -1260,7 +1260,7 @@
 				<line verbos="yes">make</line>
 				<line verbos="yes">make modules_install</line>
 				
-				<line verbos="yes">cp -v arch/x86/boot/bzImage /boot/vmlinuz-$ENTRY__VERSION-$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__CONTROLLER</line>
+				<line verbos="yes">cp -v arch/x86/boot/bzImage /boot/vmlinuz</line>
 				<line verbos="yes">cp -v System.map /boot/System.map-4.4.6</line>
 				<line verbos="yes">cp -v .config /boot/config-4.4.6</line>
 				
