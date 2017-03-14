@@ -28,12 +28,14 @@
 								fi;
 								break;
 							fi;
-							if [ $i = end ]; then exit 1; fi;
+							if [ $i = end ]; then echo 'syslinux not found.'; exit 1; fi;
 						done
 					</line>
 					
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
+					
 					<line>echo "default vmlinuz initrd=rootfs.gz" > ./isolinux.cfg</line>
+					
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>
 					
