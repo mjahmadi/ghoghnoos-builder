@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="removing" stage="98" chroot="yes">
+<build subject="removing" stage="98" sudo="yes">
 
 	<phase seq="1">
 	
@@ -8,28 +8,28 @@
 			<action when="after" seq="1">
 				<line>echo -e "Removing unnecessary files...\n"</line>
 				
-				<line>rm -f /usr/lib/lib{bfd,opcodes}.a</line>
-				<line>rm -f /usr/lib/libbz2.a</line>
-				<line>rm -f /usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
-				<line>rm -f /usr/lib/libltdl.a</line>
-				<line>rm -f /usr/lib/libfl.a</line>
-				<line>rm -f /usr/lib/libfl_pic.a</line>
-				<line>rm -f /usr/lib/libz.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/lib{bfd,opcodes}.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/libbz2.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/libltdl.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl_pic.a</line>
+				<line verbos="yes" sudo="yes">rm -f /usr/lib/libz.a</line>
 				
-				<line>rm -rf /tmp/*</line>
+				<line verbos="yes" sudo="yes">rm -rf /tmp/*</line>
 				
-				<line>rm -rf /build</line>
-				<line>rm -rf /packages</line>
+				<line verbos="yes" sudo="yes">rm -rf /build</line>
+				<line verbos="yes" sudo="yes">rm -rf /packages</line>
 			</action>
 		    
 			<action when="after" seq="2">
 				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
 				
-				<line>umount -v /dev/pts</line>
-				<line>umount -v /dev</line>
-				<line>umount -v /run</line>
-				<line>umount -v /proc</line>
-				<line>umount -v /sys</line>
+				<line verbos="yes" sudo="yes">umount -v /dev/pts</line>
+				<line verbos="yes" sudo="yes">umount -v /dev</line>
+				<line verbos="yes" sudo="yes">umount -v /run</line>
+				<line verbos="yes" sudo="yes">umount -v /proc</line>
+				<line verbos="yes" sudo="yes">umount -v /sys</line>
 			</action>
 		</entry>
 				
