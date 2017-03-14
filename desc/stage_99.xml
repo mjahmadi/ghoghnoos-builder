@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="packing" stage="99" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" chroot="yes" sudo="yes">
+<build subject="packing" stage="99">
 
 	<phase seq="1">
 	
