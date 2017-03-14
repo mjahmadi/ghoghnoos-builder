@@ -463,6 +463,7 @@
 					EOF
                 </line>
                 
+			<line verbos="yes">$PROJECT_RFS/etc/profile.d</line>
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/profile.d/extrapaths.sh &lt;&lt;-EOF
 					if [[ -d /usr/local/lib/pkgconfig ]] ; then
