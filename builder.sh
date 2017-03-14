@@ -21,16 +21,22 @@ exec__start_time=$(date +%s)
 
 # CHECK IF XML DESC FILE IS PASSED
 if [[ -z $1 ]]; then
-	echo -e "${RED}ERROR: Build descriptor file missing.${NORMAL}"
+	echo -e "${RED}ERROR: Build descriptor file is missing.${NORMAL}"
 	exit -1
 elif [[ ! -s $1 ]]; then
 	echo -e "${RED}ERROR: Build descriptor file does not exist or access denied.${NORMAL}"
 	exit -1
 fi
 
+# CHECK IF XML DESC FILE IS PASSED
+config_filename="$(dirname $1)/config.xml"
+if [[ ! -s $config_filename ]]; then
+	echo -e "${RED}ERROR: Config file does not exist or access denied.${NORMAL}"
+	exit -1
+fi
 
 # GET CONFIG XML STRING INTO A VAR
-XML_CONF_STRING=$(cat $(dirname $1)/config.xml)
+XML_CONF_STRING=$(cat $config_filename)
 
 # GET DESC XML STRING INTO A VAR
 XML_DESC_STRING=$(cat $1)
@@ -146,6 +152,7 @@ if [[ $(xml_get_val "$XML_CONF_STRING" "/config/system/constructor") = 'yes' ]];
 	export PROJECT__BLD=$PROJECT__RFS/build
 	export PROJECT__TOL=$PROJECT__RFS/tools
 	export PROJECT__PKG=$PROJECT__RFS/packages
+	export PROJECT__SCR=$PROJECT__RFS/scripts
 	
 	mkdir -pv $PROJECT__PKG
 	mkdir -pv $PROJECT__BLD
@@ -157,6 +164,7 @@ else
 	export PROJECT__RFS=$PROJECT__DIR/rootfs
 	export PROJECT__TOL=$PROJECT__DIR/tools
 	export PROJECT__PKG=$PROJECT__CUR/packages
+	export PROJECT__SCR=$PROJECT__RFS/scripts
 	
 	mkdir -pv $PROJECT__PKG
 	mkdir -pv $PROJECT__BLD
