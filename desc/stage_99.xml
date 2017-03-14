@@ -18,9 +18,10 @@
 	            <action when="after" seq="3">
 					<line>echo -e "\n\nMaking bootable iso file...\n"</line>
 					
-					<line>rm -rf $PROJECT__ISODIR/isoimage</line>
-					<line>mkdir -v $PROJECT__ISODIR/isoimage</line>
-					<line>cd $PROJECT__ISODIR/isoimage</line>
+					<line>rm -rf $PROJECT__ISODIR</line>
+					<line>mkdir -v $PROJECT__ISODIR</line>
+			    
+					<line>cd $PROJECT__ISODIR</line>
 					
 					<line>
 						for i in lib lib64 share end ; do
@@ -37,10 +38,10 @@
 					
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
 					<line>echo 'default vmlinuz-4.4.6-$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__CONTROLLER initrd=rootfs.gz' > ./isolinux.cfg</line>
-					<line>genisoimage -J -r -o $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
-					<line>isohybrid $PROJECT__ISODIR/isoimage/$PROJECT__ISONAME 2>/dev/null || true</line>
+					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
+					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>
 					
-					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created in\n$PROJECT__ISODIR/isoimage/$PROJECT__ISONAME\n"</line>
+					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created in\n$PROJECT__ISODIR/$PROJECT__ISONAME\n"</line>
 	            </action>
        		</entry>
 				
