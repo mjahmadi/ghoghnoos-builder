@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="packing" stage="99">
+<build subject="packing" stage="99" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" chroot="yes" sudo="yes">
 
 	<phase seq="1">
 	
@@ -12,7 +12,7 @@
 	                <line>mkdir -vp $PROJECT__ISODIR</line>
 	                
 	                <line>cd $PROJECT__RFS</line>
-	                <line>find . -not -path "./builder.sh" -not -path "./build*" -not -path "./tools*" -not -path "./packages*" -not -path "./desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
+	                <line>find . -not -path "./builder.sh" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
 	            </action>
 	            
 	            <action when="after" seq="3">
@@ -33,7 +33,7 @@
 					</line>
 					
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
-					<line>echo 'default vmlinuz-4.4.6-$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__CONTROLLER initrd=rootfs.gz' > ./isolinux.cfg</line>
+					<line>echo "default vmlinuz-4.4.6-$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__CONTROLLER initrd=rootfs.gz" > ./isolinux.cfg</line>
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>
 					

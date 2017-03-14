@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="removing" stage="98" sudo="yes">
+<build subject="removing" stage="98" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" sudo="yes">
 
 	<phase seq="1">
 	
