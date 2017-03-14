@@ -6,6 +6,8 @@
 	
 	    <entry type="script/bash" seq="1">
 	    	<action when="after" seq="1">
+				<line verbos="yes">mkdir -vp $PROJECT_RFS/etc/profile.d</line>
+			
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/systemd/network/10-eth0-static.network &lt;&lt;-EOF
 					[Match]
