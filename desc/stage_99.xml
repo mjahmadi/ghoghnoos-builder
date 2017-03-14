@@ -18,11 +18,7 @@
 	            <action when="after" seq="3">
 					<line>echo -e "\n\nMaking bootable iso file...\n"</line>
 					
-					<line>rm -rf $PROJECT__ISODIR</line>
-					<line>mkdir -v $PROJECT__ISODIR</line>
-			    
 					<line>cd $PROJECT__ISODIR</line>
-					
 					<line>
 						for i in lib lib64 share end ; do
 							if [ -f /usr/$i/syslinux/isolinux.bin ]; then
