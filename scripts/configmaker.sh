@@ -61,7 +61,7 @@ read -p "Is system self constructor [Yes/no]: " PROJECT__CONSTRUCTOR
 PROJECT__CONSTRUCTOR=${PROJECT__CONSTRUCTOR:-yes}
 
 read -p "ISO directory [$(dirname \"$(pwd)\")]: " PROJECT__ISODIR
-PROJECT__ISODIR=${PROJECT__ISODIR:-$(dirname \"$(pwd)\")}
+PROJECT__ISODIR=${PROJECT__ISODIR:-$(dirname "$(pwd)")}
 
 read -p "Project license [GPL-3.0]: " PROJECT__LICENSE
 PROJECT__LICENSE=${PROJECT__LICENSE:-GPL-3.0}
