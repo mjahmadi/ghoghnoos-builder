@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="removing" stage="98" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" chroot="yes" sudo="yes">
+<build subject="removing" stage="98" sudo="yes">
 
 	<phase seq="1">
 	
@@ -8,33 +8,31 @@
 			<action when="after" seq="1">
 				<line>echo -e "Removing unnecessary files...\n"</line>
 				
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/lib{bfd,opcodes}.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/libbz2.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/libltdl.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl_pic.a</line>
-				<line verbos="yes" sudo="yes">rm -f /usr/lib/libz.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/lib{bfd,opcodes}.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/libbz2.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/libltdl.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/libfl.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/libfl_pic.a</line>
+				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/usr/lib/libz.a</line>
 				
-				<line verbos="yes" sudo="yes">find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true</line>
-				<line verbos="yes" sudo="yes">find /usr/share/doc -empty|xargs rmdir || true</line>
-				<line verbos="yes" sudo="yes">rm -rf /usr/share/man/* /usr/share/groff/* /usr/share/info/*</line>
-				<line verbos="yes" sudo="yes">rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*</line>
+				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/usr/share/man/* /usr/share/groff/* /usr/share/info/*</line>
+				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/usr/share/lintian/* /usr/share/linda/* /var/cache/man/*</line>
 				
-				<line verbos="yes" sudo="yes">rm -rf /tmp/*</line>
+				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/tmp/*</line>
 				
-				<line verbos="yes" sudo="yes">rm -rf /build</line>
-				<line verbos="yes" sudo="yes">rm -rf /packages</line>
+				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/build</line>
+				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/packages</line>
 			</action>
 		    
 			<action when="after" seq="2">
 				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
 				
-				<line verbos="yes" sudo="yes">umount -v /dev/pts</line>
-				<line verbos="yes" sudo="yes">umount -v /dev</line>
-				<line verbos="yes" sudo="yes">umount -v /run</line>
-				<line verbos="yes" sudo="yes">umount -v /proc</line>
-				<line verbos="yes" sudo="yes">umount -v /sys</line>
+				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/dev/pts</line>
+				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/dev</line>
+				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/run</line>
+				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/proc</line>
+				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/sys</line>
 			</action>
 		</entry>
 				
