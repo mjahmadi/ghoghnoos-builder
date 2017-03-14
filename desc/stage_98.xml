@@ -28,11 +28,15 @@
 			<action when="after" seq="2">
 				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
 				
+				<line>set +e</line>
+				
 				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/dev/pts</line>
 				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/dev</line>
 				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/run</line>
 				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/proc</line>
 				<line verbos="yes" sudo="yes">umount -v $PROJECT__RFS/sys</line>
+				
+				<line>set -e</line>
 			</action>
 		</entry>
 				

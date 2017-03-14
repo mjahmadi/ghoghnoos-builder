@@ -431,9 +431,9 @@
 					RED="\[\e[1;31m\]"
 					GREEN="\[\e[1;32m\]"
 					if [[ $EUID == 0 ]] ; then
-						PS1="$RED\u [ $NORMAL\w$RED ]# $NORMAL"
+						PS1="$BOLD_TXT$RED\u@\h:\w\$ $NORMAL$NORMAL_TXT"
 					else
-						PS1="$GREEN\u [ $NORMAL\w$GREEN ]\$ $NORMAL"
+						PS1="NORMAL$\u@\h:\w$ "
 					fi
 
 					for script in /etc/profile.d/*.sh ; do
@@ -583,11 +583,11 @@
 					  export PATH=$NEWPATH:$1
 					}
 
-					if [ -f "$HOME/.bashrc" ] ; then
+					if [[ -f "$HOME/.bashrc" ]] ; then
 					  source $HOME/.bashrc
 					fi
 
-					if [ -d "$HOME/bin" ] ; then
+					if [[ -d "$HOME/bin" ]] ; then
 					  append $HOME/bin
 					fi
 
@@ -601,7 +601,7 @@
 					cat > $PROJECT_RFS/root/.bashrc &lt;&lt;-EOF
 					# Begin ~/.bashrc
 
-					if [ -f "/etc/bashrc" ] ; then
+					if [[ -f "/etc/bashrc" ]] ; then
 					  source /etc/bashrc
 					fi
 
