@@ -103,7 +103,7 @@ echo -e "<?xml version=\"1.0\"?>
 		<constructor>$PROJECT__CONSTRUCTOR</constructor>
 	</system>
 	
-	<isodir>$PROJECT__ISODIR</isodir>
+	<isodir>$PROJECT__ISODIR/iso</isodir>
 	<license>$PROJECT__LICENSE</license>
 	
 	<globals>
