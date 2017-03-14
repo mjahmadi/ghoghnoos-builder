@@ -101,11 +101,13 @@ if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $PROJECT__HOST_ARCH ]]; then
 fi
 
 # CHECK IF BUILD NEED'S SUDO
-if [[ $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
+if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
 	set +e
 	
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
 	read -rs HOST_ROOT_PASS
+	
+	#sudo -k
 	
 	echo "$HOST_ROOT_PASS" | sudo -S echo "hello" &> /dev/null
 	
@@ -262,7 +264,6 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		        
 				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
 					eval "echo $HOST_ROOT_PASS | sudo -k -S $command"
-					#do_as_root $command
 				else
 					eval "$command"
 				fi
@@ -379,7 +380,6 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		        
 			if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
 				eval "echo $HOST_ROOT_PASS | sudo -k -S $command"
-				#do_as_root $command
 			else
 				eval "$command"
 			fi
