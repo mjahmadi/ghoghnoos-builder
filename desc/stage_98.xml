@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="removing" stage="98" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" sudo="yes">
+<build subject="removing" stage="98" envpath="/bin:/usr/bin:/tools/bin:/tools/sbin" chroot="yes" sudo="yes">
 
 	<phase seq="1">
 	
@@ -15,6 +15,11 @@
 				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl.a</line>
 				<line verbos="yes" sudo="yes">rm -f /usr/lib/libfl_pic.a</line>
 				<line verbos="yes" sudo="yes">rm -f /usr/lib/libz.a</line>
+				
+				<line verbos="yes" sudo="yes">find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true</line>
+				<line verbos="yes" sudo="yes">find /usr/share/doc -empty|xargs rmdir || true</line>
+				<line verbos="yes" sudo="yes">rm -rf /usr/share/man/* /usr/share/groff/* /usr/share/info/*</line>
+				<line verbos="yes" sudo="yes">rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*</line>
 				
 				<line verbos="yes" sudo="yes">rm -rf /tmp/*</line>
 				
