@@ -47,7 +47,7 @@
 				
 				<line verbos="yes">
 					cat > $PROJECT__RFS/root/.bashrc &lt;&lt;-EOF
-					export PS1="\e[31m$(whoami)@$(hostname):$(pwd)\$ \e[39m"
+					export PS1="\e[31m\u@\h:\w\$ \e[39m"
 					export PATH=/usr/bin:/usr/sbin:/bin:/sbin
 					EOF
 				</line>
@@ -143,7 +143,7 @@
 
 				<line verbos="yes">install -v -m755 -d $PROJECT__RFS/etc/modprobe.d</line>				
 				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/modprobe.d/usb.conf &lt;&lt; "EOF"
+					cat > $PROJECT__RFS/etc/modprobe.d/usb.conf &lt;&lt;-EOF
 					# Begin /etc/modprobe.d/usb.conf
 
 					install ohci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i ohci_hcd ; true
@@ -164,11 +164,12 @@
 				</line>
 				
 				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/mtab &lt;&lt;-EOF
-					aufs / aufs rw, relatiome 0 0
-					proc /proc proc rw 0 0
-					sysfs /sys sysfs rw 0 0
-					tmpfs /dev/shm tmpfs rw 0 0
+					cat > $PROJECT__RFS/etc/fstab &lt;&lt;-EOF
+					aufs / aufs default 0 0
+					proc /proc proc default 0 0
+					sysfs /sys sysfs default 0 0
+					devpts /dev/pts devpts gid=5,mode=620 0 0
+					tmpfs /dev/shm tmpfs default 0 0
 					EOF
 				</line>
 				
