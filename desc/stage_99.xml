@@ -33,7 +33,6 @@
 					</line>
 					
 					<line>cp $PROJECT__RFS/boot/kernel.bz ./kernel.bz</line>
-					
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
 					
 					<line>echo "default kernel.bz initrd=rootfs.gz" > ./isolinux.cfg</line>

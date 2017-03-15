@@ -38,6 +38,12 @@
 				
 				<line>set -e</line>
 			</action>
+			
+			<action when="after" seq="3">
+				<line verbos="yes" sudo="yes">chown -R root:root $PROJECT__RFS</line>
+				<line verbos="yes" sudo="yes">chmod -R a+rwx $PROJECT__RFS</line>
+				<line verbos="yes" sudo="yes">chmod -R o+rx $PROJECT__RFS</line>
+			</action>
 		</entry>
 				
 	</phase>
