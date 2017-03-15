@@ -5,7 +5,7 @@
 	<phase seq="1">
 		<entry type="script/bash" seq="1">
 			<action when="before" seq="1">
-				<line verbos="yes">mkdir -pv /{bin,boot,etc/{opt,sysconfig},home,lib/firmware,mnt,opt}</line>
+				<line verbos="yes">mkdir -pv /{bin,boot,etc/{profile.d,opt,sysconfig},home,lib/firmware,mnt,opt}</line>
 				<line verbos="yes">mkdir -pv /{media/{floppy,cdrom},sbin,srv,var}</line>
 				<line verbos="yes">install -dv -m 0750 /root</line>
 				<line verbos="yes">install -dv -m 1777 /tmp /var/tmp</line>
