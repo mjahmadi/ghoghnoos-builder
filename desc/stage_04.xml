@@ -156,12 +156,12 @@
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/fstab &lt;&lt;-EOF
 					# file    system    mount-point    type    options    dump    fsck    order
-					aufs / aufs default 0 0
+					#aufs / aufs default 0 0
 					proc /proc proc default 0 0
 					sysfs /sys sysfs default 0 0
 					devpts /dev/pts devpts gid=5,mode=620 0 0
 					tmpfs /dev/shm tmpfs default 0 0
-					usbfs  /proc/bus/usb  usbfs  devgid=14,devmode=0660  0  0
+					#usbfs  /proc/bus/usb  usbfs  devgid=14,devmode=0660  0  0
 					EOF
 				</line>
 				
