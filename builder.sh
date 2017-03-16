@@ -263,7 +263,7 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		        fi
 		        
 				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
-					eval "echo $HOST_ROOT_PASS | sudo -k -S $command"
+					eval "echo $HOST_ROOT_PASS | sudo -S $command"
 				else
 					eval "$command"
 				fi
@@ -378,13 +378,13 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
 		        
-			if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
-				eval "echo $HOST_ROOT_PASS | sudo -k -S $command"
-			else
-				eval "$command"
-			fi
+				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
+					eval "echo $HOST_ROOT_PASS | sudo -S $command"
+				else
+					eval "$command"
+				fi
         	done
-		line_begin_from=1
+			line_begin_from=1
         done
     done
     
