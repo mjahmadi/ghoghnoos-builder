@@ -35,7 +35,7 @@
 					<line>cp $PROJECT__RFS/boot/kernel.bz ./kernel.bz</line>
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
 					
-					<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
+					<line>echo 'default kernel.bz loglevel=3 initrd=rootfs.gz' > ./isolinux.cfg</line>
 					
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>

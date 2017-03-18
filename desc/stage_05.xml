@@ -8,14 +8,7 @@
 	    
 	    	<action when="after" seq="1">
 	    	
-				<line verbos="yes">
-					cat > $PROJECT__RFS/init &lt;&lt;-EOF
-					#!/bin/bash
-					
-					/sbin/init
-					
-					EOF
-				</line>
+				<line verbos="yes">rm $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
 				<line verbos="yes">chmod u+rwx $PROJECT__RFS/init</line>
 				
 				<line verbos="yes">
@@ -28,6 +21,7 @@
 					Gateway=192.168.0.1
 					DNS=192.168.0.1
 					Domains=
+					
 					EOF
 				</line>
 				
@@ -75,7 +69,7 @@
 				
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/vconsole.conf &lt;&lt;-EOF
-					KEYMAP=de-latin1
+					KEYMAP=us
 					FONT=Lat2-Terminus16
 					EOF
 				</line>
@@ -139,8 +133,8 @@
 					mount -t sysfs none /sys
 
 					for DEVICE in /sys/class/net/* ; do
-						ip link set \${DEVICE##*/} up
-						[ \${DEVICE##*/} != lo ] &amp;&amp; udhcpc -b -i \${DEVICE##*/} -s /etc/rc.dhcp
+					    ip link set \${DEVICE##*/} up
+					    [ \${DEVICE##*/} != lo ] &amp;&amp; udhcpc -b -i \${DEVICE##*/} -s /etc/rc.dhcp
 					done
 					EOF
 				</line>
@@ -186,7 +180,7 @@
 					ip addr add \$ip/\$mask dev \$interface
 
 					if [ "\$router" ]; then
-						ip route add default via \$router dev \$interface
+					    ip route add default via \$router dev \$interface
 					fi
 					EOF
 				</line>
@@ -525,10 +519,10 @@
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/profile.d/X.sh &lt;&lt;-EOF
 					if [[ -x /usr/X11R6/bin/X ]]; then
-						pathappend /usr/X11R6/bin
+					    pathappend /usr/X11R6/bin
 					fi
 					if [[ -d /usr/X11R6/lib/pkgconfig ]]; then
-						pathappend /usr/X11R6/lib/pkgconfig PKG_CONFIG_PATH
+					    pathappend /usr/X11R6/lib/pkgconfig PKG_CONFIG_PATH
 					fi
 					EOF
                 </line>
@@ -543,7 +537,6 @@
                 <line verbos="yes">
 					cat > $PROJECT_RFS/etc/bashrc &lt;&lt;-EOF
 					# Begin /etc/bashrc
-					# Written for Beyond Linux From Scratch
 
 					# System wide aliases and functions.
 
@@ -566,12 +559,13 @@
 					RED="\[\e[1;31m\]"
 					GREEN="\[\e[1;32m\]"
 					if [[ $EUID == 0 ]] ; then
-					  PS1="$RED\u@\h:\w \$ $NORMAL"
+					    PS1="$RED\u@\h:\w \$ $NORMAL"
 					else
-					  PS1="\u@\h:\w \$"
+					    PS1="\u@\h:\w \$"
 					fi
 
 					# End /etc/bashrc
+					
 					EOF
                 </line>
                 
@@ -579,6 +573,7 @@
 					cat > $PROJECT__RFS/root/.bashrc &lt;&lt;-EOF
 					export PS1="\e[31m\u@\h:\w\$ \e[39m"
 					export PATH=/usr/bin:/usr/sbin:/bin:/sbin
+					
 					EOF
 				</line>
 				
@@ -607,11 +602,11 @@
 					}
 
 					if [[ -f "\$HOME/.bashrc" ]] ; then
-					  source \$HOME/.bashrc
+					    source \$HOME/.bashrc
 					fi
 
 					if [[ -d "\$HOME/bin" ]] ; then
-					  append \$HOME/bin
+					    append \$HOME/bin
 					fi
 
 					unset append
@@ -625,7 +620,7 @@
 					# Begin ~/.bashrc
 
 					if [[ -f "/etc/bashrc" ]] ; then
-					  source /etc/bashrc
+					    source /etc/bashrc
 					fi
 
 					# End ~/.bashrc

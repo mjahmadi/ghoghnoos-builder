@@ -831,6 +831,8 @@
 				
 				<line verbos="yes">rm -fv /etc/resolv.conf</line>
 				<line verbos="yes">ln -s ../lib/systemd/resolv.conf /etc/resolv.conf</line>
+				
+				<line verbos="yes">exit -1</line>
 			</action>
 		</entry>
 		
