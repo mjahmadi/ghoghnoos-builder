@@ -4,18 +4,18 @@
 
 	<phase seq="1">
 	
-		<entry type="script/bash" seq="3">
-	            <action when="after" seq="3">
+		<entry type="script/bash" seq="1">
+	            <action when="after" seq="1">
 	                <line>echo -e "\n\nPackaging root filesystem...\n"</line>
 	                
 	                <line>rm -rf $PROJECT__ISODIR</line>
 	                <line>mkdir -vp $PROJECT__ISODIR</line>
 	                
 	                <line>cd $PROJECT__RFS</line>
-	                <line>find . -not -path "./builder.sh" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
+	                <line>find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.cpio.gz</line>
 	            </action>
 	            
-	            <action when="after" seq="3">
+	            <action when="after" seq="2">
 					<line>echo -e "\n\nMaking bootable iso file...\n"</line>
 					
 					<line>cd $PROJECT__ISODIR</line>
@@ -35,7 +35,7 @@
 					<line>cp $PROJECT__RFS/boot/kernel.bz ./kernel.bz</line>
 					<line>mv $PROJECT__ISODIR/rootfs.cpio.gz ./rootfs.gz</line>
 					
-					<line>echo "default kernel.bz initrd=rootfs.gz" > ./isolinux.cfg</line>
+					<line>echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
 					
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>

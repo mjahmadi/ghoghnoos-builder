@@ -432,10 +432,10 @@
                 <line verbos="yes">make &amp;&amp; make install</line>
 				<line verbos="yes">mv -v /usr/bin/passwd /bin</line>
 				
+				<line verbos="yes">pwconv</line>
+				<line verbos="yes">grpconv</line>
 				
-				<!-- SHADOW NEED'S SOME CONFIG HERE!  -->
-				
-				
+				<line verbos="yes">passwd root</line>
 			</action>
 		</entry>
 		
@@ -794,7 +794,6 @@
 					MOUNT_CFLAGS="-I/tools/include/libmount"
 					cc_cv_CFLAGS__flto=no
 					XSLTPROC="/usr/bin/xsltproc"
-				
 					EOF
 				</line>
 				<line verbos="yes">
