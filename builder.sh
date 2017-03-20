@@ -121,8 +121,6 @@ if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]];
 	set -e
 fi
 
-echo -e "\n\n${BOLD_TXT}About to building '$PROJECT__NAME-$PROJECT__TYPE-$PROJECT__SUBJECT-$PROJECT__ARCH-$PROJECT__VERSION-->[$PROJECT__SUBJECT]'${NORMAL_TXT}\n"
-
 # IMPILIMEN BUILD SEGMENTAION
 if [[ -n $2 ]]; then
     phase_begin_from=$2
