@@ -41,11 +41,11 @@
 			
 			<action when="after" seq="3">
 				<line verbos="yes" sudo="yes">chown -R root:root $PROJECT__RFS</line>
-				<line verbos="yes" sudo="yes">chmod -R a+rwx $PROJECT__RFS</line>
+				<line verbos="yes" sudo="yes">chmod -R u+rwx $PROJECT__RFS</line>
 				<line verbos="yes" sudo="yes">chmod -R o-w $PROJECT__RFS</line>
 			</action>
 		</entry>
-				
+		
 	</phase>
 	
 </build>

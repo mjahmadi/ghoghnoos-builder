@@ -8,7 +8,7 @@
 	    
 	    	<action when="after" seq="1">
 	    	
-				<line verbos="yes">rm $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
 				<line verbos="yes">chmod u+rwx $PROJECT__RFS/init</line>
 				
 				<line verbos="yes">
