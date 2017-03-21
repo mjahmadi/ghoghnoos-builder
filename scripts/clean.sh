@@ -4,7 +4,8 @@
 username=$USER
 group=$(id -g -n $username)
 
-echo -e "\nUnmounting..."
+sudo echo -e "\nUnmounting..."
+
 sudo umount -v ./dev/pts
 sudo umount -v ./dev
 sudo umount -v ./run
