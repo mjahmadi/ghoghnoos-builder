@@ -8,7 +8,11 @@
 	    
 	    	<action when="after" seq="1">
 	    	
-				<line verbos="yes">rm -f $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
+	    		<line verbos="yes">ln -sfv /proc/self/mounts $PROJECT__RFS/etc/mtab</line>
+	    		
+	    		<line verbos="yes">rm -fv $PROJECT__RFS/etc/resolv.conf &amp;&amp; ln -svf ../lib/systemd/resolv.conf $PROJECT__RFS/etc/resolv.conf</line>
+	    		
+				<line verbos="yes">rm -fv $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
 				<line verbos="yes">chmod u+rwx $PROJECT__RFS/init</line>
 				
 				<line verbos="yes">
@@ -38,16 +42,12 @@
 					EOF
 				</line>
 				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/hostname &lt;&lt;-EOF
-					$PROJECT__HOSTNAME
-					EOF
-				</line>
+				<line verbos="yes">echo $PROJECT__HOSTNAME > $PROJECT__RFS/etc/hostname</line>
 				
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/hosts &lt;&lt;-EOF
 					127.0.0.1 localhost
-					127.0.0.1 $PROJECT__HOSTNAME
+					::1       localhost
 					EOF
 				</line>
 				
@@ -70,7 +70,6 @@
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/vconsole.conf &lt;&lt;-EOF
 					KEYMAP=us
-					FONT=Lat2-Terminus16
 					EOF
 				</line>
 				
@@ -123,7 +122,7 @@
 					EOF
 				</line>
 				
-				<line verbos="yes">
+				<line verbos="yes" disabled="yes">
 					cat > $PROJECT__RFS/etc/bootscript.sh &lt;&lt;-EOF
 					#!/bin/sh
 
@@ -138,7 +137,7 @@
 					done
 					EOF
 				</line>
-				<line>chmod +x $PROJECT__RFS/etc/bootscript.sh</line>
+				<line disabled="yes">chmod +x $PROJECT__RFS/etc/bootscript.sh</line>
 
 				<line verbos="yes">install -v -m755 -d $PROJECT__RFS/etc/modprobe.d</line>				
 				<line verbos="yes">
@@ -159,53 +158,6 @@
 					sysfs /sys sysfs default 0 0
 					devpts /dev/pts devpts gid=5,mode=620 0 0
 					tmpfs /dev/shm tmpfs default 0 0
-					EOF
-				</line>
-				
-				<line verbos="yes" sudo="yes">rm -f $PROJECT__RFS/etc/mtab</line>
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/mtab &lt;&lt;-EOF
-					aufs / aufs default 0 0
-					proc /proc proc default 0 0
-					sysfs /sys sysfs default 0 0
-					devpts /dev/pts devpts gid=5,mode=620 0 0
-					tmpfs /dev/shm tmpfs default 0 0
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/rc.dhcp &lt;&lt;-EOF
-					#!/bin/sh
-
-					ip addr add \$ip/\$mask dev \$interface
-
-					if [ "\$router" ]; then
-					    ip route add default via \$router dev \$interface
-					fi
-					EOF
-				</line>
-				<line>chmod +x $PROJECT__RFS/etc/rc.dhcp</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/resolv.conf &lt;&lt;-EOF
-					nameserver 8.8.8.8
-					nameserver 8.8.4.4
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/inittab &lt;&lt;-EOF
-					::sysinit:/etc/bootscript.sh
-					::restart:/sbin/init
-					::ctrlaltdel:/sbin/reboot
-					::once:cat /etc/welcome
-					::respawn:/bin/cttyhack /bin/sh
-					tty2::once:cat /etc/welcome
-					tty2::respawn:/bin/sh
-					tty3::once:cat /etc/welcome
-					tty3::respawn:/bin/sh
-					tty4::once:cat /etc/welcome
-					tty4::respawn:/bin/sh
 					EOF
 				</line>
 				
@@ -368,27 +320,11 @@
 					DISTRIB_ID="$PROJECT__NAME"
 					DISTRIB_RELEASE="$PROJECT__VERSION-systemd"
 					DISTRIB_CODENAME="$PROJECT__CODENAME"
-					DISTRIB_DESCRIPTION="$PROJECT__NAME"
+					DISTRIB_DESCRIPTION="$PROJECT__NAME-$PROJECT__CODENAME"
 					
 					EOF
 				</line>
 
-				<line verbos="yes">
-					cat > $PROJECT_RFS/etc/welcome &lt;&lt;-EOF
-					#####################################################################
-					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
-					
-					Author: 
-					    $PROJECT__AUTHOR_NAME
-					    $PROJECT__AUTHOR_EMAIL
-					
-					Website:
-					    $PROJECT__WEBSITE
-					#####################################################################
-					
-					EOF
-                </line>
-                
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/profile &lt;&lt;-EOF
 					# Begin /etc/profile
@@ -402,23 +338,23 @@
 						local DIR
 						local PATHVARIABLE=\${2:-PATH}
 						for DIR in \${!PATHVARIABLE} ; do
-								if [ "\$DIR" != "$1" ] ; then
-								  NEWPATH=\${NEWPATH:+\$NEWPATH:}\$DIR
-								fi
+						    if [ "\$DIR" != "$1" ] ; then
+						        NEWPATH=\${NEWPATH:+\$NEWPATH:}\$DIR
+						    fi
 						done
 						export \$PATHVARIABLE="\$NEWPATH"
 					}
 
 					pathprepend () {
-						pathremove \$1 \$2
-						local PATHVARIABLE=\${2:-PATH}
-						export \$PATHVARIABLE="\$1\${!PATHVARIABLE:+:\${!PATHVARIABLE}}"
+					    pathremove \$1 \$2
+					    local PATHVARIABLE=\${2:-PATH}
+					    export \$PATHVARIABLE="\$1\${!PATHVARIABLE:+:\${!PATHVARIABLE}}"
 					}
 
 					pathappend () {
-						pathremove $1 $2
-						local PATHVARIABLE=\${2:-PATH}
-						export \$PATHVARIABLE="\${!PATHVARIABLE:+\${!PATHVARIABLE}:}\$1"
+					    pathremove $1 $2
+					    local PATHVARIABLE=\${2:-PATH}
+					    export \$PATHVARIABLE="\${!PATHVARIABLE:+\${!PATHVARIABLE}:}\$1"
 					}
 
 
@@ -426,8 +362,8 @@
 					export PATH=/bin:/usr/bin
 
 					if [[ \$EUID -eq 0 ]] ; then
-						pathappend /sbin:/usr/sbin
-						unset HISTFILE
+					    pathappend /sbin:/usr/sbin
+					    unset HISTFILE
 					fi
 
 					# Setup some environment variables.
@@ -439,15 +375,15 @@
 					RED="\[\e[1;31m\]"
 					GREEN="\[\e[1;32m\]"
 					if [[ \$EUID == 0 ]] ; then
-						PS1="\$BOLD_TXT\$RED\u@\h:\w\$ \$NORMAL\$NORMAL_TXT"
+					    PS1="\$BOLD_TXT\$RED\u@\h:\w\$ \$NORMAL\$NORMAL_TXT"
 					else
-						PS1="\$NORMAL\u@\h:\w$ "
+					    PS1="\$NORMAL\u@\h:\w$ "
 					fi
 
 					for script in /etc/profile.d/*.sh ; do
-						if [[ -r \$script ]] ; then
-							. \$script
-						fi
+					    if [[ -r \$script ]] ; then
+					        . \$script
+					    fi
 					done
 
 					# Now to clean up
@@ -461,11 +397,11 @@
 					cat > $PROJECT_RFS/etc/profile.d/dircolors.sh &lt;&lt;-EOF
 					# Setup for /bin/ls to support color, the alias is in /etc/bashrc.
 					if [[ -f "/etc/dircolors" ]] ; then
-						eval \$(dircolors -b /etc/dircolors)
+					    eval \$(dircolors -b /etc/dircolors)
 
-						if [[ -f "\$HOME/.dircolors" ]] ; then
-							eval \$(dircolors -b \$HOME/.dircolors)
-						fi
+					    if [[ -f "\$HOME/.dircolors" ]] ; then
+					        eval \$(dircolors -b \$HOME/.dircolors)
+					    fi
 					fi
 					alias ls='ls --color=auto'
 					EOF
@@ -495,45 +431,6 @@
 					EOF
                 </line>
                 
-				<line verbos="yes">
-					cat > $PROJECT_RFS/etc/profile.d/readline.sh &lt;&lt;-EOF
-					# Setup the INPUTRC environment variable.
-					if [[ -z "\$INPUTRC" &amp;&amp; ! -f "\$HOME/.inputrc" ]] ; then
-					    INPUTRC=/etc/inputrc
-					fi
-					export INPUTRC
-					EOF
-                </line>
-                
-				<line verbos="yes">
-					cat > $PROJECT_RFS/etc/profile.d/umask.sh &lt;&lt;-EOF
-					# By default we want the umask to get set.
-					if [[ "\$(id -gn)" = "\$(id -un)" &amp;&amp; \$EUID -gt 99 ]] ; then
-					    umask 002
-					else
-					    umask 022
-					fi
-					EOF
-                </line>
-                
-				<line verbos="yes">
-					cat > $PROJECT_RFS/etc/profile.d/X.sh &lt;&lt;-EOF
-					if [[ -x /usr/X11R6/bin/X ]]; then
-					    pathappend /usr/X11R6/bin
-					fi
-					if [[ -d /usr/X11R6/lib/pkgconfig ]]; then
-					    pathappend /usr/X11R6/lib/pkgconfig PKG_CONFIG_PATH
-					fi
-					EOF
-                </line>
-                
-                <line verbos="yes">
-		            cat > $PROJECT_RFS/etc/profile.d/i18n.sh &lt;&lt;-EOF
-					# Set up i18n variables
-					export LANG=en_US.UTF-8
-					EOF
-                </line>
-                
                 <line verbos="yes">
 					cat > $PROJECT_RFS/etc/bashrc &lt;&lt;-EOF
 					# Begin /etc/bashrc
@@ -554,10 +451,13 @@
 					# in the X environment. [Review the LFS archive thread titled
 					# PS1 Environment Variable for a great case study behind this script
 					# addendum.]
-
+					
+					cat /etc/welcome
+					
 					NORMAL="\[\e[0m\]"
 					RED="\[\e[1;31m\]"
 					GREEN="\[\e[1;32m\]"
+					
 					if [[ $EUID == 0 ]] ; then
 					    PS1="$RED\u@\h:\w \$ $NORMAL"
 					else
@@ -588,17 +488,17 @@
 					# System wide aliases and functions are in /etc/bashrc.
 
 					append () {
-					  # First remove the directory
-					  local IFS=':'
-					  local NEWPATH
-					  for DIR in $PATH; do
-						 if [ "\$DIR" != "\$1" ]; then
-						   NEWPATH=${NEWPATH:+\$NEWPATH:}\$DIR
-						 fi
-					  done
+					    # First remove the directory
+					    local IFS=':'
+					    local NEWPATH
+					    for DIR in $PATH; do
+					        if [ "\$DIR" != "\$1" ]; then
+					            NEWPATH=${NEWPATH:+\$NEWPATH:}\$DIR
+						    fi
+					    done
 
-					  # Then append the directory
-					  export PATH=\$NEWPATH:\$1
+					    # Then append the directory
+					    export PATH=\$NEWPATH:\$1
 					}
 
 					if [[ -f "\$HOME/.bashrc" ]] ; then
@@ -618,7 +518,7 @@
                 <line verbos="yes">
 					cat > $PROJECT_RFS/root/.bashrc &lt;&lt;-EOF
 					# Begin ~/.bashrc
-
+					
 					if [[ -f "/etc/bashrc" ]] ; then
 					    source /etc/bashrc
 					fi
@@ -634,6 +534,22 @@
 					# Personal items to perform on logout.
 
 					# End ~/.bash_logout
+					EOF
+                </line>
+                
+				<line verbos="yes">
+					cat > $PROJECT_RFS/etc/welcome &lt;&lt;-EOF
+					#####################################################################
+					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+					
+					Author: 
+					    $PROJECT__AUTHOR_NAME
+					    $PROJECT__AUTHOR_EMAIL
+					
+					Website:
+					    $PROJECT__WEBSITE
+					#####################################################################
+					
 					EOF
                 </line>
                 
