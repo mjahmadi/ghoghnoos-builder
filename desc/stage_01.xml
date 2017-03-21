@@ -648,39 +648,5 @@
 
 	</phase>
 	
-	
-	
-	<phase seq="3">
-	
-		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
-			<action when="before" seq="1">
-				<line sudo="yes">rm -rf $PROJECT__BLD/*</line>
-			</action>
-			
-			<action when="before" seq="2">
-				<line sudo="yes">chown -R root:root /tools</line>
-				
-				<line>mkdir -pv $PROJECT__RFS/{dev,proc,sys,run}</line>
-				
-				<line sudo="yes">mknod -m 600 $PROJECT__RFS/dev/console c 5 1</line>
-				<line sudo="yes">mknod -m 666 $PROJECT__RFS/dev/null c 1 3</line>
-				
-				<line sudo="yes">mount -v --bind /dev $PROJECT__RFS/dev</line>
-				<line sudo="yes">mount -vt devpts devpts $PROJECT__RFS/dev/pts -o gid=5,mode=620</line>
-				<line sudo="yes">mount -vt proc proc $PROJECT__RFS/proc</line>
-				<line sudo="yes">mount -vt sysfs sysfs $PROJECT__RFS/sys</line>
-				<line sudo="yes">mount -vt tmpfs tmpfs $PROJECT__RFS/run</line>
-				
-				<line>
-					if [[ -h $PROJECT__RFS/dev/shm ]]; then
-						mkdir -pv $PROJECT__RFS/$(readlink $PROJECT__RFS/dev/shm)
-					fi
-				</line>
-			</action>
-			
-		</entry>
-		
-	</phase>
-	
 </build>
 
