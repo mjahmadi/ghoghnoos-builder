@@ -10,9 +10,6 @@ MAGENTA="\e[35m"
 CYAN="\e[36m"
 RED="\e[31m"
 
-BOLD_TXT=$(tput bold)
-NORMAL_TXT=$(tput sgr0)
-
 if [[ -s "/tools/bin/env" ]]; then
 	env_tmp=/tools/bin/env
 	path_tmp=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin
@@ -27,7 +24,7 @@ chroot "$(pwd)"                                         \
 $env_tmp -i                                             \
 HOME=/root                                              \
 TERM="$TERM"                                            \
-PS1="$BOLD_TXT$BLUE\u@chroot:\w\$ $NORMAL$NORMAL_TXT"    \
+PS1="$RED\u@chroot:\w\$ $NORMAL"    \
 PATH=$path_tmp                                          \
 $bash_tmp --login +h
 
