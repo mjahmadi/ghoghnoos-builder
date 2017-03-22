@@ -61,7 +61,8 @@ function do_as_root
 
 # CHECK IF RUNING IN CHROOT MODE AS ROOT
 chroot=$(xml_get_val "$XML_DESC_STRING" "/build/@chroot")
-if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
+runbysudo=$(xml_get_val "$XML_DESC_STRING" "/build/@runbysudo")
+if [[ $runbysudo != "yes" && $chroot != "yes" && $(id -u) == 0 ]]; then
 	echo -e "${RED}ERROR: Sorry, user root is not allowed to execute '$0'.${NORMAL}"
 	exit -1
 fi
@@ -100,8 +101,8 @@ if [[ $PROJECT__ARCH != "x86" && $PROJECT__ARCH != $PROJECT__HOST_ARCH ]]; then
 	exit -1
 fi
 
-# CHECK IF BUILD NEED'S SUDO
-if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
+# CHECK IF BUILD NEED'S sudo
+if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@usesudo") == 'yes' ]]; then
 	set +e
 	
 	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
@@ -244,24 +245,23 @@ for phase in `seq $phase_begin_from $phase_count`; do
 		# BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
 		entry_action_line_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line)")
         for line in `seq $line_begin_from $entry_action_line_count`; do
-        	
 			line_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@disabled")
 			if [[ $line_disabled == 'yes' ]]; then
 				echo -e "${BOLD_TXT}\nline '$line' is disabled!\n${NORMAL_TXT}"
 				continue
 			fi
 			
-		        sudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@sudo")
-		        verbos=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@verbos")
+		        usesudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@usesudo")
+		        verbose=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]/@verbose")
 	        	
 		        command=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='before'][$action]/line[$line]")
 		        
-		        if [[ $verbos == 'yes' ]]; then
+		        if [[ $verbose == 'yes' ]]; then
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
 		        
-				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
-					eval "echo $HOST_ROOT_PASS | sudo -S $command"
+				if [[ $usesudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
+					eval "echo $HOST_ROOT_PASS | usesudo -S $command"
 				else
 					eval "$command"
 				fi
@@ -269,22 +269,22 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	line_begin_from=1
         done
         
-	# BUILD >> PHASE >> ENTRY
-	cdto=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@cdto")
-	download=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@download")
-	extract=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@extract")
-	link=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/link")
-	filename=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
-	directory=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory")
-	directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
-	checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
-	checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
-    
-	if [[ $download == 'yes' ]]; then
-		echo -e "\nDownloading '$filename'"
-		wget --continue $link --directory-prefix="$PROJECT__PKG"
-	fi
-        
+		# BUILD >> PHASE >> ENTRY
+		cdto=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@cdto")
+		download=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@download")
+		extract=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@extract")
+		link=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/link")
+		filename=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
+		directory=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory")
+		directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
+		checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
+		checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
+		
+		if [[ $download == 'yes' ]]; then
+			echo -e "\nDownloading '$filename'"
+			wget --continue $link --directory-prefix="$PROJECT__PKG"
+		fi
+		    
 		if [[ $entry_type == 'package/src' ]]; then
 		
 			if [[ ! -s "$PROJECT__PKG/$filename" ]]; then
@@ -360,23 +360,22 @@ for phase in `seq $phase_begin_from $phase_count`; do
             # BUILD >> PHASE >> ENTRY >> ACTION [TYPE=AFTER] >> LINE
         	entry_action_line_count=$(xml_get_val "$XML_DESC_STRING" "count(/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line)")
         	for line in `seq $line_begin_from $entry_action_line_count`; do
-        	
 				line_disabled=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@disabled")
 				if [[ $line_disabled == 'yes' ]]; then
 					echo -e "${BOLD_TXT}\nline '$line' is disabled!\n${NORMAL_TXT}"
 					continue
 				fi
 			
-		        sudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@sudo")
-		        verbos=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@verbos")
+		        usesudo=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@usesudo")
+		        verbose=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]/@verbose")
 	        	
 		        command=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/action[@when='after'][$action]/line[$line]")
 		        
-		        if [[ $verbos == 'yes' ]]; then
+		        if [[ $verbose == 'yes' ]]; then
 		            echo -e "${BOLD_TXT}$command${NORMAL_TXT}"
 		        fi
 		        
-				if [[ $sudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
+				if [[ $usesudo == 'yes' && -n $HOST_ROOT_PASS ]]; then
 					eval "echo $HOST_ROOT_PASS | sudo -S $command"
 				else
 					eval "$command"
