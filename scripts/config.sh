@@ -25,10 +25,10 @@ function get_timezone {
 echo $OLSONTZ
 echo -e "${BOLD_TXT}This program will guide you to create a simple xml config file\nfor Ghoghnoos distro build system.\n\nhttps://github.com/mjahmadi/ghoghnoos-builder/\n\n${NORMAL_TXT}"
 
-read -p "Project name [Ghoghnoos]: " PROJECT__NAME
+read -p "Project name [ghoghnoos]: " PROJECT__NAME
 PROJECT__NAME=${PROJECT__NAME:-Ghoghnoos}
 
-read -p "Project version [X.Y.Z]: " PROJECT__VERSION
+read -p "Project version [0.0.1]: " PROJECT__VERSION
 PROJECT__VERSION=${PROJECT__VERSION:-0.0.1}
 
 read -p "Project codename: " PROJECT__CODENAME
@@ -51,7 +51,7 @@ PROJECT__HOSTNAME=${PROJECT__HOSTNAME:-$PROJECT__NAME-$PROJECT__ARCH}
 read -p "System timezone [$(get_timezone)]: " PROJECT__TIMEZONE
 PROJECT__TIMEZONE=${PROJECT__TIMEZONE:-$(get_timezone)}
 
-read -p "System controller [systemd]: " PROJECT__CONTROLLER
+read -p "System init [systemd]: " PROJECT__CONTROLLER
 PROJECT__CONTROLLER=${PROJECT__CONTROLLER:-systemd}
 
 read -p "Default root password [root]: " PROJECT__ROOTPASWD
