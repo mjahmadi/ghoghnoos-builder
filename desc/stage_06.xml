@@ -309,7 +309,6 @@
 					ID=$PROJECT__NAME
 					PRETTY_NAME="$PROJECT__NAME $PROJECT__VERSION-systemd"
 					VERSION_CODENAME="$PROJECT__CODENAME"
-					
 					EOF
             	</line>
             	
@@ -321,7 +320,6 @@
 					DISTRIB_RELEASE="$PROJECT__VERSION-systemd"
 					DISTRIB_CODENAME="$PROJECT__CODENAME"
 					DISTRIB_DESCRIPTION="$PROJECT__NAME-$PROJECT__CODENAME"
-					
 					EOF
 				</line>
 
@@ -465,7 +463,6 @@
 					fi
 
 					# End /etc/bashrc
-					
 					EOF
                 </line>
                 
@@ -473,7 +470,6 @@
 					cat > $PROJECT__RFS/root/.bashrc &lt;&lt;-EOF
 					export PS1="\e[31m\u@\h:\w\$ \e[39m"
 					export PATH=/usr/bin:/usr/sbin:/bin:/sbin
-					
 					EOF
 				</line>
 				

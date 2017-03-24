@@ -22,7 +22,6 @@
 				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/tmp/*</line>
 				
 				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/build</line>
-				<line verbos="yes" sudo="yes">rm -rf $PROJECT__RFS/packages</line>
 			</action>
 		    
 			<action when="after" seq="2">
