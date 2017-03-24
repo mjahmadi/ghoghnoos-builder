@@ -535,8 +535,10 @@
                 
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/welcome &lt;&lt;-EOF
-					#####################################################################
-					Welcome to $PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)
+					
+					
+					##########################################################################
+					Welcome to $PROJECT__NAME-$PROJECT__CODENAME-$PROJECT__VERSION ($PROJECT__ARCH)
 					
 					Author: 
 					    $PROJECT__AUTHOR_NAME
@@ -544,10 +546,12 @@
 					
 					Website:
 					    $PROJECT__WEBSITE
-					#####################################################################
+					##########################################################################
 					
 					EOF
                 </line>
+                
+                <line verbos="yes">chmod go-rwx $PROJECT__RFS/root</line>
                 
 			</action>
 		</entry>
