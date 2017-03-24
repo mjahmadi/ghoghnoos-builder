@@ -1,142 +1,19 @@
 <?xml version="1.0"?>
 
-<build subject="filesystem" stage="02" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
-	
-	<phase seq="1">
-		<entry type="script/bash" seq="1">
-			<action when="before" seq="1">
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/{bin,boot,etc/{profile.d,opt,sysconfig},home,lib/firmware,mnt,opt}</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/{media/{floppy,cdrom},sbin,srv,var}</line>
-				<line verbos="yes">install -dv -m 0750 $PROJECT__RFS/root</line>
-				<line verbos="yes">install -dv -m 1777 $PROJECT__RFS/tmp $PROJECT__RFS/var/tmp</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/usr/{,local/}{bin,include,lib,sbin,src}</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/usr/{,local/}share/{color,dict,doc,info,locale,man}</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/usr/{,local/}share/{misc,terminfo,zoneinfo}</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/usr/libexec</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/usr/{,local/}share/man/man{1..8}</line>
-				
-				<line verbos="yes">
-					case $(uname -m) in
-						x86_64) ln -fsv lib $PROJECT__RFS/lib64
-								ln -fsv lib $PROJECT__RFS/usr/lib64
-								ln -fsv lib $PROJECT__RFS/usr/local/lib64 ;;
-					esac
-				</line>
-				
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/var/{log,mail,spool}</line>
-				<line verbos="yes">ln -fsv /run $PROJECT__RFS/var/run</line>
-				<line verbos="yes">ln -fsv /run/lock $PROJECT__RFS/var/lock</line>
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/var/{opt,cache,lib/{color,misc,locate},local}</line>
-				
-				<line verbos="yes">ln -fsv /tools/bin/{bash,cat,echo,pwd,stty} $PROJECT__RFS/bin</line>
-				<line verbos="yes">ln -fsv /tools/bin/perl $PROJECT__RFS/usr/bin</line>
-				<line verbos="yes">ln -fsv /tools/lib/libgcc_s.so{,.1} $PROJECT__RFS/usr/lib</line>
-				<line verbos="yes">ln -fsv /tools/lib/libstdc++.so{,.6} $PROJECT__RFS/usr/lib</line>
-				<line verbos="yes">sed 's/tools/usr/' /tools/lib/libstdc++.la > $PROJECT__RFS/usr/lib/libstdc++.la</line>
-				<line verbos="yes">ln -fsv bash $PROJECT__RFS/bin/sh</line>
-				<line verbos="yes">ln -fsv $PROJECT__RFS/proc/self/mounts /etc/mtab</line>
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/passwd &lt;&lt;-EOF
-					root:x:0:0:root:/root:/bin/bash
-					bin:x:1:1:bin:/dev/null:/bin/false
-					daemon:x:6:6:Daemon User:/dev/null:/bin/false
-					messagebus:x:18:18:D-Bus Message Daemon User:/var/run/dbus:/bin/false
-					systemd-bus-proxy:x:72:72:systemd Bus Proxy:/:/bin/false
-					systemd-journal-gateway:x:73:73:systemd Journal Gateway:/:/bin/false
-					systemd-journal-remote:x:74:74:systemd Journal Remote:/:/bin/false
-					systemd-journal-upload:x:75:75:systemd Journal Upload:/:/bin/false
-					systemd-network:x:76:76:systemd Network Management:/:/bin/false
-					systemd-resolve:x:77:77:systemd Resolver:/:/bin/false
-					systemd-timesync:x:78:78:systemd Time Synchronization:/:/bin/false
-					systemd-coredump:x:79:79:systemd Core Dumper:/:/bin/false
-					nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/group &lt;&lt;-EOF
-					root:x:0:
-					bin:x:1:daemon
-					sys:x:2:
-					kmem:x:3:
-					tape:x:4:
-					tty:x:5:
-					daemon:x:6:
-					floppy:x:7:
-					disk:x:8:
-					lp:x:9:
-					dialout:x:10:
-					audio:x:11:
-					video:x:12:
-					utmp:x:13:
-					usb:x:14:
-					cdrom:x:15:
-					adm:x:16:
-					messagebus:x:18:
-					systemd-journal:x:23:
-					input:x:24:
-					mail:x:34:
-					systemd-bus-proxy:x:72:
-					systemd-journal-gateway:x:73:
-					systemd-journal-remote:x:74:
-					systemd-journal-upload:x:75:
-					systemd-network:x:76:
-					systemd-resolve:x:77:
-					systemd-timesync:x:78:
-					systemd-coredump:x:79:
-					nogroup:x:99:
-					users:x:999:
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/ld.so.conf &lt;&lt;-EOF
-					# Begin /etc/ld.so.conf
-					/usr/local/lib
-					/opt/lib
-					
-					# Add include directory
-					include /etc/ld.so.conf.d/*.conf
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > $PROJECT__RFS/etc/nsswitch.conf &lt;&lt;-EOF
-					# Begin /etc/nsswitch.conf
-					passwd: files
-					group: files
-					shadow: files
-					hosts: files dns
-					networks: files
-					protocols: files
-					services: files
-					ethers: files
-					rpc: files
-					# End /etc/nsswitch.conf
-					EOF
-				</line>
-                
-				<line verbos="yes">touch $PROJECT__RFS/var/log/{btmp,lastlog,faillog,wtmp}</line>
-				<line verbos="yes">chgrp -v utmp $PROJECT__RFS/var/log/lastlog</line>
-				<line verbos="yes">chmod -v 664 $PROJECT__RFS/var/log/lastlog</line>
-				<line verbos="yes">chmod -v 600 $PROJECT__RFS/var/log/btmp</line>
-				
-				<line verbos="yes">mkdir -pv $PROJECT__RFS/etc/ld.so.conf.d</line>
-
-			</action>
-       	</entry>
-	</phase>
-
+<build subject="tools" stage="01" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
+		
 	<phase seq="2">
 		<entry type="script/bash" seq="1">
+		
 			<action when="before" seq="1">
 				<line sudo="yes">rm -rf $PROJECT__BLD/*</line>
 			</action>
 			
 			<action when="before" seq="2">
 				<line sudo="yes">chown -R root:root $PROJECT__RFS/tools</line>
+				<line sudo="yes">chown -R $USERNAME:$USERGROUP $PROJECT__RFS/desc $PROJECT__RFS/scripts $PROJECT__RFS/packages</line>
 				
-				<line>mkdir -pv $PROJECT__RFS/{dev,proc,sys,run}</line>
+				<line sudo="yes">mkdir -pv $PROJECT__RFS/{dev,proc,sys,run}</line>
 				
 				<line sudo="yes">mknod -m 600 $PROJECT__RFS/dev/console c 5 1</line>
 				<line sudo="yes">mknod -m 666 $PROJECT__RFS/dev/null c 1 3</line>
@@ -152,9 +29,8 @@
 						mkdir -pv $PROJECT__RFS/$(readlink $PROJECT__RFS/dev/shm)
 					fi
 				</line>
-				
-				<line verbos="yes">exec /tools/bin/bash --login +h</line>
 			</action>
+			
 		</entry>
 	</phase>
 	
