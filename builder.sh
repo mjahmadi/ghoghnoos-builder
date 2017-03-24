@@ -3,6 +3,9 @@ set +h
 
 umask 022
 
+export USERNAME=$USER
+export USERGROUP=$(id -g -n $username)
+
 # COLORS
 NORMAL="\e[39m"
 WHITE="\e[37m"
@@ -61,7 +64,8 @@ function do_as_root
 
 # CHECK IF RUNING IN CHROOT MODE AS ROOT
 chroot=$(xml_get_val "$XML_DESC_STRING" "/build/@chroot")
-if [[ $chroot != "yes" && $(id -u) == 0 ]]; then
+runbysudo=$(xml_get_val "$XML_DESC_STRING" "/build/@runbysudo")
+if [[ $runbysudo != "yes" && $chroot != "yes" && $(id -u) == 0 ]]; then
 	echo -e "${RED}ERROR: Sorry, user root is not allowed to execute '$0'.${NORMAL}"
 	exit -1
 fi
@@ -104,7 +108,7 @@ fi
 if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]]; then
 	set +e
 	
-	echo -e "${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
+	echo -e "\n${BOLD_TXT}We ask for root credential because of your configurations.${NORMAL_TXT}\nroot's password: "
 	read -rs HOST_ROOT_PASS
 	
 	#sudo -k
@@ -115,7 +119,7 @@ if [[ $UID != 0 && $(xml_get_val "$XML_DESC_STRING" "/build/@sudo") == 'yes' ]];
 		echo -e "${RED}ERROR: Incorrect password was entered.${NORMAL}"
 		exit -1
 	else
-		echo -e "${GREEN}OK!${NORMAL}"
+		echo -e "${GREEN}OK!${NORMAL}\n"
 	fi
 	
 	set -e
@@ -269,21 +273,21 @@ for phase in `seq $phase_begin_from $phase_count`; do
         	line_begin_from=1
         done
         
-	# BUILD >> PHASE >> ENTRY
-	cdto=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@cdto")
-	download=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@download")
-	extract=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@extract")
-	link=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/link")
-	filename=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
-	directory=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory")
-	directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
-	checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
-	checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
-    
-	if [[ $download == 'yes' ]]; then
-		echo -e "\nDownloading '$filename'"
-		wget --continue $link --directory-prefix="$PROJECT__PKG"
-	fi
+		# BUILD >> PHASE >> ENTRY
+		cdto=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@cdto")
+		download=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@download")
+		extract=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/@extract")
+		link=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/link")
+		filename=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/filename")
+		directory=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory")
+		directory_base=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/directory/@base")
+		checksum=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum")
+		checksum_type=$(xml_get_val "$XML_DESC_STRING" "/build/phase[$phase]/entry[$entry]/checksum/@type")
+		
+		if [[ $download == 'yes' ]]; then
+			echo -e "\nDownloading '$filename'"
+			wget --continue $link --directory-prefix="$PROJECT__PKG"
+		fi
         
 		if [[ $entry_type == 'package/src' ]]; then
 		
