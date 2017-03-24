@@ -26,7 +26,7 @@ echo $OLSONTZ
 echo -e "${BOLD_TXT}This program will guide you to create a simple xml config file\nfor Ghoghnoos distro build system.\n\nhttps://github.com/mjahmadi/ghoghnoos-builder/\n\n${NORMAL_TXT}"
 
 read -p "Project name [ghoghnoos]: " PROJECT__NAME
-PROJECT__NAME=${PROJECT__NAME:-Ghoghnoos}
+PROJECT__NAME=${PROJECT__NAME:-ghoghnoos}
 
 read -p "Project version [0.0.1]: " PROJECT__VERSION
 PROJECT__VERSION=${PROJECT__VERSION:-0.0.1}
