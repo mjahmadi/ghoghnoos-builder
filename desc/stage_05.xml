@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="removing" stage="04" chroot="yes" sudo="yes">
+<build subject="removing" stage="04" chroot="yes">
 
 	<phase seq="1">
 	

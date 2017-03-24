@@ -948,7 +948,7 @@
 			</action>
 		</entry>
 		
-		<entry name="groff-1.22.3" type="package/src" seq="48" cdto="yes" download="no" extract="yes">
+		<entry name="groff-1.22.3" type="package/src" seq="48" cdto="yes" download="no" extract="yes" neednet="yes">
 		    <filename>groff-1.22.3.tar.gz</filename>
 		    <version>1.22.3</version>
 		    <checksum type="md5">cc825fa64bc7306a885f2fb2268d3ec5</checksum>

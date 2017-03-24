@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="packing" stage="99" chroot="yes">
+<build subject="packing" stage="99" runbysudo="yes">
 
 	<phase seq="1">
 	
