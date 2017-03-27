@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="tools" stage="01" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
+<build subject="tools" stage="02" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
 		
 	<phase seq="2">
 		<entry type="script/bash" seq="1">

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="base" stage="03" envpath="/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin" chroot="yes">
+<build subject="base" stage="04" envpath="/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin" chroot="yes">
 
 	<phase seq="1">
 	
