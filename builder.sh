@@ -157,7 +157,9 @@ if [[ $(xml_get_val "$XML_CONF_STRING" "/config/system/constructor") = 'yes' ]];
 	export PROJECT__TOL=$PROJECT__RFS/tools
 	export PROJECT__PKG=$PROJECT__RFS/packages
 	export PROJECT__SCR=$PROJECT__RFS/scripts
-	
+	export PROJECT__DEC=$PROJECT__RFS/desc
+	export PROJECT__AST=$PROJECT__RFS/assets
+		
 	mkdir -pv $PROJECT__PKG
 	mkdir -pv $PROJECT__BLD
 	mkdir -pv $PROJECT__TOL
@@ -169,10 +171,12 @@ else
 	export PROJECT__TOL=$PROJECT__DIR/tools
 	export PROJECT__PKG=$PROJECT__CUR/packages
 	export PROJECT__SCR=$PROJECT__RFS/scripts
+	export PROJECT__DEC=$PROJECT__RFS/desc
+	export PROJECT__AST=$PROJECT__RFS/assets
 	
+	mkdir -pv $PROJECT__RFS
 	mkdir -pv $PROJECT__PKG
 	mkdir -pv $PROJECT__BLD
-	mkdir -pv $PROJECT__RFS
 	mkdir -pv $PROJECT__TOL
 fi
 
