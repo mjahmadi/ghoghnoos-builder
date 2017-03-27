@@ -125,12 +125,12 @@
 						menu separator # insert an empty line
 						
 						label linux
-						  menu label ^Install Ghoghnoos 0.0.1
+						  menu label ^Install Ghoghnoos
 						  kernel kernel.bz
 						  append initrd=rootfs.gz
 						  
 						label livecd
-						  menu label ^Try live Ghoghnoos 0.0.1
+						  menu label ^Try Ghoghnoos without installing
 						  menu default
 						  kernel kernel.bz
 						  append initrd=rootfs.gz
@@ -140,12 +140,11 @@
 						label check
 						  menu label ^Check this installation media
 						  kernel kernel.bz
-						  append initrd=rootfs.gz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet
+						  append initrd=rootfs.gz
 						
 						label memtest
 						  menu label ^Memory Test
 						  kernel kernel.bz memtest
-						  append initrd=rootfs.gz inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet
 						  
 						EOF
 					</line>

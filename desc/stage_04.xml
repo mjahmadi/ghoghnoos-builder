@@ -1358,35 +1358,353 @@
             </action>
 		</entry>
 		
-		<entry name="wget-1.18" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
+		<entry name="libtasn1-4.9" type="package/src" seq="75" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
+		    <filename>libtasn1-4.9.tar.gz</filename>
+		    <version>4.9</version>
+		    <checksum type="md5">3018d0f466a32b66dde41bb122e6cab6</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="libtasn1-4.9" type="package/src" seq="76" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
+		    <filename>libtasn1-4.9.tar.gz</filename>
+		    <version>4.9</version>
+		    <checksum type="md5">3018d0f466a32b66dde41bb122e6cab6</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="openssl-1.0.2h" type="package/src" seq="77" cdto="yes" download="no" extract="yes">
+			<link>https://openssl.org/source/openssl-1.0.2h.tar.gz</link>
+		    <filename>openssl-1.0.2h.tar.gz</filename>
+		    <version>1.0.2h</version>
+		    <checksum type="md5">9392e65072ce4b614c1392eefc1f23d0</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					./config --prefix=/usr         \
+							 --openssldir=/etc/ssl \
+							 --libdir=lib          \
+							 shared                \
+							 zlib-dynamic
+                </line>
+                <line verbos="yes">make depend &amp;&amp; make</line>
+                <line verbos="yes">sed -i 's# libcrypto.a##;s# libssl.a##' Makefile</line>
+				<line verbos="yes">
+					make MANDIR=/usr/share/man MANSUFFIX=ssl install &amp;&amp;
+					install -dv -m755 /usr/share/doc/openssl-1.0.2h  &amp;&amp;
+					cp -vfr doc/*     /usr/share/doc/openssl-1.0.2h
+				</line>
+            </action>
+		</entry>
+		
+		<entry name="p11-kit-0.23.2" type="package/src" seq="79" cdto="yes" download="no" extract="yes">
+			<link>http://p11-glue.freedesktop.org/releases/p11-kit-0.23.2.tar.gz</link>
+		    <filename>p11-kit-0.23.2.tar.gz</filename>
+		    <version>0.23.2</version>
+		    <checksum type="md5">738af2442331fc22f440df9bee9b062a</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --without-trust-paths --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="gnutls-3.5.3" type="package/src" seq="80" cdto="yes" download="no" extract="yes">
+			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
+		    <filename>gnutls-3.5.3.tar.xz</filename>
+		    <version>3.2</version>
+		    <checksum type="md5">6c2c7f40ddf52933ee3ca474cb8cb63c</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc --with-pcre=system</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="wget-1.18" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
 		    <filename>wget-1.18.tar.xz</filename>
 		    <version>1.18</version>
 		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+                <line verbos="yes">./configure --prefix=/usr --with-default-trust-store-file=/etc/ssl/ca-bundle.crt</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="krb5-1.14.3" type="package/src" seq="82" cdto="yes" download="no" extract="yes">
+			<link>http://web.mit.edu/kerberos/dist/krb5/1.14/krb5-1.14.3.tar.gz</link>
+		    <filename>krb5-1.14.3.tar.gz</filename>
+		    <version>1.14.3</version>
+		    <checksum type="md5">f76e4f8a3c95bb59980dd5ef4b48aea9</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					cd src &amp;&amp;
+
+					sed -e "s@python2.5/Python.h@&amp; python2.7/Python.h@g" \
+						-e "s@-lpython2.5]@&amp;,\n  AC_CHECK_LIB(python2.7,main,[PYTHON_LIB=-lpython2.7])@g" \
+						-i configure.in &amp;&amp;
+
+					sed -e 's@\^u}@^u cols 300}@' \
+						-i tests/dejagnu/config/default.exp &amp;&amp;
+
+					sed -e '/eq 0/{N;s/12 //}' \
+						-i plugins/kdb/db2/libdb2/test/run.test &amp;&amp;
+
+					autoconf &amp;&amp;
+					./configure --prefix=/usr            \
+								--sysconfdir=/etc        \
+								--localstatedir=/var/lib \
+								--with-system-et         \
+								--with-system-ss         \
+								--with-system-verto=no   \
+								--enable-dns-for-realm
+                </line>
                 <line verbos="yes">make &amp;&amp; make install</line>
                 <line verbos="yes">
-					chmod   -v   755 /usr/lib/lib{hogweed,nettle}.so &amp;&amp;
-					install -v -m755 -d /usr/share/doc/nettle-3.2 &amp;&amp;
-					install -v -m644 nettle.html /usr/share/doc/nettle-3.2
+					for f in gssapi_krb5 gssrpc k5crypto kadm5clnt kadm5srv \
+							 kdb5 kdb_ldap krad krb5 krb5support verto ; do
+
+						find /usr/lib -type f -name "lib$f*.so*" -exec chmod -v 755 {} \;    
+					done &amp;&amp;
+
+					mv -v /usr/lib/libkrb5.so.3*        /lib &amp;&amp;
+					mv -v /usr/lib/libk5crypto.so.3*    /lib &amp;&amp;
+					mv -v /usr/lib/libkrb5support.so.0* /lib &amp;&amp;
+
+					ln -v -sf ../../lib/libkrb5.so.3.3        /usr/lib/libkrb5.so        &amp;&amp;
+					ln -v -sf ../../lib/libk5crypto.so.3.1    /usr/lib/libk5crypto.so    &amp;&amp;
+					ln -v -sf ../../lib/libkrb5support.so.0.1 /usr/lib/libkrb5support.so &amp;&amp;
+
+					mv -v /usr/bin/ksu /bin &amp;&amp;
+					chmod -v 755 /bin/ksu
                 </line>
             </action>
 		</entry>
 		
-		<entry name="wget-1.18" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
-			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
-		    <filename>wget-1.18.tar.xz</filename>
-		    <version>1.18</version>
-		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
+		<entry name="certdata" type="script/bash" seq="83">
             <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
-                <line verbos="yes">make &amp;&amp; make install</line>
                 <line verbos="yes">
-					chmod   -v   755 /usr/lib/lib{hogweed,nettle}.so &amp;&amp;
-					install -v -m755 -d /usr/share/doc/nettle-3.2 &amp;&amp;
-					install -v -m644 nettle.html /usr/share/doc/nettle-3.2
+					cat > /usr/bin/make-cert.pl &lt;&lt;-EOF
+					#!/usr/bin/perl -w
+
+					# Used to generate PEM encoded files from Mozilla certdata.txt.
+					# Run as ./make-cert.pl > certificate.crt
+					#
+					# Parts of this script courtesy of RedHat (mkcabundle.pl)
+					#
+					# This script modified for use with single file data (tempfile.cer) extracted
+					# from certdata.txt, taken from the latest version in the Mozilla NSS source.
+					# mozilla/security/nss/lib/ckfw/builtins/certdata.txt
+					#
+					# Authors: DJ Lucas
+					#          Bruce Dubbs
+					#
+					# Version 20120211
+
+					my $certdata = './tempfile.cer';
+
+					open( IN, "cat $certdata|" )
+						|| die "could not open $certdata";
+
+					my $incert = 0;
+
+					while ( &lt;IN> )
+					{
+						if ( /^CKA_VALUE MULTILINE_OCTAL/ )
+						{
+							$incert = 1;
+							open( OUT, "|openssl x509 -text -inform DER -fingerprint" )
+								|| die "could not pipe to openssl x509";
+						}
+
+						elsif ( /^END/ &amp;&amp; $incert )
+						{
+							close( OUT );
+							$incert = 0;
+							print "\n\n";
+						}
+
+						elsif ($incert)
+						{
+							my @bs = split( /\\/ );
+							foreach my $b (@bs)
+							{
+								chomp $b;
+								printf( OUT "%c", oct($b) ) unless $b eq '';
+							}
+						}
+					}
+					EOF
                 </line>
+                <line verbos="yes">chmod +x /usr/bin/make-cert.pl</line>
+                
+                <line verbos="yes">
+					cat > /usr/bin/make-ca.sh &lt;&lt;-EOF
+					#!/bin/sh
+					# Begin make-ca.sh
+					# Script to populate OpenSSL's CApath from a bundle of PEM formatted CAs
+					#
+					# The file certdata.txt must exist in the local directory
+					# Version number is obtained from the version of the data.
+					#
+					# Authors: DJ Lucas
+					#          Bruce Dubbs
+					#
+					# Version 20120211
+
+					# Some data in the certs have UTF-8 characters
+					export LANG=en_US.utf8
+
+					certdata="certdata.txt"
+
+					if [ ! -r $certdata ]; then
+					  echo "$certdata must be in the local directory"
+					  exit 1
+					fi
+
+					REVISION=$(grep CVS_ID $certdata | cut -f4 -d'$')
+
+					if [ -z "${REVISION}" ]; then
+					  echo "$certfile has no 'Revision' in CVS_ID"
+					  exit 1
+					fi
+
+					VERSION=$(echo $REVISION | cut -f2 -d" ")
+
+					TEMPDIR=$(mktemp -d)
+					TRUSTATTRIBUTES="CKA_TRUST_SERVER_AUTH"
+					BUNDLE="BLFS-ca-bundle-${VERSION}.crt"
+					CONVERTSCRIPT="/usr/bin/make-cert.pl"
+					SSLDIR="/etc/ssl"
+
+					mkdir "${TEMPDIR}/certs"
+
+					# Get a list of starting lines for each cert
+					CERTBEGINLIST=$(grep -n "^# Certificate" "${certdata}" | cut -d ":" -f1)
+
+					# Get a list of ending lines for each cert
+					CERTENDLIST=`grep -n "^CKA_TRUST_STEP_UP_APPROVED" "${certdata}" | cut -d ":" -f 1`
+
+					# Start a loop
+					for certbegin in ${CERTBEGINLIST}; do
+					  for certend in ${CERTENDLIST}; do
+						if test "${certend}" -gt "${certbegin}"; then
+						  break
+						fi
+					  done
+
+					  # Dump to a temp file with the name of the file as the beginning line number
+					  sed -n "${certbegin},${certend}p" "${certdata}" > "${TEMPDIR}/certs/${certbegin}.tmp"
+					done
+
+					unset CERTBEGINLIST CERTDATA CERTENDLIST certbegin certend
+
+					mkdir -p certs
+					rm -f certs/*      # Make sure the directory is clean
+
+					for tempfile in ${TEMPDIR}/certs/*.tmp; do
+					  # Make sure that the cert is trusted...
+					  grep "CKA_TRUST_SERVER_AUTH" "${tempfile}" | \
+						egrep "TRUST_UNKNOWN|NOT_TRUSTED" > /dev/null
+
+					  if test "${?}" = "0"; then
+						# Throw a meaningful error and remove the file
+						cp "${tempfile}" tempfile.cer
+						perl ${CONVERTSCRIPT} > tempfile.crt
+						keyhash=$(openssl x509 -noout -in tempfile.crt -hash)
+						echo "Certificate ${keyhash} is not trusted!  Removing..."
+						rm -f tempfile.cer tempfile.crt "${tempfile}"
+						continue
+					  fi
+
+					  # If execution made it to here in the loop, the temp cert is trusted
+					  # Find the cert data and generate a cert file for it
+
+					  cp "${tempfile}" tempfile.cer
+					  perl ${CONVERTSCRIPT} > tempfile.crt
+					  keyhash=$(openssl x509 -noout -in tempfile.crt -hash)
+					  mv tempfile.crt "certs/${keyhash}.pem"
+					  rm -f tempfile.cer "${tempfile}"
+					  echo "Created ${keyhash}.pem"
+					done
+
+					# Remove blacklisted files
+					# MD5 Collision Proof of Concept CA
+					if test -f certs/8f111d69.pem; then
+					  echo "Certificate 8f111d69 is not trusted!  Removing..."
+					  rm -f certs/8f111d69.pem
+					fi
+
+					# Finally, generate the bundle and clean up.
+					cat certs/*.pem >  ${BUNDLE}
+					rm -r "${TEMPDIR}"
+					EOF
+				</line>
+                <line verbos="yes">chmod +x /usr/bin/make-ca.sh</line>
+                
+                <line verbos="yes">
+					cat > /usr/sbin/remove-expired-certs.sh &lt;&lt;-EOF
+					#!/bin/sh
+					# Begin /usr/sbin/remove-expired-certs.sh
+					#
+					# Version 20120211
+
+					# Make sure the date is parsed correctly on all systems
+					mydate()
+					{
+					  local y=$( echo $1 | cut -d" " -f4 )
+					  local M=$( echo $1 | cut -d" " -f1 )
+					  local d=$( echo $1 | cut -d" " -f2 )
+					  local m
+
+					  if [ ${d} -lt 10 ]; then d="0${d}"; fi
+
+					  case $M in
+						Jan) m="01";;
+						Feb) m="02";;
+						Mar) m="03";;
+						Apr) m="04";;
+						May) m="05";;
+						Jun) m="06";;
+						Jul) m="07";;
+						Aug) m="08";;
+						Sep) m="09";;
+						Oct) m="10";;
+						Nov) m="11";;
+						Dec) m="12";;
+					  esac
+
+					  certdate="${y}${m}${d}"
+					}
+
+					OPENSSL=/usr/bin/openssl
+					DIR=/etc/ssl/certs
+
+					if [ $# -gt 0 ]; then
+					  DIR="$1"
+					fi
+
+					certs=$( find ${DIR} -type f -name "*.pem" -o -name "*.crt" )
+					today=$( date +%Y%m%d )
+
+					for cert in $certs; do
+					  notafter=$( $OPENSSL x509 -enddate -in "${cert}" -noout )
+					  date=$( echo ${notafter} |  sed 's/^notAfter=//' )
+					  mydate "$date"
+
+					  if [ ${certdate} -lt ${today} ]; then
+						 echo "${cert} expired on ${certdate}! Removing..."
+						 rm -f "${cert}"
+					  fi
+					done
+					EOF
+                </line>
+                <line verbos="yes">chmod u+x /usr/sbin/remove-expired-certs.sh</line>
             </action>
 		</entry>
 		
