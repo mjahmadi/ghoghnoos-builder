@@ -1274,6 +1274,122 @@
 				</line>
 			</action>
 		</entry>
+		
+		<entry name="libffi-3.2.1" type="package/src" seq="70" cdto="yes" download="no" extract="yes">
+			<link>ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz</link>
+		    <filename>libffi-3.2.1.tar.gz</filename>
+		    <version>4.8.10</version>
+		    <checksum type="md5">83b89587607e3eb65c70d361f13bab43</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					sed -e '/^includesdir/ s/$(libdir).*$/$(includedir)/' \
+						-i include/Makefile.in &amp;&amp;
+
+					sed -e '/^includedir/ s/=.*$/=@includedir@/' \
+						-e 's/^Cflags: -I${includedir}/Cflags:/' \
+						-i libffi.pc.in &amp;&amp;
+
+					./configure --prefix=/usr --disable-static
+                </line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="pcre-8.40" type="package/src" seq="71" cdto="yes" download="no" extract="yes">
+			<link>ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.bz2</link>
+		    <filename>pcre-8.40.tar.bz2</filename>
+		    <version>8.40</version>
+		    <checksum type="md5">41a842bf7dcecd6634219336e2167d1d</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					./configure --prefix=/usr             \
+						--docdir=/usr/share/doc/pcre-8.40 \
+						--enable-unicode-properties       \
+						--enable-pcre16                   \
+						--enable-pcre32                   \
+						--enable-pcregrep-libz            \
+						--enable-pcregrep-libbz2          \
+						--enable-pcretest-libreadline     \
+						--disable-static
+                </line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                
+                <line verbos="yes">mv -v /usr/lib/libpcre.so.* /lib</line>
+                <line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so</line>
+            </action>
+		</entry>
+		
+		<entry name="glib-2.52.0" type="package/src" seq="72" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/glib/2.52/glib-2.52.0.tar.xz</link>
+		    <filename>glib-2.52.0.tar.xz</filename>
+		    <version>2.52.0</version>
+		    <checksum type="md5">64283e546091dcf3c9837d5430dda022</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --with-pcre=system</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="mc-4.8.19" type="package/src" seq="73" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.midnight-commander.org/mc-4.8.19.tar.xz</link>
+		    <filename>mc-4.8.19.tar.xz</filename>
+		    <version>4.8.19</version>
+		    <checksum type="md5">57209d138c0adcb9ea01dfe6bbb4cb87</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					./configure --prefix=/usr           \
+								--sysconfdir=/etc       \
+								--with-screen=ncurses   \
+								--enable-charset
+                </line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">cp -v doc/keybind-migration.txt /usr/share/mc</line>
+            </action>
+		</entry>
+		
+		<entry name="nettle-3.2" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
+			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
+		    <filename>nettle-3.2.tar.gz</filename>
+		    <version>3.2</version>
+		    <checksum type="md5">afb15b4764ebf1b4e6d06c62bd4d29e4</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc --with-pcre=system</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="wget-1.18" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
+		    <filename>wget-1.18.tar.xz</filename>
+		    <version>1.18</version>
+		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">
+					chmod   -v   755 /usr/lib/lib{hogweed,nettle}.so &amp;&amp;
+					install -v -m755 -d /usr/share/doc/nettle-3.2 &amp;&amp;
+					install -v -m644 nettle.html /usr/share/doc/nettle-3.2
+                </line>
+            </action>
+		</entry>
+		
+		<entry name="wget-1.18" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
+		    <filename>wget-1.18.tar.xz</filename>
+		    <version>1.18</version>
+		    <checksum type="md5">af9ca95a4bb8ac4a9bf10aeae66fa5ec</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">
+					chmod   -v   755 /usr/lib/lib{hogweed,nettle}.so &amp;&amp;
+					install -v -m755 -d /usr/share/doc/nettle-3.2 &amp;&amp;
+					install -v -m644 nettle.html /usr/share/doc/nettle-3.2
+                </line>
+            </action>
+		</entry>
+		
 	</phase>
 	
 </build>
