@@ -1403,7 +1403,7 @@
             </action>
 		</entry>
 		
-		<entry name="p11-kit-0.23.2" type="package/src" seq="79" cdto="yes" download="no" extract="yes">
+		<entry name="p11-kit-0.23.2" type="package/src" seq="78" cdto="yes" download="no" extract="yes">
 			<link>http://p11-glue.freedesktop.org/releases/p11-kit-0.23.2.tar.gz</link>
 		    <filename>p11-kit-0.23.2.tar.gz</filename>
 		    <version>0.23.2</version>
@@ -1414,7 +1414,7 @@
             </action>
 		</entry>
 		
-		<entry name="gnutls-3.5.3" type="package/src" seq="80" cdto="yes" download="no" extract="yes">
+		<entry name="gnutls-3.5.3" type="package/src" seq="79" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
 		    <filename>gnutls-3.5.3.tar.xz</filename>
 		    <version>3.2</version>
@@ -1425,7 +1425,7 @@
             </action>
 		</entry>
 		
-		<entry name="wget-1.18" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
+		<entry name="wget-1.18" type="package/src" seq="80" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
 		    <filename>wget-1.18.tar.xz</filename>
 		    <version>1.18</version>
@@ -1436,7 +1436,7 @@
             </action>
 		</entry>
 		
-		<entry name="krb5-1.14.3" type="package/src" seq="82" cdto="yes" download="no" extract="yes">
+		<entry name="krb5-1.14.3" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
 			<link>http://web.mit.edu/kerberos/dist/krb5/1.14/krb5-1.14.3.tar.gz</link>
 		    <filename>krb5-1.14.3.tar.gz</filename>
 		    <version>1.14.3</version>
@@ -1486,7 +1486,7 @@
             </action>
 		</entry>
 		
-		<entry name="certdata" type="script/bash" seq="83">
+		<entry name="certdata" type="script/bash" seq="82">
             <action when="after" seq="1">
                 <line verbos="yes">
 					cat > /usr/bin/make-cert.pl &lt;&lt;-EOF
