@@ -181,7 +181,7 @@ else
 fi
 
 # MAXIMUM CONCURRENT MAKE JOBS
-if [[ ! -z "/proc/cpuinfo " ]]; then
+if [[ -s "/proc/cpuinfo " ]]; then
 	export MAKEFLAGS="-j $(grep ^processor /proc/cpuinfo | wc -l)"
 fi
 
