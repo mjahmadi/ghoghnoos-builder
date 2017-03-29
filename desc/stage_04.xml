@@ -1436,7 +1436,38 @@
             </action>
 		</entry>
 		
-		<entry name="krb5-1.14.3" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
+		<entry name="which-2.21" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/which/which-2.21.tar.gz</link>
+		    <filename>which-2.21.tar.gz</filename>
+		    <version>2.21</version>
+		    <checksum type="md5">097ff1a324ae02e0a3b0369f07a7544a</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="sudo-1.8.17p1" type="package/src" seq="82" cdto="yes" download="no" extract="yes">
+			<link>ftp://ftp.sudo.ws/pub/sudo/sudo-1.8.17p1.tar.gz</link>
+		    <filename>sudo-1.8.17p1.tar.gz</filename>
+		    <version>1.8.17p1</version>
+		    <checksum type="md5">50a840a688ceb6fa3ab24fc0adf4fa23</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">
+					./configure                                     \
+						--prefix=/usr                               \
+						--libexecdir=/usr/lib                       \
+						--with-secure-path                          \
+						--with-all-insults                          \
+						--with-env-editor                           \
+						--with-passprompt="[sudo] password for %p"
+                </line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</line>
+            </action>
+		</entry>
+		
+		<entry name="krb5-1.14.3" type="package/src" seq="83" cdto="yes" download="no" extract="yes">
 			<link>http://web.mit.edu/kerberos/dist/krb5/1.14/krb5-1.14.3.tar.gz</link>
 		    <filename>krb5-1.14.3.tar.gz</filename>
 		    <version>1.14.3</version>
@@ -1486,7 +1517,7 @@
             </action>
 		</entry>
 		
-		<entry name="certdata" type="script/bash" seq="82">
+		<entry name="certdata" type="script/bash" seq="84">
             <action when="after" seq="1">
                 <line verbos="yes">
 					cat > /usr/bin/make-cert.pl &lt;&lt;-EOF

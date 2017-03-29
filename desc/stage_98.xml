@@ -12,7 +12,7 @@
 	    		
 	    		<line verbos="yes">rm -fv $PROJECT__RFS/etc/resolv.conf &amp;&amp; ln -svf ../lib/systemd/resolv.conf $PROJECT__RFS/etc/resolv.conf</line>
 	    		
-				<line verbos="yes">rm -fv $PROJECT__RFS/init &amp;&amp; ln -svf /sbin/init $PROJECT__RFS/init</line>
+				<line verbos="yes">rm -fv $PROJECT__RFS/init &amp;&amp; ln -svf /lib/systemd/systemd $PROJECT__RFS/init</line>
 				<line verbos="yes">chmod u+rwx $PROJECT__RFS/init</line>
 				
 				<line verbos="yes">
