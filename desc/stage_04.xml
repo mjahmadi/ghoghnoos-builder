@@ -1275,7 +1275,11 @@
 			</action>
 		</entry>
 		
-		<entry name="libffi-3.2.1" type="package/src" seq="70" cdto="yes" download="no" extract="yes">
+	</phase>
+	
+	
+	<phase seq="2">	
+		<entry name="libffi-3.2.1" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
 			<link>ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz</link>
 		    <filename>libffi-3.2.1.tar.gz</filename>
 		    <version>4.8.10</version>
@@ -1295,7 +1299,7 @@
             </action>
 		</entry>
 		
-		<entry name="pcre-8.40" type="package/src" seq="71" cdto="yes" download="no" extract="yes">
+		<entry name="pcre-8.40" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.bz2</link>
 		    <filename>pcre-8.40.tar.bz2</filename>
 		    <version>8.40</version>
@@ -1319,7 +1323,7 @@
             </action>
 		</entry>
 		
-		<entry name="glib-2.52.0" type="package/src" seq="72" cdto="yes" download="no" extract="yes">
+		<entry name="glib-2.52.0" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/glib/2.52/glib-2.52.0.tar.xz</link>
 		    <filename>glib-2.52.0.tar.xz</filename>
 		    <version>2.52.0</version>
@@ -1330,7 +1334,7 @@
             </action>
 		</entry>
 		
-		<entry name="mc-4.8.19" type="package/src" seq="73" cdto="yes" download="no" extract="yes">
+		<entry name="mc-4.8.19" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.midnight-commander.org/mc-4.8.19.tar.xz</link>
 		    <filename>mc-4.8.19.tar.xz</filename>
 		    <version>4.8.19</version>
@@ -1347,7 +1351,7 @@
             </action>
 		</entry>
 		
-		<entry name="nettle-3.2" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
+		<entry name="nettle-3.2" type="package/src" seq="5" cdto="yes" download="no" extract="yes">
 			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
 		    <filename>nettle-3.2.tar.gz</filename>
 		    <version>3.2</version>
@@ -1358,7 +1362,7 @@
             </action>
 		</entry>
 		
-		<entry name="libtasn1-4.9" type="package/src" seq="75" cdto="yes" download="no" extract="yes">
+		<entry name="libtasn1-4.9" type="package/src" seq="6" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
 		    <filename>libtasn1-4.9.tar.gz</filename>
 		    <version>4.9</version>
@@ -1369,18 +1373,7 @@
             </action>
 		</entry>
 		
-		<entry name="libtasn1-4.9" type="package/src" seq="76" cdto="yes" download="no" extract="yes">
-			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
-		    <filename>libtasn1-4.9.tar.gz</filename>
-		    <version>4.9</version>
-		    <checksum type="md5">3018d0f466a32b66dde41bb122e6cab6</checksum>
-            <action when="after" seq="1">
-                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
-                <line verbos="yes">make &amp;&amp; make install</line>
-            </action>
-		</entry>
-		
-		<entry name="openssl-1.0.2h" type="package/src" seq="77" cdto="yes" download="no" extract="yes">
+		<entry name="openssl-1.0.2h" type="package/src" seq="7" cdto="yes" download="no" extract="yes">
 			<link>https://openssl.org/source/openssl-1.0.2h.tar.gz</link>
 		    <filename>openssl-1.0.2h.tar.gz</filename>
 		    <version>1.0.2h</version>
@@ -1403,7 +1396,7 @@
             </action>
 		</entry>
 		
-		<entry name="p11-kit-0.23.2" type="package/src" seq="78" cdto="yes" download="no" extract="yes">
+		<entry name="p11-kit-0.23.2" type="package/src" seq="8" cdto="yes" download="no" extract="yes">
 			<link>http://p11-glue.freedesktop.org/releases/p11-kit-0.23.2.tar.gz</link>
 		    <filename>p11-kit-0.23.2.tar.gz</filename>
 		    <version>0.23.2</version>
@@ -1414,7 +1407,7 @@
             </action>
 		</entry>
 		
-		<entry name="gnutls-3.5.3" type="package/src" seq="79" cdto="yes" download="no" extract="yes">
+		<entry name="gnutls-3.5.3" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
 		    <filename>gnutls-3.5.3.tar.xz</filename>
 		    <version>3.2</version>
@@ -1425,7 +1418,7 @@
             </action>
 		</entry>
 		
-		<entry name="wget-1.18" type="package/src" seq="80" cdto="yes" download="no" extract="yes">
+		<entry name="wget-1.18" type="package/src" seq="10" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
 		    <filename>wget-1.18.tar.xz</filename>
 		    <version>1.18</version>
@@ -1436,7 +1429,7 @@
             </action>
 		</entry>
 		
-		<entry name="which-2.21" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
+		<entry name="which-2.21" type="package/src" seq="11" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/which/which-2.21.tar.gz</link>
 		    <filename>which-2.21.tar.gz</filename>
 		    <version>2.21</version>
@@ -1447,7 +1440,7 @@
             </action>
 		</entry>
 		
-		<entry name="sudo-1.8.17p1" type="package/src" seq="82" cdto="yes" download="no" extract="yes">
+		<entry name="sudo-1.8.17p1" type="package/src" seq="12" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.sudo.ws/pub/sudo/sudo-1.8.17p1.tar.gz</link>
 		    <filename>sudo-1.8.17p1.tar.gz</filename>
 		    <version>1.8.17p1</version>
@@ -1460,14 +1453,14 @@
 						--with-secure-path                          \
 						--with-all-insults                          \
 						--with-env-editor                           \
-						--with-passprompt="[sudo] password for %p"
+						--with-passprompt="[sudo] password for %p: "
                 </line>
                 <line verbos="yes">make &amp;&amp; make install</line>
                 <line verbos="yes">ln -sfv libsudo_util.so.0.0.0 /usr/lib/sudo/libsudo_util.so.0</line>
             </action>
 		</entry>
 		
-		<entry name="krb5-1.14.3" type="package/src" seq="83" cdto="yes" download="no" extract="yes">
+		<entry name="krb5-1.14.3" type="package/src" seq="13" cdto="yes" download="no" extract="yes">
 			<link>http://web.mit.edu/kerberos/dist/krb5/1.14/krb5-1.14.3.tar.gz</link>
 		    <filename>krb5-1.14.3.tar.gz</filename>
 		    <version>1.14.3</version>
@@ -1517,7 +1510,7 @@
             </action>
 		</entry>
 		
-		<entry name="certdata" type="script/bash" seq="84">
+		<entry name="certdata" type="script/bash" seq="14">
             <action when="after" seq="1">
                 <line verbos="yes">
 					cat > /usr/bin/make-cert.pl &lt;&lt;-EOF
