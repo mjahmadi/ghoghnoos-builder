@@ -15,7 +15,9 @@
 	                
 	                <line>cd $PROJECT__RFS</line>
 	                
-	                <line>find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.gz</line>
+	                <line>mksquashfs $PROJECT__RFS $PROJECT__ISODIR/initramd.img -root-owned</line>
+	                
+	                <line disabled="yes">find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.gz</line>
 	                <line disabled="yes">find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | lzma -7 > $PROJECT__ISODIR/rootfs.lz</line>
    	            </action>
 	            
@@ -43,7 +45,7 @@
 					
 					<line>cp $PROJECT__RFS/boot/kernel.bz ./kernel.bz</line>
 					
-					<line>cp $PROJECT__AST/splash.png ./splash.png</line>
+					<line>cp $PROJECT__AST/splash-02.png ./splash.png</line>
 					
 					<line disabled="yes">echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
 					<line disabled="yes">echo 'default kernel.bz initrd=rootfs.lz' > ./isolinux.cfg</line>
@@ -127,13 +129,13 @@
 						label linux
 						  menu label ^Install Ghoghnoos
 						  kernel kernel.bz
-						  append initrd=rootfs.gz
+						  append vga=normal initrd=rootfs.gz printk.time=0
 						  
 						label livecd
 						  menu label ^Try Ghoghnoos without installing
 						  menu default
 						  kernel kernel.bz
-						  append initrd=rootfs.gz
+						  append vga=normal initrd=initramd.img printk.time=0 
 						  
 						menu separator # insert an empty line
 						

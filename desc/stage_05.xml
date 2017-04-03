@@ -612,18 +612,7 @@
             </action>
 		</entry>
 		
-		<entry name="xcursor-themes-1.0.4" type="package/src" seq="31" cdto="yes" download="no" extract="yes">
-			<link>http://ftp.x.org/pub/individual/data/xcursor-themes-1.0.4.tar.bz2</link>
-		    <filename>xcursor-themes-1.0.4.tar.bz2</filename>
-		    <version>1.1.1</version>
-		    <checksum type="md5">fdfb0ad9cfceed60e3bfe9f18765aa0d</checksum>
-            <action when="after" seq="1">
-                <line verbos="yes">./configure $XORG_CONFIG</line>
-                <line verbos="yes">make &amp;&amp; make install</line>
-            </action>
-		</entry>
-		
-		<entry name="Xorg Fonts" type="script/bash" seq="32">
+		<entry name="Xorg Fonts" type="script/bash" seq="31">
             <action when="after" seq="1">
             	<line verbos="yes">mkdir -vp $PROJECT__PKG/xfont &amp;&amp; cd $PROJECT__PKG/xfont</line>
                 <line verbos="yes">
@@ -692,6 +681,19 @@
 					ln -svfn $XORG_PREFIX/share/fonts/X11/OTF /usr/share/fonts/X11-OTF &amp;&amp;
 					ln -svfn $XORG_PREFIX/share/fonts/X11/TTF /usr/share/fonts/X11-TTF
                 </line>
+            </action>
+		</entry>
+		
+		<entry name="xkeyboard-config-2.18" type="package/src" seq="32" cdto="yes" download="no" extract="yes">
+			<link>http://xorg.freedesktop.org/archive/individual/data/xkeyboard-config/xkeyboard-config-2.18.tar.bz2</link>
+		    <filename>xkeyboard-config-2.18.tar.bz2</filename>
+		    <version>2.18</version>
+		    <checksum type="md5">c28cf45616bfec276879360bc36c6b27</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure $XORG_CONFIG --with-xkb-rules-symlink=xorg</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                
+                <line verbos="yes">exit -1</line>
             </action>
 		</entry>
 		
@@ -814,16 +816,6 @@
             <action when="after" seq="1">
                 <line verbos="yes">./configure $XORG_CONFIG</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">
-		            cat >> ${XORG_PREFIX}/share/X11/xorg.conf.d/20-glamor.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier "radeon"
-					        Driver "ati"
-					        Option "AccelMethod" "glamor"
-					EndSection
-					EOF
-				</line>
             </action>
 		</entry>
 		
@@ -846,16 +838,6 @@
             <action when="after" seq="1">
                 <line verbos="yes">./configure $XORG_CONFIG --enable-kms-only --enable-uxa</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">
-		            cat >> /etc/X11/xorg.conf.d/20-intel.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier "Intel Graphics"
-					        Driver "intel"
-					        Option "AccelMethod" "uxa"
-					EndSection
-					EOF
-				</line>
             </action>
 		</entry>
 		
@@ -867,16 +849,6 @@
             <action when="after" seq="1">
                 <line verbos="yes">./configure $XORG_CONFIG</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">
-		            cat >> /etc/X11/xorg.conf.d/nvidia.conf &lt;&lt;-EOF
-					Section "Device"
-							Identifier "nvidia"
-							Driver "nouveau"
-							Option "AccelMethod" "glamor"
-					EndSection
-					EOF
-				</line>
             </action>
 		</entry>
 		

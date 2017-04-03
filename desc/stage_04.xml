@@ -1253,7 +1253,10 @@
 		    <checksum type="md5">efc822dad2149e40cc908718a4fea1d3</checksum>
             <action when="after" seq="1">
             	<line verbos="yes">make mrproper</line>
+            	
 				<line verbos="yes">make defconfig</line>
+				<line verbos="yes">make menuconfig</line>
+				
 				<line verbos="yes">make</line>
 				<line verbos="yes">make modules_install</line>
 				
@@ -1272,14 +1275,54 @@
 					# End /etc/modprobe.d/usb.conf
 					EOF
 				</line>
+				
+				<line verbos="yes">exit -1</line>
 			</action>
 		</entry>
 		
-	</phase>
-	
-	
-	<phase seq="2">	
-		<entry name="libffi-3.2.1" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="pciutils-3.5.1" type="package/src" seq="70" cdto="yes" download="no" extract="yes">
+			<link>https://www.kernel.org/pub/software/utils/pciutils/pciutils-3.5.1.tar.xz</link>
+		    <filename>pciutils-3.5.1.tar.xz</filename>
+		    <version>3.5.1</version>
+		    <checksum type="md5">0879a8f7ac51f4e874cfc6b3521a13cc</checksum>
+            <action when="after" seq="1">
+		        <line verbos="yes">
+					make PREFIX=/usr                    \
+						 SHAREDIR=/usr/share/hwdata     \
+						 SHARED=yes
+		        </line>
+                <line verbos="yes">
+					make PREFIX=/usr                    \
+						 SHAREDIR=/usr/share/hwdata     \
+						 SHARED=yes                     \
+						 install install-lib &amp;&amp;
+						 
+						 chmod -v 755 /usr/lib/libpci.so
+                </line>
+            </action>
+		</entry>
+		
+		<entry name="lynx2.8.8rel.2" type="package/src" seq="71" cdto="yes" download="no" extract="yes">
+			<link>http://invisible-mirror.net/archives/lynx/tarballs/lynx2.8.8rel.2.tar.bz2</link>
+		    <filename>lynx2.8.8rel.2.tar.bz2</filename>
+		    <version>8.8rel.2</version>
+		    <checksum type="md5">b231c2aa34dfe7ca25681ef4e55ee7e8</checksum>
+            <action when="after" seq="1">
+		        <line verbos="yes">
+					./configure --prefix=/usr                              \
+								--sysconfdir=/etc/lynx                     \
+								--datadir=/usr/share/doc/lynx-2.8.8rel.2   \
+								--with-zlib                                \
+								--with-bzlib                               \
+								--with-screen=ncursesw                     \
+								--enable-locale-charset
+		        </line>
+                <line verbos="yes">make &amp;&amp; make install-full</line>
+				<line verbos="yes">chgrp -v -R root /usr/share/doc/lynx-2.8.8rel.2/lynx_doc</line>
+            </action>
+		</entry>
+		
+		<entry name="libffi-3.2.1" type="package/src" seq="72" cdto="yes" download="no" extract="yes">
 			<link>ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz</link>
 		    <filename>libffi-3.2.1.tar.gz</filename>
 		    <version>4.8.10</version>
@@ -1299,7 +1342,7 @@
             </action>
 		</entry>
 		
-		<entry name="pcre-8.40" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+		<entry name="pcre-8.40" type="package/src" seq="73" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.bz2</link>
 		    <filename>pcre-8.40.tar.bz2</filename>
 		    <version>8.40</version>
@@ -1323,7 +1366,7 @@
             </action>
 		</entry>
 		
-		<entry name="glib-2.52.0" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
+		<entry name="glib-2.52.0" type="package/src" seq="74" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/glib/2.52/glib-2.52.0.tar.xz</link>
 		    <filename>glib-2.52.0.tar.xz</filename>
 		    <version>2.52.0</version>
@@ -1334,7 +1377,7 @@
             </action>
 		</entry>
 		
-		<entry name="mc-4.8.19" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+		<entry name="mc-4.8.19" type="package/src" seq="75" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.midnight-commander.org/mc-4.8.19.tar.xz</link>
 		    <filename>mc-4.8.19.tar.xz</filename>
 		    <version>4.8.19</version>
@@ -1351,7 +1394,7 @@
             </action>
 		</entry>
 		
-		<entry name="nettle-3.2" type="package/src" seq="5" cdto="yes" download="no" extract="yes">
+		<entry name="nettle-3.2" type="package/src" seq="76" cdto="yes" download="no" extract="yes">
 			<link>https://ftp.gnu.org/gnu/nettle/nettle-3.2.tar.gz</link>
 		    <filename>nettle-3.2.tar.gz</filename>
 		    <version>3.2</version>
@@ -1362,7 +1405,7 @@
             </action>
 		</entry>
 		
-		<entry name="libtasn1-4.9" type="package/src" seq="6" cdto="yes" download="no" extract="yes">
+		<entry name="libtasn1-4.9" type="package/src" seq="77" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
 		    <filename>libtasn1-4.9.tar.gz</filename>
 		    <version>4.9</version>
@@ -1373,7 +1416,7 @@
             </action>
 		</entry>
 		
-		<entry name="openssl-1.0.2h" type="package/src" seq="7" cdto="yes" download="no" extract="yes">
+		<entry name="openssl-1.0.2h" type="package/src" seq="78" cdto="yes" download="no" extract="yes">
 			<link>https://openssl.org/source/openssl-1.0.2h.tar.gz</link>
 		    <filename>openssl-1.0.2h.tar.gz</filename>
 		    <version>1.0.2h</version>
@@ -1396,7 +1439,7 @@
             </action>
 		</entry>
 		
-		<entry name="p11-kit-0.23.2" type="package/src" seq="8" cdto="yes" download="no" extract="yes">
+		<entry name="p11-kit-0.23.2" type="package/src" seq="79" cdto="yes" download="no" extract="yes">
 			<link>http://p11-glue.freedesktop.org/releases/p11-kit-0.23.2.tar.gz</link>
 		    <filename>p11-kit-0.23.2.tar.gz</filename>
 		    <version>0.23.2</version>
@@ -1407,7 +1450,7 @@
             </action>
 		</entry>
 		
-		<entry name="gnutls-3.5.3" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
+		<entry name="gnutls-3.5.3" type="package/src" seq="80" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-3.5.3.tar.xz</link>
 		    <filename>gnutls-3.5.3.tar.xz</filename>
 		    <version>3.2</version>
@@ -1418,7 +1461,7 @@
             </action>
 		</entry>
 		
-		<entry name="wget-1.18" type="package/src" seq="10" cdto="yes" download="no" extract="yes">
+		<entry name="wget-1.18" type="package/src" seq="81" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/wget/wget-1.18.tar.xz</link>
 		    <filename>wget-1.18.tar.xz</filename>
 		    <version>1.18</version>
@@ -1429,7 +1472,7 @@
             </action>
 		</entry>
 		
-		<entry name="which-2.21" type="package/src" seq="11" cdto="yes" download="no" extract="yes">
+		<entry name="which-2.21" type="package/src" seq="82" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnu.org/gnu/which/which-2.21.tar.gz</link>
 		    <filename>which-2.21.tar.gz</filename>
 		    <version>2.21</version>
@@ -1440,7 +1483,7 @@
             </action>
 		</entry>
 		
-		<entry name="sudo-1.8.17p1" type="package/src" seq="12" cdto="yes" download="no" extract="yes">
+		<entry name="sudo-1.8.17p1" type="package/src" seq="83" cdto="yes" download="no" extract="yes">
 			<link>ftp://ftp.sudo.ws/pub/sudo/sudo-1.8.17p1.tar.gz</link>
 		    <filename>sudo-1.8.17p1.tar.gz</filename>
 		    <version>1.8.17p1</version>
@@ -1460,7 +1503,7 @@
             </action>
 		</entry>
 		
-		<entry name="krb5-1.14.3" type="package/src" seq="13" cdto="yes" download="no" extract="yes">
+		<entry name="krb5-1.14.3" type="package/src" seq="84" cdto="yes" download="no" extract="yes">
 			<link>http://web.mit.edu/kerberos/dist/krb5/1.14/krb5-1.14.3.tar.gz</link>
 		    <filename>krb5-1.14.3.tar.gz</filename>
 		    <version>1.14.3</version>
@@ -1510,7 +1553,7 @@
             </action>
 		</entry>
 		
-		<entry name="certdata" type="script/bash" seq="14">
+		<entry name="certdata" type="script/bash" seq="85">
             <action when="after" seq="1">
                 <line verbos="yes">
 					cat > /usr/bin/make-cert.pl &lt;&lt;-EOF

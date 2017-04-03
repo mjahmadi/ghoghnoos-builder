@@ -70,7 +70,7 @@
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/vconsole.conf &lt;&lt;-EOF
 					KEYMAP=us
-					FONT=Lat2-Terminus16
+					#FONT=Lat2-Terminus16
 					EOF
 				</line>
 				
@@ -534,6 +534,155 @@
 					EOF
                 </line>
                 
+                <line verbos="yes">
+		            cat > /etc/X11/xorg.conf.d/xkb-defaults.conf &lt;&lt;-EOF
+					Section "InputClass"
+					        Identifier "XKB Defaults"
+					        MatchIsKeyboard "yes"
+					        Option "XkbOptions" "terminate:ctrl_alt_bksp"
+					EndSection
+					EOF
+                </line>
+                
+                <line verbos="yes">
+		            cat > /etc/X11/xorg.conf.d/videocard-0.conf &lt;&lt;-EOF
+					Section "Device"
+					        Identifier  "Videocard0"
+					        Driver      "radeon"
+					        VendorName  "Videocard vendor"
+					        BoardName   "ATI Radeon 7500"
+					        Option      "NoAccel" "true"
+					EndSection
+					EOF
+                </line>
+                
+                <line verbos="yes">
+		            cat > /etc/X11/xorg.conf.d/server-layout.conf &lt;&lt;-EOF
+					Section "ServerLayout"
+					        Identifier     "DefaultLayout"
+					        Screen      0  "Screen0" 0 0
+					        Option         "Xinerama"
+					EndSection
+					EOF
+                </line>
+                
+                <line verbos="yes">
+		            cat >> /etc/X11/xorg.conf.d/nvidia.conf &lt;&lt;-EOF
+					Section "Device"
+					        Identifier "nvidia"
+					        Driver "nouveau"
+					        Option "AccelMethod" "glamor"
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes">
+		            cat >> /etc/X11/xorg.conf.d/20-intel.conf &lt;&lt;-EOF
+					Section "Device"
+					        Identifier "Intel Graphics"
+					        Driver "intel"
+					        Option "AccelMethod" "uxa"
+					EndSection
+					EOF
+				</line>
+				
+                <line verbos="yes">
+		            cat >> /usr/share/X11/xorg.conf.d/20-glamor.conf &lt;&lt;-EOF
+					Section "Device"
+					        Identifier "radeon"
+					        Driver "ati"
+					        Option "AccelMethod" "glamor"
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > ~/.gtkrc-2.0 &lt;&lt;-EOF
+					include "/usr/share/themes/Glider/gtk-2.0/gtkrc"
+					gtk-icon-theme-name = "hicolor"
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > /etc/gtk-2.0/gtkrc &lt;&lt;-EOF
+					include "/usr/share/themes/Clearlooks/gtk-2.0/gtkrc"
+					gtk-icon-theme-name = "elementary"
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					mkdir -vp ~/.config/gtk-3.0 &amp;&amp;
+					cat > ~/.config/gtk-3.0/settings.ini &lt;&lt;-EOF
+					[Settings]
+					gtk-theme-name = Adwaita
+					gtk-icon-theme-name = oxygen
+					gtk-font-name = DejaVu Sans 12
+					gtk-cursor-theme-size = 18
+					gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ
+					gtk-xft-antialias = 1
+					gtk-xft-hinting = 1
+					gtk-xft-hintstyle = hintslight
+					gtk-xft-rgba = rgb
+					gtk-cursor-theme-name = Adwaita
+					EOF
+				</line>
+				
+				<line verbos="yes">
+					cat > /etc/X11/xorg.conf &lt;&lt;-EOF
+					Section "ServerLayout"
+						Identifier     "X.org Configured"
+						Screen      0  "Screen0" 0 0
+						InputDevice    "Mouse0" "CorePointer"
+						InputDevice    "Keyboard0" "CoreKeyboard"
+					EndSection
+
+					Section "Files"
+						ModulePath   "/usr/lib/xorg/modules"
+						FontPath     "/usr/share/fonts/X11/misc/"
+						FontPath     "/usr/share/fonts/X11/TTF/"
+						FontPath     "/usr/share/fonts/X11/OTF/"
+						FontPath     "/usr/share/fonts/X11/Type1/"
+						FontPath     "/usr/share/fonts/X11/100dpi/"
+						FontPath     "/usr/share/fonts/X11/75dpi/"
+					EndSection
+
+					#Section "Module"
+					#	Load  "glx"
+					#EndSection
+
+					Section "InputDevice"
+						Identifier  "Keyboard0"
+						Driver      "kbd"
+					EndSection
+
+					Section "InputDevice"
+						Identifier  "Mouse0"
+						Driver      "mouse"
+						Option	    "Protocol" "auto"
+						Option	    "Device" "/dev/input/mice"
+						Option	    "ZAxisMapping" "4 5 6 7"
+					EndSection
+
+					Section "Monitor"
+						Identifier   "Monitor0"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "fbdev"
+						Driver      "vesa"
+						Driver      "modesetting"
+					EndSection
+
+					Section "Screen"
+						SubSection "Display"
+							Viewport   0 0
+							Depth     24
+						EndSubSection
+					EndSection
+					EOF
+				</line>
+				
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/welcome &lt;&lt;-EOF
 					

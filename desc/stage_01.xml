@@ -2,13 +2,6 @@
 
 <build subject="tools" stage="01" envpath="/tools/bin:/bin:/usr/bin" sudo="yes">
 	
-	<globals>
-		export CPPFLAGS="-I/tools/include"
-		export LDFLAGS="-L/tools/lib64"
-		
-		export PKG_CONFIG_PATH="/tools/lib64/pkgconfig"
-	</globals>
-	
 	<phase seq="1">
 	
 		<entry type="script/bash" seq="1" cdto="no" download="no" extract="no">
