@@ -62,6 +62,16 @@ function do_as_root
 	fi
 }
 
+# FUNCTION TO CHECK IF RUNNING IN CHROOT
+function chroot_check
+{
+	if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
+		echo "We are chrooted!"
+	else
+		echo "Business as usual"
+	fi
+}
+
 # CHECK IF RUNING IN CHROOT MODE AS ROOT
 chroot=$(xml_get_val "$XML_DESC_STRING" "/build/@chroot")
 runbysudo=$(xml_get_val "$XML_DESC_STRING" "/build/@runbysudo")
