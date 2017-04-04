@@ -8,6 +8,7 @@
 	    
 	    	<action when="after" seq="1">
 	    	
+	    	    <line verbos="yes">chmod go-rwx $PROJECT__RFS/root</line>
 	    		<line verbos="yes">ln -sfv /proc/self/mounts $PROJECT__RFS/etc/mtab</line>
 	    		
 	    		<line verbos="yes">rm -fv $PROJECT__RFS/etc/resolv.conf &amp;&amp; ln -svf ../lib/systemd/resolv.conf $PROJECT__RFS/etc/resolv.conf</line>
@@ -534,101 +535,8 @@
 					EOF
                 </line>
                 
-                <line verbos="yes">
-		            cat > /etc/X11/xorg.conf.d/xkb-defaults.conf &lt;&lt;-EOF
-					Section "InputClass"
-					        Identifier "XKB Defaults"
-					        MatchIsKeyboard "yes"
-					        Option "XkbOptions" "terminate:ctrl_alt_bksp"
-					EndSection
-					EOF
-                </line>
-                
-                <line verbos="yes">
-		            cat > /etc/X11/xorg.conf.d/videocard-0.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier  "Videocard0"
-					        Driver      "radeon"
-					        VendorName  "Videocard vendor"
-					        BoardName   "ATI Radeon 7500"
-					        Option      "NoAccel" "true"
-					EndSection
-					EOF
-                </line>
-                
-                <line verbos="yes">
-		            cat > /etc/X11/xorg.conf.d/server-layout.conf &lt;&lt;-EOF
-					Section "ServerLayout"
-					        Identifier     "DefaultLayout"
-					        Screen      0  "Screen0" 0 0
-					        Option         "Xinerama"
-					EndSection
-					EOF
-                </line>
-                
-                <line verbos="yes">
-		            cat >> /etc/X11/xorg.conf.d/nvidia.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier "nvidia"
-					        Driver "nouveau"
-					        Option "AccelMethod" "glamor"
-					EndSection
-					EOF
-				</line>
-				
-				<line verbos="yes">
-		            cat >> /etc/X11/xorg.conf.d/20-intel.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier "Intel Graphics"
-					        Driver "intel"
-					        Option "AccelMethod" "uxa"
-					EndSection
-					EOF
-				</line>
-				
-                <line verbos="yes">
-		            cat >> /usr/share/X11/xorg.conf.d/20-glamor.conf &lt;&lt;-EOF
-					Section "Device"
-					        Identifier "radeon"
-					        Driver "ati"
-					        Option "AccelMethod" "glamor"
-					EndSection
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > ~/.gtkrc-2.0 &lt;&lt;-EOF
-					include "/usr/share/themes/Glider/gtk-2.0/gtkrc"
-					gtk-icon-theme-name = "hicolor"
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > /etc/gtk-2.0/gtkrc &lt;&lt;-EOF
-					include "/usr/share/themes/Clearlooks/gtk-2.0/gtkrc"
-					gtk-icon-theme-name = "elementary"
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					mkdir -vp ~/.config/gtk-3.0 &amp;&amp;
-					cat > ~/.config/gtk-3.0/settings.ini &lt;&lt;-EOF
-					[Settings]
-					gtk-theme-name = Adwaita
-					gtk-icon-theme-name = oxygen
-					gtk-font-name = DejaVu Sans 12
-					gtk-cursor-theme-size = 18
-					gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ
-					gtk-xft-antialias = 1
-					gtk-xft-hinting = 1
-					gtk-xft-hintstyle = hintslight
-					gtk-xft-rgba = rgb
-					gtk-cursor-theme-name = Adwaita
-					EOF
-				</line>
-				
-				<line verbos="yes">
-					cat > /etc/X11/xorg.conf &lt;&lt;-EOF
+                <line verbos="yes" disabled="yes">
+                	cat > /etc/X11/xorg.conf &lt;&lt;-EOF
 					Section "ServerLayout"
 						Identifier     "X.org Configured"
 						Screen      0  "Screen0" 0 0
@@ -646,9 +554,9 @@
 						FontPath     "/usr/share/fonts/X11/75dpi/"
 					EndSection
 
-					#Section "Module"
-					#	Load  "glx"
-					#EndSection
+					Section "Module"
+						Load  "glx"
+					EndSection
 
 					Section "InputDevice"
 						Identifier  "Keyboard0"
@@ -665,27 +573,234 @@
 
 					Section "Monitor"
 						Identifier   "Monitor0"
+						VendorName   "Monitor Vendor"
+						ModelName    "Monitor Model"
 					EndSection
 
 					Section "Device"
 						Identifier  "Card0"
 						Driver      "fbdev"
-						Driver      "vesa"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "nouveau"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "radeon"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "ati"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
 						Driver      "modesetting"
 					EndSection
 
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "vesa"
+					EndSection
+
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "vboxvideo"
+					EndSection
+
 					Section "Screen"
+						Identifier "Screen0"
+						Device     "Card0"
+						Monitor    "Monitor0"
+						SubSection "Display"
+							Viewport   0 0
+							Depth     1
+						EndSubSection
+						SubSection "Display"
+							Viewport   0 0
+							Depth     4
+						EndSubSection
+						SubSection "Display"
+							Viewport   0 0
+							Depth     8
+						EndSubSection
+						SubSection "Display"
+							Viewport   0 0
+							Depth     15
+						EndSubSection
+						SubSection "Display"
+							Viewport   0 0
+							Depth     16
+						EndSubSection
 						SubSection "Display"
 							Viewport   0 0
 							Depth     24
 						EndSubSection
+					EndSection
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/default-path.conf &lt;&lt;-EOF
+					Section "Files"
+						ModulePath   "/usr/lib/xorg/modules"
+						FontPath     "/usr/share/fonts/X11/misc/"
+						FontPath     "/usr/share/fonts/X11/TTF/"
+						FontPath     "/usr/share/fonts/X11/OTF/"
+						FontPath     "/usr/share/fonts/X11/Type1/"
+						FontPath     "/usr/share/fonts/X11/100dpi/"
+						FontPath     "/usr/share/fonts/X11/75dpi/"
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/default-module.conf &lt;&lt;-EOF
+					Section "Module"
+					    Load  "glx"
+					EndSection
+					EOF
+				</line>
+
+                <line verbos="yes" disabled="yes">
+                	cat > /etc/X11/xorg.conf.d/default-screen.conf &lt;&lt;-EOF
+		            Section "Screen"
+					    Identifier "Screen0"
+					    Device     "Card0"
+					    Monitor    "Monitor0"
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     1
+					    EndSubSection
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     4
+					    EndSubSection
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     8
+					    EndSubSection
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     15
+					    EndSubSection
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     16
+					    EndSubSection
+					    SubSection "Display"
+					        Viewport   0 0
+					        Depth     24
+					    EndSubSection
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+		            cat > /etc/X11/xorg.conf.d/default-monitor.conf &lt;&lt;-EOF
+					Section "Monitor"
+					    Identifier   "Monitor0"
+					    VendorName   "Monitor Vendor"
+					    ModelName    "Monitor Model"
+					EndSection
+				</line>
+				
+                <line verbos="yes" disabled="yes">
+		            cat > /etc/X11/xorg.conf.d/default-xkeyboard.conf &lt;&lt;-EOF
+					Section "InputDevice"
+					    Identifier  "Keyboard0"
+					    Driver      "kbd"
+					EndSection
+					EOF
+                </line>
+                
+                <line verbos="yes" disabled="yes">
+                	cat > /etc/X11/xorg.conf.d/default-mouse.conf &lt;&lt;-EOF
+		            Section "InputDevice"
+					    Identifier  "Mouse0"
+					    Driver      "mouse"
+					    Option	    "Protocol" "auto"
+					    Option	    "Device" "/dev/input/mice"
+					    Option	    "ZAxisMapping" "4 5 6 7"
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/fbdev.conf &lt;&lt;-EOF
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "fbdev"
+					EndSection
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/vesa.conf &lt;&lt;-EOF
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "vesa"
+					EndSection
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/modesetting.conf &lt;&lt;-EOF
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "modesetting"
+					EndSection
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/vmware.conf &lt;&lt;-EOF
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "vmware"
+					EndSection
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/X11/xorg.conf.d/vboxvideo.conf &lt;&lt;-EOF
+					Section "Device"
+						Identifier  "Card0"
+						Driver      "vboxvideo"
+					EndSection
+				</line>
+				
+                <line verbos="yes" disabled="yes">
+		            cat >> /etc/X11/xorg.conf.d/nvidia.conf &lt;&lt;-EOF
+					Section "Device"
+					    Identifier "nvidia"
+					    Driver     "nouveau"
+					    Option     "AccelMethod" "glamor"
+					EndSection
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+		            cat > /etc/X11/xorg.conf.d/20-intel.conf &lt;&lt;-EOF
+					Section "Device"
+					    Identifier "Intel Graphics"
+					    Driver     "intel"
+					    Option     "AccelMethod" "uxa"
+					EndSection
+					EOF
+				</line>
+				
+                <line verbos="yes" disabled="yes">
+		            cat > /usr/share/X11/xorg.conf.d/20-glamor.conf &lt;&lt;-EOF
+					Section "Device"
+					    Identifier "radeon"
+					    Driver     "ati"
+					    Option     "AccelMethod" "glamor"
 					EndSection
 					EOF
 				</line>
 				
 				<line verbos="yes">
 					cat > $PROJECT_RFS/etc/welcome &lt;&lt;-EOF
-					
 					
 					##########################################################################
 					Welcome to $(tput bold)$PROJECT__NAME-$PROJECT__VERSION ($PROJECT__ARCH)$(tput sgr0)
@@ -701,7 +816,36 @@
 					EOF
                 </line>
                 
-                <line verbos="yes">chmod go-rwx $PROJECT__RFS/root</line>
+				<line verbos="yes" disabled="yes">
+					cat > ~/.gtkrc-2.0 &lt;&lt;-EOF
+					include "/usr/share/themes/Glider/gtk-2.0/gtkrc"
+					gtk-icon-theme-name = "hicolor"
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					mkdir -vp ~/.config/gtk-3.0 &amp;&amp;
+					cat > ~/.config/gtk-3.0/settings.ini &lt;&lt;-EOF
+					[Settings]
+					gtk-theme-name = Adwaita
+					gtk-icon-theme-name = oxygen
+					gtk-font-name = DejaVu Sans 12
+					gtk-cursor-theme-size = 18
+					gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ
+					gtk-xft-antialias = 1
+					gtk-xft-hinting = 1
+					gtk-xft-hintstyle = hintslight
+					gtk-xft-rgba = rgb
+					gtk-cursor-theme-name = Adwaita
+					EOF
+				</line>
+				
+				<line verbos="yes" disabled="yes">
+					cat > /etc/gtk-2.0/gtkrc &lt;&lt;-EOF
+					include "/usr/share/themes/Clearlooks/gtk-2.0/gtkrc"
+					gtk-icon-theme-name = "elementary"
+					EOF
+				</line>
                 
 			</action>
 		</entry>

@@ -15,9 +15,7 @@
 	                
 	                <line>cd $PROJECT__RFS</line>
 	                
-	                <line>mksquashfs $PROJECT__RFS $PROJECT__ISODIR/initramd.img -root-owned</line>
-	                
-	                <line disabled="yes">find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.gz</line>
+	                <line>find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | gzip > $PROJECT__ISODIR/rootfs.gz</line>
 	                <line disabled="yes">find . -not -path "./builder.sh" -not -path "./README.md" -not -path "./LICENSE" -not -path "./assets*" -not -path "./build*" -not -path "./tools*" -not -path "./iso*" -not -path "./packages*" -not -path "./desc*" -not -path "./scripts*" | cpio -R root:root -H newc -o | lzma -7 > $PROJECT__ISODIR/rootfs.lz</line>
    	            </action>
 	            
@@ -45,7 +43,9 @@
 					
 					<line>cp $PROJECT__RFS/boot/kernel.bz ./kernel.bz</line>
 					
-					<line>cp $PROJECT__AST/splash-02.png ./splash.png</line>
+					<line>cp $PROJECT__AST/splash.png ./splash.png</line>
+					
+					<line>cp /usr/lib64/xorg/modules/drivers/{vesa,vboxvideo}_drv.so $PROJECT__RFS/usr/lib64/xorg/modules/drivers</line>
 					
 					<line disabled="yes">echo 'default kernel.bz initrd=rootfs.gz' > ./isolinux.cfg</line>
 					<line disabled="yes">echo 'default kernel.bz initrd=rootfs.lz' > ./isolinux.cfg</line>
@@ -85,10 +85,10 @@
 						menu color sel 0 #ffffffff #00000000 none
 						
 						# Title bar
-						menu color title 0 #ff7ba3d0 #00000000 none
+						menu color title 0 #ffffffff #00000000 none
 						
 						# Press [Tab] message
-						menu color tabmsg 0 #ff3a6496 #00000000 none
+						menu color tabmsg 0 #ff7ba3d0 #00000000 none
 						
 						# Unselected menu item
 						menu color unsel 0 #84b8ffff #00000000 none
@@ -119,24 +119,24 @@
 						
 						menu separator # insert an empty line
 						menu separator # insert an empty line
-						
-						label local
-						  menu label ^Boot from hard disk
-						  localboot 0xffff
-						
-						menu separator # insert an empty line
-						
-						label linux
-						  menu label ^Install Ghoghnoos
-						  kernel kernel.bz
-						  append vga=normal initrd=rootfs.gz printk.time=0
 						  
 						label livecd
 						  menu label ^Try Ghoghnoos without installing
 						  menu default
 						  kernel kernel.bz
-						  append vga=normal initrd=initramd.img printk.time=0 
-						  
+						  append initrd=rootfs.gz
+						
+						label linux
+						  menu label ^Install Ghoghnoos
+						  kernel kernel.bz
+						  append initrd=rootfs.gz
+						  						  
+						menu separator # insert an empty line
+						
+						label local
+						  menu label ^Boot from hard disk
+						  localboot 0xffff
+						
 						menu separator # insert an empty line
 						
 						label check
@@ -153,6 +153,8 @@
 					
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>
+					
+					<line>echo $(md5 $PROJECT__ISODIR/$PROJECT__ISONAME) > iso_md5.txt</line>
 					
 					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created in\n$PROJECT__ISODIR/$PROJECT__ISONAME\n"</line>
 	            </action>

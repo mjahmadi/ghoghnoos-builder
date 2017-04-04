@@ -692,8 +692,6 @@
             <action when="after" seq="1">
                 <line verbos="yes">./configure $XORG_CONFIG --with-xkb-rules-symlink=xorg</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
-                
-                <line verbos="yes">exit -1</line>
             </action>
 		</entry>
 		
@@ -808,7 +806,18 @@
             </action>
 		</entry>
 		
-		<entry name="xf86-video-ati-7.7.0" type="package/src" seq="42" cdto="yes" download="no" extract="yes">
+		<entry name="xf86-input-wacom-0.33.0" type="package/src" seq="42" cdto="yes" download="no" extract="yes">
+			<link>http://downloads.sourceforge.net/linuxwacom/xf86-input-wacom-0.33.0.tar.bz2</link>
+		    <filename>xf86-input-wacom-0.33.0.tar.bz2</filename>
+		    <version>0.33.0</version>
+		    <checksum type="md5">4faa1d4bf6eb74f40dba8c5cb3c9c3e4</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure $XORG_CONFIG --with-systemd-unit-dir=no</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="xf86-video-ati-7.7.0" type="package/src" seq="43" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/driver/xf86-video-ati-7.7.0.tar.bz2</link>
 		    <filename>xf86-video-ati-7.7.0.tar.bz2</filename>
 		    <version>13.1.0</version>
@@ -819,7 +828,7 @@
             </action>
 		</entry>
 		
-		<entry name="xf86-video-fbdev-0.4.4" type="package/src" seq="43" cdto="yes" download="no" extract="yes">
+		<entry name="xf86-video-fbdev-0.4.4" type="package/src" seq="44" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/driver/xf86-video-fbdev-0.4.4.tar.bz2</link>
 		    <filename>xf86-video-fbdev-0.4.4.tar.bz2</filename>
 		    <version>0.4.4</version>
@@ -830,7 +839,7 @@
             </action>
 		</entry>
 		
-		<entry name="xf86-video-intel-20160902" type="package/src" seq="44" cdto="yes" download="no" extract="yes">
+		<entry name="xf86-video-intel-20160902" type="package/src" seq="45" cdto="yes" download="no" extract="yes">
 			<link>http://anduin.linuxfromscratch.org/BLFS/xf86-video-intel/xf86-video-intel-20160902.tar.bz2</link>
 		    <filename>xf86-video-intel-20160902.tar.bz2</filename>
 		    <version>20160902</version>
@@ -841,7 +850,7 @@
             </action>
 		</entry>
 		
-		<entry name="xf86-video-nouveau-1.0.12" type="package/src" seq="45" cdto="yes" download="no" extract="yes">
+		<entry name="xf86-video-nouveau-1.0.12" type="package/src" seq="46" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/driver/xf86-video-nouveau-1.0.12.tar.bz2</link>
 		    <filename>xf86-video-nouveau-1.0.12.tar.bz2</filename>
 		    <version>20160902</version>
@@ -852,7 +861,7 @@
             </action>
 		</entry>
 		
-		<entry name="xf86-video-vmware-13.1.0" type="package/src" seq="46" cdto="yes" download="no" extract="yes">
+		<entry name="xf86-video-vmware-13.1.0" type="package/src" seq="47" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/driver/xf86-video-vmware-13.1.0.tar.bz2</link>
 		    <filename>xf86-video-vmware-13.1.0.tar.bz2</filename>
 		    <version>13.1.0</version>
@@ -863,7 +872,7 @@
             </action>
 		</entry>
 		
-		<entry name="libvdpau-va-gl-0.4.0" type="package/src" seq="47" cdto="yes" download="no" extract="yes">
+		<entry name="libvdpau-va-gl-0.4.0" type="package/src" seq="48" cdto="yes" download="no" extract="yes">
 			<link>https://github.com/i-rinat/libvdpau-va-gl/archive/v0.4.0.tar.gz</link>
 		    <filename>libvdpau-va-gl-0.4.0.tar.gz</filename>
 		    <version>0.4.0</version>
@@ -881,7 +890,7 @@
             </action>
 		</entry>
 		
-		<entry name="twm-1.0.9" type="package/src" seq="48" cdto="yes" download="no" extract="yes">
+		<entry name="twm-1.0.9" type="package/src" seq="49" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/app/twm-1.0.9.tar.bz2</link>
 		    <filename>twm-1.0.9.tar.bz2</filename>
 		    <version>1.0.9</version>
@@ -895,7 +904,7 @@
             </action>
 		</entry>
 		
-		<entry name="xterm-325" type="package/src" seq="49" cdto="yes" download="no" extract="yes">
+		<entry name="xterm-325" type="package/src" seq="50" cdto="yes" download="no" extract="yes">
 			<link>ftp://invisible-island.net/xterm/xterm-325.tgz</link>
 		    <filename>xterm-325.tgz</filename>
 		    <version>13.1.0</version>
@@ -913,7 +922,7 @@
             </action>
 		</entry>
 		
-		<entry name="xclock-1.0.7" type="package/src" seq="50" cdto="yes" download="no" extract="yes">
+		<entry name="xclock-1.0.7" type="package/src" seq="51" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/app/xclock-1.0.7.tar.bz2</link>
 		    <filename>xclock-1.0.7.tar.bz2</filename>
 		    <version>13.1.0</version>
@@ -924,7 +933,7 @@
             </action>
 		</entry>
 		
-		<entry name="xinit-1.3.4" type="package/src" seq="51" cdto="yes" download="no" extract="yes">
+		<entry name="xinit-1.3.4" type="package/src" seq="52" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.x.org/pub/individual/app/xinit-1.3.4.tar.bz2</link>
 		    <filename>xinit-1.3.4.tar.bz2</filename>
 		    <version>1.3.4</version>
