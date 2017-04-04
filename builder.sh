@@ -94,7 +94,7 @@ export PROJECT__CONTROLLER=$(xml_get_val "$XML_CONF_STRING" "/config/system/cont
 export PROJECT__TGT=$PROJECT__ARCH-$PROJECT__NAME-linux-gnu
 export PROJECT__PASWD=$(xml_get_val "$XML_CONF_STRING" "/config/system/password")
 export PROJECT__VENDOR=$(xml_get_val "$XML_CONF_STRING" "/config/project/vendor")
-export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__TYPE-$PROJECT__ARCH.iso"
+export PROJECT__ISONAME="$PROJECT__NAME-$PROJECT__VERSION-$PROJECT__ARCH.iso"
 export PROJECT__ISODIR=$(xml_get_val "$XML_CONF_STRING" "/config/isodir")
 export PROJECT__LICENSE=$(xml_get_val "$XML_CONF_STRING" "/config/license")
 
