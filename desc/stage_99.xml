@@ -154,7 +154,7 @@
 					<line>genisoimage -J -r -o $PROJECT__ISODIR/$PROJECT__ISONAME -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ./</line>
 					<line>isohybrid $PROJECT__ISODIR/$PROJECT__ISONAME 2>/dev/null || true</line>
 					
-					<line>echo $(md5 $PROJECT__ISODIR/$PROJECT__ISONAME) > iso_md5.txt</line>
+					<line>cd $PROJECT__ISODIR &amp;&amp; md5sum $PROJECT__ISONAME > iso_md5.txt</line>
 					
 					<line>echo -e "\n\n$PROJECT__NAME-$PROJECT__VERSION iso file is created in\n$PROJECT__ISODIR/$PROJECT__ISONAME\n"</line>
 	            </action>

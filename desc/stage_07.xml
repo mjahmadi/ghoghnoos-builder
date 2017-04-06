@@ -37,17 +37,6 @@
 			</action>
 		</entry>
 		
-		<entry name="hicolor-icon-theme-0.15" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
-			<link>http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.15.tar.xz</link>
-			<filename>hicolor-icon-theme-0.15.tar.xz</filename>
-			<version>0.15</version>
-			<checksum type="md5">6aa2b3993a883d85017c7cc0cfc0fb73</checksum>
-			<action when="after" seq="1">
-				<line verbos="yes">./configure --prefix=/usr</line>
-				<line verbos="yes">make &amp;&amp; make install</line>
-			</action>
-		</entry>
-		
 		<entry name="gdk-pixbuf-2.34.0" type="package/src" seq="5" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz</link>
 			<filename>gdk-pixbuf-2.34.0.tar.xz</filename>
@@ -87,6 +76,39 @@
 								--enable-x11-backend      \
 								--disable-wayland-backend
 				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="hicolor-icon-theme-0.15" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+			<link>http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.15.tar.xz</link>
+			<filename>hicolor-icon-theme-0.15.tar.xz</filename>
+			<version>0.15</version>
+			<checksum type="md5">6aa2b3993a883d85017c7cc0cfc0fb73</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="gnome-icon-theme-3.12.0" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/gnome-icon-theme/3.12/gnome-icon-theme-3.12.0.tar.xz</link>
+			<filename>gnome-icon-theme-3.12.0.tar.xz</filename>
+			<version>3.12.0</version>
+			<checksum type="md5">f14bed7f804e843189ffa7021141addd</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="icon-naming-utils-0.8.90" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
+			<link>http://tango.freedesktop.org/releases/icon-naming-utils-0.8.90.tar.bz2</link>
+			<filename>icon-naming-utils-0.8.90.tar.bz2</filename>
+			<version>0.8.90</version>
+			<checksum type="md5">dd8108b56130b9eedc4042df634efa66</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
@@ -231,66 +253,7 @@
 			</action>
 		</entry>
 		
-		<entry name="libusb-1.0.20" type="package/src" seq="20" cdto="yes" download="no" extract="yes">
-			<link>http://downloads.sourceforge.net/libusb/libusb-1.0.20.tar.bz2</link>
-			<filename>libusb-1.0.20.tar.bz2</filename>
-			<version>0.99.4</version>
-			<checksum type="md5">1d4eb194eaaa2bcfbba28102768c7dbf</checksum>
-			<action when="after" seq="1">
-				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
-				<line verbos="yes">make &amp;&amp; make install</line>
-			</action>
-		</entry>
-		
-		<entry name="nspr-4.12" type="package/src" seq="21" cdto="yes" download="no" extract="yes">
-			<link>https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.12/src/nspr-4.12.tar.gz</link>
-			<filename>nspr-4.12.tar.gz</filename>
-			<version>4.12</version>
-			<checksum type="md5">0de760c1e00a92e180e611cf06ce9589</checksum>
-			<action when="after" seq="1">
-				<line verbos="yes">
-					cd nspr                                                     &amp;&amp;
-					
-					sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in &amp;&amp;
-					sed -i 's#$(LIBRARY) ##' config/rules.mk                    &amp;&amp;
-
-					./configure --prefix=/usr   \
-								--with-mozilla  \
-								--with-pthreads \
-								$([ $(uname -m) = x86_64 ] &amp;&amp; echo --enable-64bit)
-				</line>
-				<line verbos="yes">make &amp;&amp; make install</line>
-			</action>
-		</entry>
-		
-		<entry name="mozjs17.0.0" type="package/src" seq="22" cdto="yes" download="no" extract="yes">
-			<link>http://ftp.mozilla.org/pub/mozilla.org/js/mozjs17.0.0.tar.gz</link>
-			<filename>mozjs17.0.0.tar.gz</filename>
-			<version>17.0.0</version>
-			<checksum type="md5">20b6f8f1140ef6e47daa3b16965c9202</checksum>
-			<action when="after" seq="1">
-				<line verbos="yes">
-					cd js/src &amp;&amp;
-					
-					sed -i 's/(defined\((@TEMPLATE_FILE)\))/\1/' config/milestone.pl &amp;&amp;
-					
-					./configure --prefix=/usr       \
-								--enable-readline   \
-								--enable-threadsafe \
-								--with-system-ffi   \
-								--with-system-nspr
-				</line>
-				<line verbos="yes">make &amp;&amp; make install</line>
-				<line verbos="yes">
-					find /usr/include/js-17.0/            \
-						 /usr/lib/libmozjs-17.0.a         \
-						 /usr/lib/pkgconfig/mozjs-17.0.pc \
-						 -type f -exec chmod -v 644 {} \;
-				</line>
-			</action>
-		</entry>
-		
-		<entry name="Linux-PAM-1.3.0" type="package/src" seq="23" cdto="yes" download="no" extract="yes">
+		<entry name="Linux-PAM-1.3.0" type="package/src" seq="20" cdto="yes" download="no" extract="yes">
 			<link>http://linux-pam.org/library/Linux-PAM-1.3.0.tar.bz2</link>
 			<filename>Linux-PAM-1.3.0.tar.bz2</filename>
 			<version>1.3.0</version>
@@ -316,27 +279,46 @@
 			</action>
 		</entry>
 		
-		<entry name="polkit-0.113" type="package/src" seq="24" cdto="yes" download="no" extract="yes">
-			<link>http://www.freedesktop.org/software/polkit/releases/polkit-0.113.tar.gz</link>
-			<filename>polkit-0.113.tar.gz</filename>
-			<version>0.113</version>
-			<checksum type="md5">4b77776c9e4f897dcfe03b2c34198edf</checksum>
+		<entry name="dbus-1.10.10" type="package/src" seq="21" cdto="yes" download="no" extract="yes">
+			<link>http://dbus.freedesktop.org/releases/dbus/dbus-1.10.10.tar.gz</link>
+			<filename>dbus-1.10.10.tar.gz</filename>
+			<version>1.10.10</version>
+			<checksum type="md5">495676d240eb982921b3ad1343526849</checksum>
 			<action when="after" seq="1">
 				<line verbos="yes">
-					sed -i "s:/sys/fs/cgroup/systemd/:/sys:g" configure &amp;&amp;
-					
-					sed -i "/seems to be moved/s/^/#/" ltmain.sh &amp;&amp;
-					./configure --prefix=/usr                    \
-								--sysconfdir=/etc                \
-								--localstatedir=/var             \
-								--with-authfw=shadow             \
+					./configure --prefix=/usr                  \
+								--sysconfdir=/etc              \
+								--localstatedir=/var           \
+								--disable-doxygen-docs         \
+								--disable-xml-docs             \
+								--disable-static               \
+								--with-console-auth-dir=/run/console/ \
+								--docdir=/usr/share/doc/dbus-1.10.10
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+				<line verbos="yes">mv -v /usr/lib/libdbus-1.so.* /lib</line>
+				<line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</line>
+				<line verbos="yes">chown -v root:messagebus /usr/libexec/dbus-daemon-launch-helper</line>
+				<line verbos="yes">chmod -v 4750 /usr/libexec/dbus-daemon-launch-helper</line>
+			</action>
+		</entry>
+		
+		<entry name="dbus-glib-0.106" type="package/src" seq="22" cdto="yes" download="no" extract="yes">
+			<link>http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.106.tar.gz</link>
+			<filename>dbus-glib-0.106.tar.gz</filename>
+			<version>0.106</version>
+			<checksum type="md5">2eea0b7f52b49f600a07abfd8535d4e4</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr       \
+								--sysconfdir=/etc   \
 								--disable-static
 				</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
-		<entry name="upower-0.99.4" type="package/src" seq="25" cdto="yes" download="no" extract="yes">
+		<entry name="upower-0.99.4" type="package/src" seq="23" cdto="yes" download="no" extract="yes">
 			<link>http://upower.freedesktop.org/releases/upower-0.99.4.tar.xz</link>
 			<filename>upower-0.99.4.tar.xz</filename>
 			<version>0.99.4</version>
@@ -347,17 +329,84 @@
 								--sysconfdir=/etc    \
 								--localstatedir=/var \
 								--enable-deprecated  \
+								--disable-man-pages  \
 								--disable-static
 				</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
-		<entry name="xfce4-appfinder-4.12.0" type="package/src" seq="26" cdto="yes" download="no" extract="yes">
+		<entry name="xfce4-appfinder-4.12.0" type="package/src" seq="24" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/xfce/xfce4-appfinder/4.12/xfce4-appfinder-4.12.0.tar.bz2</link>
+			<filename>xfce4-appfinder-4.12.0.tar.bz2</filename>
+			<version>4.12.0</version>
+			<checksum type="md5">0b238b30686388c507c119b12664f1a1</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfce4-power-manager-1.6.0" type="package/src" seq="25" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/xfce/xfce4-power-manager/1.6/xfce4-power-manager-1.6.0.tar.bz2</link>
 			<filename>xfce4-power-manager-1.6.0.tar.bz2</filename>
 			<version>1.6.0</version>
 			<checksum type="md5">2e2e24a1a22912d6a561ba6155887503</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfce4-settings-4.12.0" type="package/src" seq="26" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/xfce/xfce4-settings/4.12/xfce4-settings-4.12.0.tar.bz2</link>
+			<filename>xfce4-settings-4.12.0.tar.bz2</filename>
+			<version>4.12.0</version>
+			<checksum type="md5">3eb9ff3862d773287f56f142ab7ec361</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfwm4-4.12.3" type="package/src" seq="27" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/xfce/xfwm4/4.12/xfwm4-4.12.3.tar.bz2</link>
+			<filename>xfwm4-4.12.3.tar.bz2</filename>
+			<version>4.12.3</version>
+			<checksum type="md5">197ef087ca6a263627f1bea6d5a79d6f</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="shared-mime-info-1.6" type="package/src" seq="28" cdto="yes" download="no" extract="yes">
+			<link>http://freedesktop.org/~hadess/shared-mime-info-1.6.tar.xz</link>
+			<filename>shared-mime-info-1.6.tar.xz</filename>
+			<version>0.23</version>
+			<checksum type="md5">10abc5c4e6b22223ff05c3bd70ff9e8f</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="desktop-file-utils-0.23" type="package/src" seq="29" cdto="yes" download="no" extract="yes">
+			<link>http://freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-0.23.tar.xz</link>
+			<filename>desktop-file-utils-0.23.tar.xz</filename>
+			<version>0.23</version>
+			<checksum type="md5">599133d51cc9a41bfec186414906b6f1</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfce4-session-4.12.1" type="package/src" seq="30" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/xfce/xfce4-session/4.12/xfce4-session-4.12.1.tar.bz2</link>
+			<filename>xfce4-session-4.12.1.tar.bz2</filename>
+			<version>4.12.1</version>
+			<checksum type="md5">f4921fb2e606e74643daf1212263076c</checksum>
 			<action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr</line>
 				<line verbos="yes">make &amp;&amp; make install</line>

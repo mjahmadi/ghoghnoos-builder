@@ -1254,8 +1254,10 @@
             <action when="after" seq="1">
             	<line verbos="yes">make mrproper</line>
             	
-				<line verbos="yes">make defconfig</line>
-				<line verbos="yes">make menuconfig</line>
+				<line verbos="yes">#make defconfig</line>
+				<line verbos="yes">#make menuconfig</line>
+				
+				<line verbos="yes">cp $PROJECT__AST/kernel-4.4.6.config .config</line>
 				
 				<line verbos="yes">make</line>
 				<line verbos="yes">make modules_install</line>
@@ -1560,7 +1562,43 @@
                 </line>
             </action>
 		</entry>
-				
+		
+		<entry name="nasm-2.12.02" type="package/src" seq="86" cdto="yes" download="no" extract="yes">
+			<link>http://www.nasm.us/pub/nasm/releasebuilds/2.12.02/nasm-2.12.02.tar.xz</link>
+			<filename>nasm-2.12.02.tar.xz</filename>
+			<version>2.12.02</version>
+			<checksum type="md5">b90a3d85b93e51a7fa5a67e2a8fccfef</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="yasm-1.3.0" type="package/src" seq="87" cdto="yes" download="no" extract="yes">
+			<link>http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz</link>
+			<filename>yasm-1.3.0.tar.gz</filename>
+			<version>1.3.0</version>
+			<checksum type="md5">fc9e586751ff789b34b1f21d572d96af</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					sed -i 's#) ytasm.*#)#' Makefile.in
+					./configure --prefix=/usr --disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libtasn1-4.9" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.9.tar.gz</link>
+		    <filename>libtasn1-4.9.tar.gz</filename>
+		    <version>1.4.9</version>
+		    <checksum type="md5">3018d0f466a32b66dde41bb122e6cab6</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
 	</phase>
 	
 </build>
