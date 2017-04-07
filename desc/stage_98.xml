@@ -452,6 +452,7 @@
 					# PS1 Environment Variable for a great case study behind this script
 					# addendum.]
 					
+					figlet $PROJECT__NAME
 					cat /etc/welcome
 					
 					NORMAL="\[\e[0m\]"

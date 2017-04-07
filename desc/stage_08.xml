@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<build subject="applications" stage="08" envpath="/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin" chroot="yes">
+	
+	<phase seq="1">
+		
+		<entry name="taglib-1.11" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>https://taglib.github.io/releases/taglib-1.11.tar.gz</link>
+			<filename>taglib-1.11.tar.gz</filename>
+			<version>1.11</version>
+			<checksum type="md5">be39fa2054df40664cb557126ad7cf7c</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					mkdir build &amp;&amp;
+					cd    build &amp;&amp;
+
+					cmake -DCMAKE_INSTALL_PREFIX=/usr \
+						  -DCMAKE_BUILD_TYPE=Release  \
+						  -DBUILD_SHARED_LIBS=ON \
+						  ..
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="parole-0.8.1" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/parole/0.8/parole-0.8.1.tar.bz2</link>
+			<filename>parole-0.8.1.tar.bz2</filename>
+			<version>0.8.1</version>
+			<checksum type="md5">361e3059f1263c76a3711db2c7c1a97b</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libburn-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://files.libburnia-project.org/releases/libburn-1.4.4.tar.gz</link>
+			<filename>libburn-1.4.4.tar.gz</filename>
+			<version>1.4.4</version>
+			<checksum type="md5">80f9429e37ab3521c663a10417934b20</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libisofs-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://files.libburnia-project.org/releases/libisofs-1.4.4.tar.gz</link>
+			<filename>libisofs-1.4.4.tar.gz</filename>
+			<version>1.4.4</version>
+			<checksum type="md5">23a32bb5b8559ce031420dd5fc58885c</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libisoburn-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://files.libburnia-project.org/releases/libisoburn-1.4.4.tar.gz</link>
+			<filename>libisoburn-1.4.4.tar.gz</filename>
+			<version>1.4.4</version>
+			<checksum type="md5">3e1d789a0066d8deb27b672bac23e508</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfburn-0.5.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/xfburn/0.5/xfburn-0.5.4.tar.bz2</link>
+			<filename>xfburn-0.5.4.tar.bz2</filename>
+			<version>0.5.4</version>
+			<checksum type="md5">448fcbb7023645216c5a52435a9cf72a</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="gtksourceview-3.20.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/gtksourceview/3.20/gtksourceview-3.20.4.tar.xz</link>
+			<filename>gtksourceview-3.20.4.tar.xz</filename>
+			<version>3.20.4</version>
+			<checksum type="md5">d1f56a0ff3a87b0f4ffde50c6c99a8d5</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static --enable-pkg-check-modules</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="vte-0.28.2" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/vte/0.28/vte-0.28.2.tar.xz</link>
+			<filename>mousepad-0.4.0.tar.bz2</filename>
+			<version>3.20.4</version>
+			<checksum type="md5">f55314c5dda6323883241e6cf01550a7</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --libexecdir=/usr/lib/vte --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfce4-terminal-0.6.3" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/xfce4-terminal/0.6/xfce4-terminal-0.6.3.tar.bz2</link>
+			<filename>xfce4-terminal-0.6.3.tar.bz2</filename>
+			<version>0.6.3</version>
+			<checksum type="md5">6a2816d8b0933cd707ed456ceb731399</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="mousepad-0.4.0" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/mousepad/0.4/mousepad-0.4.0.tar.bz2</link>
+			<filename>mousepad-0.4.0.tar.bz2</filename>
+			<version>3.20.4</version>
+			<checksum type="md5">f55314c5dda6323883241e6cf01550a7</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --enable-keyfile-settings</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+	</phase>
+	
+</build>
+

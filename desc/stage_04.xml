@@ -674,6 +674,17 @@
 			</action>
 		</entry>
 		
+		<entry name="XML-Simple-2.22" type="package/src" seq="35" cdto="yes" download="no" extract="yes">
+			<link>http://cpan.org/authors/id/G/GR/GRANTM/XML-Simple-2.22.tar.gz</link>
+		    <filename>XML-Simple-2.22.tar.gz</filename>
+		    <version>2.22</version>
+		    <checksum type="md5">0914abddfce749453ed89b54029f2643</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">perl Makefile.PL</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
 		<entry name="intltool-0.51.0" type="package/src" seq="35" cdto="yes" download="no" extract="yes">
 		    <filename>intltool-0.51.0.tar.gz</filename>
 		    <version>0.51.0</version>
@@ -1193,7 +1204,7 @@
             </action>
 		</entry>
 		
-		<entry name="Python-2.7.12.tar.xz" type="package/src" seq="65" cdto="yes" download="no" extract="yes">
+		<entry name="Python-2.7.12" type="package/src" seq="65" cdto="yes" download="no" extract="yes">
 			<link>https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</link>
 		    <filename>Python-2.7.12.tar.xz</filename>
 		    <version>2.7.12</version>
@@ -1207,6 +1218,25 @@
             	</line>
                 <line verbos="yes">make &amp;&amp; make install</line>
                 <line verbos="yes">chmod -v 755 /usr/lib/libpython2.7.so.1.0</line>
+            </action>
+		</entry>
+		
+		<entry name="Python-3.5.2" type="package/src" seq="65" cdto="yes" download="no" extract="yes">
+			<link>https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tar.xz</link>
+		    <filename>Python-3.5.2.tar.xz</filename>
+		    <version>2.7.12</version>
+		    <checksum type="md5">8906efbacfcdc7c3c9198aeefafd159e</checksum>
+            <action when="after" seq="1">
+            	<line verbos="yes">
+					CXX="/usr/bin/g++"              \
+					./configure --prefix=/usr       \
+								--enable-shared     \
+								--with-system-expat \
+								--with-system-ffi   \
+								--without-ensurepip
+            	</line>
+                <line verbos="yes">make &amp;&amp; make install</line>
+                <line verbos="yes">chmod -v 755 /usr/lib64/libpython3.5m.so &amp;&amp; chmod -v 755 /usr/lib64/libpython3.so</line>
             </action>
 		</entry>
 		
@@ -1595,6 +1625,39 @@
 		    <checksum type="md5">3018d0f466a32b66dde41bb122e6cab6</checksum>
             <action when="after" seq="1">
                 <line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="pjdate-1.0" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+			<link renameto="pjdate-1.0.tar.gz">https://github.com/mjahmadi/pjdate/archive/v1.0.tar.gz</link>
+		    <filename>pjdate-1.0.tar.gz</filename>
+		    <version>1.0</version>
+		    <checksum type="md5">73425f7b2c1351a3ea3f0720649e88b7</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">chmod +x ./configure &amp;&amp; ./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="iso-codes-3.69" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+			<link>https://pkg-isocodes.alioth.debian.org/downloads/iso-codes-3.69.tar.xz</link>
+		    <filename>iso-codes-3.69.tar.xz</filename>
+		    <version>3.69</version>
+		    <checksum type="md5">33ed5ea7eed84a7609f041c838fc96d7</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+            </action>
+		</entry>
+		
+		<entry name="vala-0.32.1" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/vala/0.32/vala-0.32.1.tar.xz</link>
+		    <filename>vala-0.32.1.tar.xz</filename>
+		    <version>0.32.1</version>
+		    <checksum type="md5">755881770bffac020b5ea5f625fbe528</checksum>
+            <action when="after" seq="1">
+                <line verbos="yes">./configure --prefix=/usr</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
             </action>
 		</entry>

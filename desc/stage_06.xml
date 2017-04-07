@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<build subject="xlibraries" stage="06" envpath="/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin" chroot="yes">
+<build subject="libraries and dependencies" stage="06" envpath="/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin" chroot="yes">
 	
 	<phase seq="1">
 		
@@ -492,7 +492,7 @@
 			</action>
 		</entry>
 		
-		<entry name="polkit-0.113" type="package/src" seq="35" cdto="yes" download="no" extract="yes">
+		<entry name="polkit-0.113" type="package/src" seq="37" cdto="yes" download="no" extract="yes">
 			<link>http://www.freedesktop.org/software/polkit/releases/polkit-0.113.tar.gz</link>
 			<filename>polkit-0.113.tar.gz</filename>
 			<version>0.113</version>
@@ -506,13 +506,14 @@
 								--sysconfdir=/etc                \
 								--localstatedir=/var             \
 								--with-authfw=shadow             \
+								--disable-man-pages              \
 								--disable-static
 				</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
 		
-		<entry name="colord-1.2.12" type="package/src" seq="35" cdto="yes" download="no" extract="yes">
+		<entry name="colord-1.2.12" type="package/src" seq="38" cdto="yes" download="no" extract="yes">
 			<link>http://www.freedesktop.org/software/colord/releases/colord-1.2.12.tar.xz</link>
 			<filename>colord-1.2.12.tar.xz</filename>
 			<version>1.2.12</version>
@@ -541,13 +542,216 @@
 			</action>
 		</entry>
 		
-		<entry name="colord-gtk-0.1.26" type="package/src" seq="36" cdto="yes" download="no" extract="yes">
+		<entry name="colord-gtk-0.1.26" type="package/src" seq="39" cdto="yes" download="no" extract="yes">
 			<link>http://www.freedesktop.org/software/colord/releases/colord-gtk-0.1.26.tar.xz</link>
 			<filename>colord-gtk-0.1.26.tar.xz</filename>
 			<version>0.1.26</version>
 			<checksum type="md5">bb9d6f3c037152ad791003375aa6c16c</checksum>
 			<action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --enable-vala --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="dbus-glib-0.106" type="package/src" seq="40" cdto="yes" download="no" extract="yes">
+			<link>http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.106.tar.gz</link>
+			<filename>dbus-glib-0.106.tar.gz</filename>
+			<version>0.106</version>
+			<checksum type="md5">2eea0b7f52b49f600a07abfd8535d4e4</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --sysconfdir=/etc --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="URI-1.71" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
+			<link>http://www.cpan.org/authors/id/E/ET/ETHER/URI-1.71.tar.gz</link>
+			<filename>URI-1.71.tar.gz</filename>
+			<version>4.12.1</version>
+			<checksum type="md5">247c3da29a794f72730e01aa5a715daf</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">perl Makefile.PL &amp;&amp; make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libwnck-2.30.7" type="package/src" seq="13" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/libwnck/2.30/libwnck-2.30.7.tar.xz</link>
+			<filename>libwnck-2.30.7.tar.xz</filename>
+			<version>2.30.7</version>
+			<checksum type="md5">3d20f26105a2fd878899d6ecdbe9a082</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr      \
+								--disable-static   \
+								--program-suffix=-1 &amp;&amp;
+					make GETTEXT_PACKAGE=libwnck-1
+				</line>
+				<line verbos="yes">make GETTEXT_PACKAGE=libwnck-1 install</line>
+			</action>
+		</entry>
+		
+		<entry name="libgudev-230" type="package/src" seq="16" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/libgudev/230/libgudev-230.tar.xz</link>
+			<filename>libgudev-230.tar.xz</filename>
+			<version>230</version>
+			<checksum type="md5">e4dee8f3f349e9372213d33887819a4d</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libnotify-0.7.6" type="package/src" seq="19" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/libnotify/0.7/libnotify-0.7.6.tar.xz</link>
+			<filename>libnotify-0.7.6.tar.xz</filename>
+			<version>0.7.6</version>
+			<checksum type="md5">a4997019d08f46f3bf57b78e6f795a59</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="Linux-PAM-1.3.0" type="package/src" seq="20" cdto="yes" download="no" extract="yes">
+			<link>http://linux-pam.org/library/Linux-PAM-1.3.0.tar.bz2</link>
+			<filename>Linux-PAM-1.3.0.tar.bz2</filename>
+			<version>1.3.0</version>
+			<checksum type="md5">da4b2289b7cfb19583d54e9eaaef1c3a</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr                    \
+								--sysconfdir=/etc                \
+								--libdir=/usr/lib                \
+								--disable-regenerate-docu        \
+								--enable-securedir=/lib/security
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+				<line verbos="yes">
+					chmod -v 4755 /sbin/unix_chkpwd &amp;&amp;
+
+					for file in pam pam_misc pamc
+					do
+					    mv -v /usr/lib/lib${file}.so.* /lib &amp;&amp;
+					    ln -sfv ../../lib/$(readlink /usr/lib/lib${file}.so) /usr/lib/lib${file}.so
+					done
+				</line>
+			</action>
+		</entry>
+		
+		<entry name="dbus-1.10.10" type="package/src" seq="21" cdto="yes" download="no" extract="yes">
+			<link>http://dbus.freedesktop.org/releases/dbus/dbus-1.10.10.tar.gz</link>
+			<filename>dbus-1.10.10.tar.gz</filename>
+			<version>1.10.10</version>
+			<checksum type="md5">495676d240eb982921b3ad1343526849</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr                  \
+								--sysconfdir=/etc              \
+								--localstatedir=/var           \
+								--disable-doxygen-docs         \
+								--disable-xml-docs             \
+								--disable-static               \
+								--with-console-auth-dir=/run/console/ \
+								--docdir=/usr/share/doc/dbus-1.10.10
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+				<line verbos="yes">mv -v /usr/lib/libdbus-1.so.* /lib</line>
+				<line verbos="yes">ln -sfv ../../lib/$(readlink /usr/lib/libdbus-1.so) /usr/lib/libdbus-1.so</line>
+				<line verbos="yes">chown -v root:messagebus /usr/libexec/dbus-daemon-launch-helper</line>
+				<line verbos="yes">chmod -v 4750 /usr/libexec/dbus-daemon-launch-helper</line>
+			</action>
+		</entry>
+		
+		<entry name="dbus-glib-0.106" type="package/src" seq="22" cdto="yes" download="no" extract="yes">
+			<link>http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.106.tar.gz</link>
+			<filename>dbus-glib-0.106.tar.gz</filename>
+			<version>0.106</version>
+			<checksum type="md5">2eea0b7f52b49f600a07abfd8535d4e4</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr       \
+								--sysconfdir=/etc   \
+								--disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="upower-0.99.4" type="package/src" seq="23" cdto="yes" download="no" extract="yes">
+			<link>http://upower.freedesktop.org/releases/upower-0.99.4.tar.xz</link>
+			<filename>upower-0.99.4.tar.xz</filename>
+			<version>0.99.4</version>
+			<checksum type="md5">78800e1ac7f92b24aabdf433e38f75d2</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr        \
+								--sysconfdir=/etc    \
+								--localstatedir=/var \
+								--enable-deprecated  \
+								--disable-man-pages  \
+								--disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="lxdm-0.5.3" type="package/src" seq="24" cdto="yes" download="no" extract="yes">
+			<link>http://downloads.sourceforge.net/lxdm/lxdm-0.5.3.tar.xz</link>
+			<filename>lxdm-0.5.3.tar.xz</filename>
+			<version>0.5.3</version>
+			<checksum type="md5">061caae432634e6db38bbdc84bc6ffa0</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					cat > pam/lxdm &lt;&lt;-EOF
+					#%PAM-1.0
+					auth        required    pam_unix.so
+					auth        requisite   pam_nologin.so
+					account     required    pam_unix.so
+					password    required    pam_unix.so
+					session     required    pam_unix.so
+					EOF
+				</line>
+				<line verbos="yes">
+					sed -i 's:sysconfig/i18n:profile.d/i18n.sh:g' data/lxdm.in &amp;&amp;
+					sed -i 's:/etc/xprofile:/etc/profile:g' data/Xsession &amp;&amp;
+					sed -e 's/^bg/#&amp;/'        \
+						-e '/reset=1/ s/# //' \
+						-e 's/logou$/logout/' \
+						-e "/arg=/a arg=$XORG_PREFIX/bin/X" \
+						-i data/lxdm.conf.in
+				</line>
+				<line verbos="yes">
+					./configure --prefix=/usr       \
+								--sysconfdir=/etc   \
+								--with-pam
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="libcroco-0.6.11" type="package/src" seq="50" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/libcroco/0.6/libcroco-0.6.11.tar.xz</link>
+			<filename>libcroco-0.6.11.tar.xz</filename>
+			<version>0.6.11</version>
+			<checksum type="md5">dabc1911dfbfa85f8e6859ca47863168</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr --disable-static</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="librsvg-2.40.16" type="package/src" seq="51" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/librsvg/2.40/librsvg-2.40.16.tar.xz</link>
+			<filename>librsvg-2.40.16.tar.xz</filename>
+			<version>2.40.16</version>
+			<checksum type="md5">f474fe37177a2bf8050787df2046095c</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					sed -i "/seems to be moved/s/^/#/" ltmain.sh &amp;&amp;
+					./configure --prefix=/usr           \
+								--disable-introspection \
+								--disable-static
+				</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
 			</action>
 		</entry>
