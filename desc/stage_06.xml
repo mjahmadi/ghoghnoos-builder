@@ -26,6 +26,20 @@
 			</action>
 		</entry>
 		
+		<entry name="libexif-0.6.21" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
+			<link>http://downloads.sourceforge.net/libexif/libexif-0.6.21.tar.bz2</link>
+			<filename>libexif-0.6.21.tar.bz2</filename>
+			<version>0.6.21</version>
+			<checksum type="md5">27339b89850f28c8f1c237f233e05b27</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr                                \
+								--with-doc-dir=/usr/share/doc/libexif-0.6.21 \
+								--disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
 		<entry name="atk-2.20.0" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/atk/2.20/atk-2.20.0.tar.xz</link>
 			<filename>atk-2.20.0.tar.xz</filename>

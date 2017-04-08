@@ -8,6 +8,8 @@
 	    
 	    	<action when="after" seq="1">
 	    	
+	    		<line verbos="yes">mkdir -vp /usr/share/xfce4/backdrops &amp;&amp; cp $PROJECT__AST/wallpapers/* /usr/share/xfce4/backdrops</line>
+	    		
 	    	    <line verbos="yes">chmod go-rwx $PROJECT__RFS/root</line>
 	    		<line verbos="yes">ln -sfv /proc/self/mounts $PROJECT__RFS/etc/mtab</line>
 	    		

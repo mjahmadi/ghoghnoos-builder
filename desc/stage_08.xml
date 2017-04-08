@@ -78,6 +78,39 @@
 			</action>
 		</entry>
 		
+		<entry name="ristretto-0.8.0" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/ristretto/0.8/ristretto-0.8.0.tar.bz2</link>
+			<filename>ristretto-0.8.0.tar.bz2</filename>
+			<version>0.8.0</version>
+			<checksum type="md5">94c778850325a4e5a12e3433c8a05432</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xfce4-notifyd-0.2.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/xfce4-notifyd/0.2/xfce4-notifyd-0.2.4.tar.bz2</link>
+			<filename>xfce4-notifyd-0.2.4.tar.bz2</filename>
+			<version>0.2.4</version>
+			<checksum type="md5">094be6f29206aac8299f27084e284e88</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="leafpad-0.8.17" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+			<link>http://archive.xfce.org/src/apps/xfce4-notifyd/0.2/xfce4-notifyd-0.2.4.tar.bz2</link>
+			<filename>leafpad-0.8.17.tar.gz</filename>
+			<version>0.8.17</version>
+			<checksum type="md5">d39acdf4d31de309d484511bdc9f5924</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
 		<entry name="gtksourceview-3.20.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/gtksourceview/3.20/gtksourceview-3.20.4.tar.xz</link>
 			<filename>gtksourceview-3.20.4.tar.xz</filename>
@@ -91,9 +124,9 @@
 		
 		<entry name="vte-0.28.2" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/vte/0.28/vte-0.28.2.tar.xz</link>
-			<filename>mousepad-0.4.0.tar.bz2</filename>
+			<filename>vte-0.28.2.tar.xz</filename>
 			<version>3.20.4</version>
-			<checksum type="md5">f55314c5dda6323883241e6cf01550a7</checksum>
+			<checksum type="md5">497f26e457308649e6ece32b3bb142ff</checksum>
 			<action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --libexecdir=/usr/lib/vte --disable-static</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
