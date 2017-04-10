@@ -343,7 +343,21 @@
 			</action>
 		</entry>
 		
-		<entry name="gst-plugins-base-1.8.3" type="package/src" seq="26" cdto="yes" download="no" extract="yes">
+		<entry name="libglade-2.6.4" type="package/src" seq="26" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/libglade/2.6/libglade-2.6.4.tar.bz2</link>
+			<filename>libglade-2.6.4.tar.bz2</filename>
+			<version>2.6.4</version>
+			<checksum type="md5">d1776b40f4e166b5e9c107f1c8fe4139</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					sed -i '/DG_DISABLE_DEPRECATED/d' glade/Makefile.in &amp;&amp;
+					./configure --prefix=/usr --disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="gst-plugins-base-1.8.3" type="package/src" seq="27" cdto="yes" download="no" extract="yes">
 			<link>http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.8.3.tar.xz</link>
 			<filename>gst-plugins-base-1.8.3.tar.xz</filename>
 			<version>1.8.3</version>
@@ -358,7 +372,7 @@
 			</action>
 		</entry>
 		
-		<entry name="clutter-1.26.0" type="package/src" seq="27" cdto="yes" download="no" extract="yes">
+		<entry name="clutter-1.26.0" type="package/src" seq="28" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/clutter/1.26/clutter-1.26.0.tar.xz</link>
 			<filename>clutter-1.26.0.tar.xz</filename>
 			<version>1.26.0</version>
@@ -374,7 +388,7 @@
 			</action>
 		</entry>
 		
-		<entry name="clutter-gst-3.0.18" type="package/src" seq="28" cdto="yes" download="no" extract="yes">
+		<entry name="clutter-gst-3.0.18" type="package/src" seq="29" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/clutter-gst/3.0/clutter-gst-3.0.18.tar.xz</link>
 			<filename>clutter-gst-3.0.18.tar.xz</filename>
 			<version>3.0.18</version>
@@ -385,7 +399,7 @@
 			</action>
 		</entry>
 		
-		<entry name="clutter-gtk-1.8.0" type="package/src" seq="29" cdto="yes" download="no" extract="yes">
+		<entry name="clutter-gtk-1.8.0" type="package/src" seq="30" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/clutter-gtk/1.8/clutter-gtk-1.8.0.tar.xz</link>
 			<filename>clutter-gst-3.0.18.tar.xz</filename>
 			<version>3.0.18</version>
@@ -396,7 +410,7 @@
 			</action>
 		</entry>
 		
-		<entry name="lcms2-2.8" type="package/src" seq="30" cdto="yes" download="no" extract="yes">
+		<entry name="lcms2-2.8" type="package/src" seq="31" cdto="yes" download="no" extract="yes">
 			<link>http://downloads.sourceforge.net/lcms/lcms2-2.8.tar.gz</link>
 			<filename>lcms2-2.8.tar.gz</filename>
 			<version>2.2.8</version>
@@ -407,7 +421,7 @@
 			</action>
 		</entry>
 		
-		<entry name="sqlite-autoconf-3140100" type="package/src" seq="31" cdto="yes" download="no" extract="yes">
+		<entry name="sqlite-autoconf-3140100" type="package/src" seq="32" cdto="yes" download="no" extract="yes">
 			<link>http://sqlite.org/2016/sqlite-autoconf-3140100.tar.gz</link>
 			<filename>sqlite-autoconf-3140100.tar.gz</filename>
 			<version>3140100</version>

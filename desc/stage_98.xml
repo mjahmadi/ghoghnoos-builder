@@ -18,6 +18,8 @@
 				<line verbos="yes">rm -fv $PROJECT__RFS/init &amp;&amp; ln -svf /sbin/init $PROJECT__RFS/init</line>
 				<line verbos="yes">chmod u+rwx $PROJECT__RFS/init</line>
 				
+				<line verbos="yes">cp -R $PROJECT__AST/xfce4-config/xfce4 $PROJECT__RFS/root/.config/xfce4</line>
+				
 				<line verbos="yes">
 					cat > $PROJECT__RFS/etc/systemd/network/10-eth0-static.network &lt;&lt;-EOF
 					[Match]

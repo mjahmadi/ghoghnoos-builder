@@ -26,6 +26,17 @@
 			</action>
 		</entry>
 		
+		<entry name="adwaita-icon-theme-3.20" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnome.org/pub/gnome/sources/adwaita-icon-theme/3.20/adwaita-icon-theme-3.20.tar.xz</link>
+			<filename>adwaita-icon-theme-3.20.tar.xz</filename>
+			<version>3.20</version>
+			<checksum type="md5">411be2bd68dd8b0a3c86aca2eb351ce4</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
 		<entry name="hicolor-icon-theme-0.15" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
 			<link>http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.15.tar.xz</link>
 			<filename>hicolor-icon-theme-0.15.tar.xz</filename>
