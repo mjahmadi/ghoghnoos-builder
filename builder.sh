@@ -340,7 +340,10 @@ for phase in `seq $phase_begin_from $phase_count`; do
 						
 						tar -xf $PROJECT__PKG/$filename -C $tmp_dir
 					else
-						rm -rf $PROJECT__BLD/$des_dir
+						if [[ -n $des_dir && $des_dir != '.' ]]; then
+							rm -rf $PROJECT__BLD/$des_dir
+						fi
+						
 						tar -xf $PROJECT__PKG/$filename -C $PROJECT__BLD
 					fi
 				fi
