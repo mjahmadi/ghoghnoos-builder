@@ -784,6 +784,115 @@
 			</action>
 		</entry>
 		
+		<entry name="autofs-5.1.2" type="package/src" seq="54" cdto="yes" download="no" extract="yes">
+			<link>http://www.kernel.org/pub/linux/daemons/autofs/v5/autofs-5.1.2.tar.xz</link>
+			<filename>autofs-5.1.2.tar.xz</filename>
+			<version>5.1.2</version>
+			<checksum type="md5">130dadb63efd5cc585d19c9bf7f00268</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/         \
+								--with-systemd
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="alsa-lib-1.1.2" type="package/src" seq="55" cdto="yes" download="no" extract="yes">
+			<link>ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.2.tar.bz2</link>
+			<filename>alsa-lib-1.1.2.tar.bz2</filename>
+			<version>1.1.2</version>
+			<checksum type="md5">1946e6438b8262a7b8fdadacd0e06ba7</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="nss-3.26" type="package/src" seq="56" cdto="yes" download="no" extract="yes">
+			<link>https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_26_RTM/src/nss-3.26.tar.gz</link>
+			<filename>nss-3.26.tar.gz</filename>
+			<version>3.26</version>
+			<checksum type="md5">b71ab412cf07af436726679b204b0777</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">patch -Np1 -i $PROJECT__PKG/nss-3.26-standalone-1.patch</line>
+				<line verbos="yes">
+					cd nss &amp;&amp;
+					
+					make -j1 BUILD_OPT=1                  \
+					  NSPR_INCLUDE_DIR=/usr/include/nspr  \
+					  USE_SYSTEM_ZLIB=1                   \
+					  ZLIB_LIBS=-lz                       \
+					  $([ $(uname -m) = x86_64 ] &amp;&amp; echo USE_64=1) \
+					  $([ -f /usr/include/sqlite3.h ] &amp;&amp; echo NSS_USE_SYSTEM_SQLITE=1)
+					  
+					cd ../dist                                                          &amp;&amp;
+
+					install -v -m755 Linux*/lib/*.so              /usr/lib              &amp;&amp;
+					install -v -m644 Linux*/lib/{*.chk,libcrmf.a} /usr/lib              &amp;&amp;
+
+					install -v -m755 -d                           /usr/include/nss      &amp;&amp;
+					cp -v -RL {public,private}/nss/*              /usr/include/nss      &amp;&amp;
+					chmod -v 644                                  /usr/include/nss/*    &amp;&amp;
+
+					install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} /usr/bin &amp;&amp;
+
+					install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig
+				</line>
+			</action>
+		</entry>
+		
+		<entry name="wireless_tools.29" type="package/src" seq="57" cdto="yes" download="no" extract="yes">
+			<link>http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.29.tar.gz</link>
+			<filename>wireless_tools.29.tar.gz</filename>
+			<version>29</version>
+			<checksum type="md5">e06c222e186f7cc013fd272d023710cb</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">patch -Np1 -i $PROJECT__PKG/wireless_tools-29-fix_iwlist_scanning-1.patch</line>
+				<line verbos="yes">make &amp;&amp; make PREFIX=/usr INSTALL_MAN=/usr/share/man install</line>
+			</action>
+		</entry>
+		
+		<entry name="libvpx-1.6.0" type="package/src" seq="58" cdto="yes" download="no" extract="yes">
+			<link>http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-1.6.0.tar.bz2</link>
+			<filename>libvpx-1.6.0.tar.bz2</filename>
+			<version>1.6.0</version>
+			<checksum type="md5">f95a176768a0e1bb4fe42742e27a41af</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					sed -i 's/cp -p/cp/' build/make/Makefile &amp;&amp;
+
+					mkdir libvpx-build            &amp;&amp;
+					cd    libvpx-build            &amp;&amp;
+
+					../configure --prefix=/usr    \
+								 --enable-shared  \
+								 --disable-static
+				</line>
+				<line verbos="yes">make &amp;&amp; make PREFIX=/usr INSTALL_MAN=/usr/share/man install</line>
+			</action>
+		</entry>
+		
+		<entry name="cpio-2.12" type="package/src" seq="59" cdto="yes" download="no" extract="yes">
+			<link>http://ftp.gnu.org/pub/gnu/cpio/cpio-2.12.tar.bz2</link>
+			<filename>cpio-2.12.tar.bz2</filename>
+			<version>2.12</version>
+			<checksum type="md5">93eea9f07c0058c097891c73e4955456</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					./configure --prefix=/usr \
+								--bindir=/bin \
+								--enable-mt   \
+								--with-rmt=/usr/libexec/rmt &amp;&amp;
+					make &amp;&amp;
+					makeinfo --html            -o doc/html      doc/cpio.texi &amp;&amp;
+					makeinfo --html --no-split -o doc/cpio.html doc/cpio.texi &amp;&amp;
+					makeinfo --plaintext       -o doc/cpio.txt  doc/cpio.texi
+				</line>
+				<line verbos="yes">make install</line>
+			</action>
+		</entry>
+		
 	</phase>
 	
 </build>

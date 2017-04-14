@@ -23,7 +23,7 @@
 			</action>
 		</entry>
 		
-		<entry name="parole-0.8.1" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="parole-0.8.1" type="package/src" seq="2" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/parole/0.8/parole-0.8.1.tar.bz2</link>
 			<filename>parole-0.8.1.tar.bz2</filename>
 			<version>0.8.1</version>
@@ -34,7 +34,7 @@
 			</action>
 		</entry>
 		
-		<entry name="libburn-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="libburn-1.4.4" type="package/src" seq="3" cdto="yes" download="no" extract="yes">
 			<link>http://files.libburnia-project.org/releases/libburn-1.4.4.tar.gz</link>
 			<filename>libburn-1.4.4.tar.gz</filename>
 			<version>1.4.4</version>
@@ -45,7 +45,7 @@
 			</action>
 		</entry>
 		
-		<entry name="libisofs-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="libisofs-1.4.4" type="package/src" seq="4" cdto="yes" download="no" extract="yes">
 			<link>http://files.libburnia-project.org/releases/libisofs-1.4.4.tar.gz</link>
 			<filename>libisofs-1.4.4.tar.gz</filename>
 			<version>1.4.4</version>
@@ -56,7 +56,7 @@
 			</action>
 		</entry>
 		
-		<entry name="libisoburn-1.4.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="libisoburn-1.4.4" type="package/src" seq="5" cdto="yes" download="no" extract="yes">
 			<link>http://files.libburnia-project.org/releases/libisoburn-1.4.4.tar.gz</link>
 			<filename>libisoburn-1.4.4.tar.gz</filename>
 			<version>1.4.4</version>
@@ -67,7 +67,7 @@
 			</action>
 		</entry>
 		
-		<entry name="xfburn-0.5.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="xfburn-0.5.4" type="package/src" seq="6" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/xfburn/0.5/xfburn-0.5.4.tar.bz2</link>
 			<filename>xfburn-0.5.4.tar.bz2</filename>
 			<version>0.5.4</version>
@@ -78,7 +78,7 @@
 			</action>
 		</entry>
 		
-		<entry name="ristretto-0.8.0" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="ristretto-0.8.0" type="package/src" seq="7" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/ristretto/0.8/ristretto-0.8.0.tar.bz2</link>
 			<filename>ristretto-0.8.0.tar.bz2</filename>
 			<version>0.8.0</version>
@@ -89,7 +89,7 @@
 			</action>
 		</entry>
 		
-		<entry name="xfce4-notifyd-0.2.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="xfce4-notifyd-0.2.4" type="package/src" seq="8" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/xfce4-notifyd/0.2/xfce4-notifyd-0.2.4.tar.bz2</link>
 			<filename>xfce4-notifyd-0.2.4.tar.bz2</filename>
 			<version>0.2.4</version>
@@ -100,7 +100,7 @@
 			</action>
 		</entry>
 		
-		<entry name="leafpad-0.8.17" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="leafpad-0.8.17" type="package/src" seq="9" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/xfce4-notifyd/0.2/xfce4-notifyd-0.2.4.tar.bz2</link>
 			<filename>leafpad-0.8.17.tar.gz</filename>
 			<version>0.8.17</version>
@@ -111,7 +111,7 @@
 			</action>
 		</entry>
 		
-		<entry name="gtksourceview-3.20.4" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="gtksourceview-3.20.4" type="package/src" seq="10" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/gtksourceview/3.20/gtksourceview-3.20.4.tar.xz</link>
 			<filename>gtksourceview-3.20.4.tar.xz</filename>
 			<version>3.20.4</version>
@@ -122,7 +122,7 @@
 			</action>
 		</entry>
 		
-		<entry name="vte-0.28.2" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="vte-0.28.2" type="package/src" seq="11" cdto="yes" download="no" extract="yes">
 			<link>http://ftp.gnome.org/pub/gnome/sources/vte/0.28/vte-0.28.2.tar.xz</link>
 			<filename>vte-0.28.2.tar.xz</filename>
 			<version>3.20.4</version>
@@ -133,7 +133,7 @@
 			</action>
 		</entry>
 		
-		<entry name="xfce4-terminal-0.6.3" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="xfce4-terminal-0.6.3" type="package/src" seq="12" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/xfce4-terminal/0.6/xfce4-terminal-0.6.3.tar.bz2</link>
 			<filename>xfce4-terminal-0.6.3.tar.bz2</filename>
 			<version>0.6.3</version>
@@ -144,7 +144,7 @@
 			</action>
 		</entry>
 		
-		<entry name="mousepad-0.4.0" type="package/src" seq="1" cdto="yes" download="no" extract="yes">
+		<entry name="mousepad-0.4.0" type="package/src" seq="13" cdto="yes" download="no" extract="yes">
 			<link>http://archive.xfce.org/src/apps/mousepad/0.4/mousepad-0.4.0.tar.bz2</link>
 			<filename>mousepad-0.4.0.tar.bz2</filename>
 			<version>3.20.4</version>
@@ -152,6 +152,184 @@
 			<action when="after" seq="1">
 				<line verbos="yes">./configure --prefix=/usr --enable-keyfile-settings</line>
 				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="firefox-48.0.2" type="package/src" seq="14" cdto="yes" download="no" extract="yes">
+			<link>https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/48.0.2/source/firefox-48.0.2.source.tar.xz</link>
+			<filename>firefox-48.0.2.source.tar.xz</filename>
+			<version>48.0.2</version>
+			<checksum type="md5">bd6410592a8c608c0f771c056351493c</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					cat > mozconfig &lt;&lt;-EOF
+					# If you have a multicore machine, all cores will be used by default.
+					# If desired, you can reduce the number of cores used, e.g. to 1, by
+					# uncommenting the next line and setting a valid number of CPU cores.
+					#mk_add_options MOZ_MAKE_FLAGS="-j1"
+
+					# If you have installed DBus-Glib comment out this line:
+					ac_add_options --disable-dbus
+
+					# If you have installed dbus-glib, and you have installed (or will install)
+					# wireless-tools, and you wish to use geolocation web services, comment out
+					# this line
+					ac_add_options --disable-necko-wifi
+
+					# Uncomment this option if you wish to build with gtk+-2
+					#ac_add_options --enable-default-toolkit=cairo-gtk2
+
+					# Uncomment these lines if you have installed optional dependencies:
+					#ac_add_options --enable-system-hunspell
+					#ac_add_options --enable-startup-notification
+
+					# Comment out following option if you have PulseAudio installed
+					ac_add_options --disable-pulseaudio
+
+					# If you have installed GConf, comment out this line
+					ac_add_options --disable-gconf
+
+					# Comment out following options if you have not installed
+					# recommended dependencies:
+					ac_add_options --enable-system-sqlite
+					ac_add_options --with-system-libevent
+					ac_add_options --with-system-libvpx
+					ac_add_options --with-system-nspr
+					ac_add_options --with-system-nss
+					ac_add_options --with-system-icu
+
+					# If you are going to apply the patch for system graphite
+					# and system harfbuzz, uncomment these lines:
+					#ac_add_options --with-system-graphite2
+					#ac_add_options --with-system-harfbuzz
+
+					# Stripping is now enabled by default.
+					# Uncomment these lines if you need to run a debugger:
+					#ac_add_options --disable-strip
+					#ac_add_options --disable-install-strip
+
+					# The BLFS editors recommend not changing anything below this line:
+					ac_add_options --prefix=/usr
+					ac_add_options --enable-application=browser
+
+					ac_add_options --disable-crashreporter
+					ac_add_options --disable-updater
+					ac_add_options --disable-tests
+
+					ac_add_options --enable-optimize
+
+					ac_add_options --enable-gio
+					ac_add_options --enable-official-branding
+					ac_add_options --enable-safe-browsing
+					ac_add_options --enable-url-classifier
+
+					# From firefox-40, using system cairo causes firefox to crash
+					# frequently when it is doing background rendering in a tab.
+					#ac_add_options --enable-system-cairo
+					ac_add_options --enable-system-ffi
+					ac_add_options --enable-system-pixman
+
+					ac_add_options --with-pthreads
+
+					ac_add_options --with-system-bz2
+					ac_add_options --with-system-jpeg
+					ac_add_options --with-system-png
+					ac_add_options --with-system-zlib
+
+					mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir
+					EOF
+				</line>
+				<line verbos="yes">set +e &amp;&amp; patch -Np1 -i $PROJECT__PKG/firefox-48.0.2-gtk320-1.patch &amp;&amp; set -e</line>
+				<line verbos="yes">
+					export CFLAGS_HOLD=$CFLAGS &amp;&amp;
+					export CXXFLAGS_HOLD=$CXXFLAGS &amp;&amp;
+					export CFLAGS+=" -fno-delete-null-pointer-checks -fno-lifetime-dse -fno-schedule-insns2" &amp;&amp;
+					export CXXFLAGS+=" -fno-delete-null-pointer-checks -fno-lifetime-dse -fno-schedule-insns2" &amp;&amp;
+					
+					make -f client.mk
+				</line>
+				<line verbos="yes">
+					make -f client.mk install INSTALL_SDK= &amp;&amp;
+					chown -R 0:0 /usr/lib/firefox-48.0.2   &amp;&amp;
+
+					mkdir -pv    /usr/lib/mozilla/plugins &amp;&amp;
+					ln    -sfv   ../../mozilla/plugins /usr/lib/firefox-48.0.2/browser
+				
+					export CFLAGS=$CFLAGS_HOLD     &amp;&amp;
+					export CXXFLAGS=$CXXFLAGS_HOLD &amp;&amp;
+					unset CFLAGS_HOLD CXXFLAGS_HOLD
+				</line>
+				<line verbos="yes">
+					mkdir -pv /usr/share/applications &amp;&amp;
+					mkdir -pv /usr/share/pixmaps &amp;&amp;
+
+					cat > /usr/share/applications/firefox.desktop &lt;&lt;-EOF &amp;&amp;
+					[Desktop Entry]
+					Encoding=UTF-8
+					Name=Firefox Web Browser
+					Comment=Browse the World Wide Web
+					GenericName=Web Browser
+					Exec=firefox %u
+					Terminal=false
+					Type=Application
+					Icon=firefox
+					Categories=GNOME;GTK;Network;WebBrowser;
+					MimeType=application/xhtml+xml;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
+					StartupNotify=true
+					EOF
+
+					ln -sfv /usr/lib/firefox-48.0.2/browser/icons/mozicon128.png \
+							/usr/share/pixmaps/firefox.png
+				</line>
+			</action>
+		</entry>
+		
+		<entry name="xscreensaver-5.35" type="package/src" seq="15" cdto="yes" download="no" extract="yes">
+			<link>http://www.jwz.org/xscreensaver/xscreensaver-5.35.tar.gz</link>
+			<filename>xscreensaver-5.35.tar.gz</filename>
+			<version>5.35</version>
+			<checksum type="md5">672e6bb903dd4412226e22ff65df8b84</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">./configure --prefix=/usr</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+			</action>
+		</entry>
+		
+		<entry name="xarchiver-0.5.4" type="package/src" seq="16" cdto="yes" download="no" extract="yes">
+			<link>http://downloads.sourceforge.net/project/xarchiver/xarchiver-0.5.4.tar.bz2</link>
+			<filename>xarchiver-0.5.4.tar.bz2</filename>
+			<version>0.5.4</version>
+			<checksum type="md5">1b4cd37a6af03afc957a8e307417e8d0</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					patch -Np1 -i $PROJECT__PKG/xarchiver-0.5.4-fixes-1.patch &amp;&amp;
+
+					./autogen.sh --prefix=/usr               \
+								 --libexecdir=/usr/lib/xfce4 \
+								 --disable-gtk3 
+				</line>
+				<line verbos="yes">make &amp;&amp; make install</line>
+				<line verbos="yes">
+					update-desktop-database &amp;&amp;
+					gtk-update-icon-cache -t -f --include-image-data /usr/share/icons/hicolor
+				</line>
+			</action>
+		</entry>
+		
+		<entry name="dvd+rw-tools-7.1" type="package/src" seq="17" cdto="yes" download="no" extract="yes">
+			<link>http://fy.chalmers.se/~appro/linux/DVD+RW/tools/dvd+rw-tools-7.1.tar.gz</link>
+			<filename>dvd+rw-tools-7.1.tar.gz</filename>
+			<version>7.1</version>
+			<checksum type="md5">8acb3c885c87f6838704a0025e435871</checksum>
+			<action when="after" seq="1">
+				<line verbos="yes">
+					sed -i '/stdlib/a #include &lt;limits.h>' transport.hxx &amp;&amp;
+					sed -i 's#mkisofs"#xorrisofs"#' growisofs.c &amp;&amp;
+					sed -i 's#mkisofs#xorrisofs#;s#MKISOFS#XORRISOFS#' growisofs.1 &amp;&amp;
+
+					make all rpl8 btcflash
+				</line>
+				<line verbos="yes">make prefix=/usr install</line>
 			</action>
 		</entry>
 		
