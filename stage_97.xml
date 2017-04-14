@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<build subject="removing" stage="97" chroot="yes">
+
+	<phase seq="1">
+	
+		<entry type="script/bash" seq="1">
+			<action when="after" seq="1">
+				<line>echo -e "Removing unnecessary files...\n"</line>
+				
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/lib{bfd,opcodes}.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/libbz2.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/lib{com_err,e2p,ext2fs,ss}.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/libltdl.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/libfl.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/libfl_pic.a</line>
+				<line verbos="yes">rm -f $PROJECT__RFS/usr/lib/libz.a</line>
+				
+				<line verbos="yes">rm -rf $PROJECT__RFS/usr/share/man/* /usr/share/groff/* /usr/share/info/*</line>
+				<line verbos="yes">rm -rf $PROJECT__RFS/usr/share/lintian/* /usr/share/linda/* /var/cache/man/*</line>
+				
+				<line verbos="yes">rm -rf $PROJECT__RFS/tmp/*</line>
+				
+				<line verbos="yes">rm -rf $PROJECT__RFS/build</line>
+			</action>
+		    
+			<action when="after" seq="2">
+				<line>echo -e "\n\nUnmounting filesystem...\n"</line>
+				
+				<line>set +e</line>
+				
+				<line verbos="yes">umount -v $PROJECT__RFS/dev/pts</line>
+				<line verbos="yes">umount -v $PROJECT__RFS/dev</line>
+				<line verbos="yes">umount -v $PROJECT__RFS/run</line>
+				<line verbos="yes">umount -v $PROJECT__RFS/proc</line>
+				<line verbos="yes">umount -v $PROJECT__RFS/sys</line>
+				
+				<line>set -e</line>
+			</action>
+			
+			<action when="after" seq="3">
+				<line verbos="yes">chown -R root:root $PROJECT__RFS</line>
+				<line verbos="yes">chmod -R u+rwx $PROJECT__RFS</line>
+				<line verbos="yes">chmod -R o-w $PROJECT__RFS</line>
+			</action>
+		</entry>
+		
+	</phase>
+	
+</build>
+
