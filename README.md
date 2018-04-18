@@ -7,5 +7,5 @@ Ghoghnoos builder is a bash shell script to build the Ghoghnoos Linux distro bas
   <img src="https://github.com/mjahmadi/ghoghnoos-builder/blob/master/assets/wallpapers/desktop/002.png" />
   <img src="https://github.com/mjahmadi/ghoghnoos-builder/blob/master/assets/wallpapers/desktop/003.png" />
   <img src="https://github.com/mjahmadi/ghoghnoos-builder/blob/master/assets/wallpapers/desktop/004.png" />
-  <img src="https://github.com/mjahmadi/ghoghnoos-builder/blob/master/assets/wallpapers/desktop/005.png" />
+  <img src="https://github.com/mjahmadi/ghoghnoos-builder/blob/master/assets/wallpapers/desktop/009.png" />
 </p>
